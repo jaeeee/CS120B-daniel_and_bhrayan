@@ -16,10 +16,7 @@
  	DDRB = 0xFF;
   PORTB = 0x00;
 
- 	unsigned char tempA0 = 0x00;
- 	unsigned char tempA1 = 0x00;
- 	unsigned char tempA2 = 0x00;
- 	unsigned char tempA3 = 0x00;
+ 	unsigned char tempA0, tempA1, tempA2, tempA3 = 0x00;
  	unsigned char cntavail = 4;
 
  	while(1) {
@@ -39,8 +36,8 @@
  		if(tempA3 == 0x08) {
  			--cntavail;
  		}
-    if (cntavil == 0) {
-      cntavil = 128;
+    if (cntavail == 0) {
+      cntavail = 0x80;
     }
  		PORTC = cntavail;
     cntavail = 4;
