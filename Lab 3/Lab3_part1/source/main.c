@@ -1,7 +1,7 @@
 /*	Author: dkwon014
  *  Partner(s) Name: Bhrayan Escobar
  *	Lab Section:
- *	Assignment: Lab #  Exercise #
+ *	Assignment: Lab #3  Exercise #1
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -14,7 +14,12 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-
+    DDRA = 0x00;
+    DDRB = 0x00;
+    DDRC = 0xFF;
+    PORTA = 0xFF;
+    PORTB = 0xFF;
+    PORTC = 0x00;
     /* Insert your solution below */
     while (1) {
 
