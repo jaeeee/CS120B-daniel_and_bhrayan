@@ -1,7 +1,7 @@
 /*	Author: dkwon014
  *  Partner(s) Name: Bhrayan Escobar
  *	Lab Section:
- *	Assignment: Lab #  Exercise #
+ *	Assignment: Lab #2  Exercise #2
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -16,10 +16,7 @@
  	DDRB = 0xFF;
   PORTB = 0x00;
 
- 	unsigned char tempA0 = 0x00;
- 	unsigned char tempA1 = 0x00;
- 	unsigned char tempA2 = 0x00;
- 	unsigned char tempA3 = 0x00;
+ 	unsigned char tempA0, tempA1, tempA2, tempA3 = 0x00;
  	unsigned char cntavail = 4;
 
  	while(1) {
