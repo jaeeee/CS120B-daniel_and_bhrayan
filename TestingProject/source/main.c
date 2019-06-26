@@ -9,7 +9,7 @@
  */
 
  #include <avr/io.h>
- #ifdef _SIMLATE_
+ #ifdef _SIMULATE_
  #include "simAVRHeader.h"
  #endif
 
