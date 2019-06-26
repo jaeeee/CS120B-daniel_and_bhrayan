@@ -1,2 +1,2 @@
-# CS120B-daniel_and_bhrayan 
+# EE/CS120B Introduction to Embedded Systems 
 I hate this class :)
