@@ -27,12 +27,34 @@ unsigned char GetBit(char port, char bit_position) {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0x00; //input
+		DDRA = 0x00; //input
     DDRB = 0x00; //input
-    DDRC = 0x00; //input
+    DDRC = 0xFF; //output
+    PORTA = 0xFF;
+    // PORTB = 0xFF;
+    PORTC = 0x00;
+		unsigned char holder = 0x00;
     /* Insert your solution below */
     while (1) {
-
+			holder = PINA;
+			if ((holder >= 0x0E) && (holder <= 0x0F)) {
+				PORTC = 0x3F;
+			}
+			if ((holder >= 0x0A) && (holder <= 0x0E)) {
+				PORTC = 0x3E;
+			}
+			if ((holder >= 0x07) && (holder <= 0x09)) {
+				PORTC = 0x3C;
+			}
+			if ((holder >= 0x05) && (holder <= 0x06)) {
+				PORTC = 0x38;
+			}
+			if ((holder >= 0x03) && (holder <= 0x04)) {
+				PORTC = 0x70;
+			}
+			if ((holder >= 0x01) && (holder <= 0x02)) {
+				PORTC = 0x60;
+			}
     }
     return 1;
 }
