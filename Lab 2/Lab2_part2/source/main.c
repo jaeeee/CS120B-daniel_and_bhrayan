@@ -46,5 +46,5 @@
  		PORTC = cntavail;
     cntavail = 4;
  	}
-
+return 1;
  }
