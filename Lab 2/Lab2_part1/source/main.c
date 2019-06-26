@@ -24,7 +24,7 @@
     unsigned char tmp3 = 0x00;
     while (1)
     {
- 	   tmp1 = PINA & 0x01;
+ 	   /*tmp1 = PINA & 0x01;
  	   tmp2 = PINA & 0x02;
  	   if( tmp1 == 0x01 && tmp2 == 0x00)
  	   {
@@ -35,6 +35,6 @@
  		   tmp3 = (tmp3 & 0xFE) | 0x00;
  	   }
  	   PORTB = tmp3;
-     }
+   }*/
  	return 1;
  }
