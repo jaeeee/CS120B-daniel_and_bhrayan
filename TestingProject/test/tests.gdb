@@ -1,4 +1,4 @@
-# Test file for TestingProject
+# Test file for Lab2_part2
 
 
 # commands.gdb provides the following functions for ease:
@@ -39,6 +39,106 @@ expectPORTC 0
 checkResult
 
 # Add tests below
+
+test "PINA: 0x00 => PORTC: 0x04"
+set Pina 0x00
+continue 5
+expectPortB 0x04
+checkResult
+//
+
+test "PINA: 0x01 => PORTC: 0x03"
+set Pina 0x01
+continue 5
+expectPortB 0x03
+checkResult
+
+test "PINA: 0x02 => PORTC: 0x03"
+set Pina 0x02
+continue 5
+expectPortB 0x03
+checkResult
+
+test "PINA: 0x04 => PORTC: 0x03"
+set Pina 0x04
+continue 5
+expectPortB 0x03
+checkResult
+
+test "PINA: 0x08 => PORTC: 0x03"
+set Pina 0x08
+continue 5
+expectPortB 0x03
+checkResult
+//
+test "PINA: 0x03 => PORTC: 0x02"
+set Pina 0x03
+continue 5
+expectPortB 0x02
+checkResult
+
+test "PINA: 0x09 => PORTC: 0x02"
+set Pina 0x09
+continue 5
+expectPortB 0x02
+checkResult
+
+test "PINA: 0x05 => PORTC: 0x02"
+set Pina 0x05
+continue 5
+expectPortB 0x02
+checkResult
+
+test "PINA: 0x06 => PORTC: 0x02"
+set Pina 0x06
+continue 5
+expectPortB 0x02
+checkResult
+
+test "PINA: 0x0A => PORTC: 0x02"
+set Pina 0x0A
+continue 5
+expectPortB 0x02
+checkResult
+
+test "PINA: 0x0C => PORTC: 0x02"
+set Pina 0x0C
+continue 5
+expectPortB 0x02
+checkResult
+
+//
+
+test "PINA: 0x0E => PORTC: 0x01"
+set Pina 0x0E
+continue 5
+expectPortB 0x01
+checkResult
+
+test "PINA: 0x0B => PORTC: 0x01"
+set Pina 0x0B
+continue 5
+expectPortB 0x01
+checkResult
+
+test "PINA: 0x07 => PORTC: 0x01"
+set Pina 0x07
+continue 5
+expectPortB 0x01
+checkResult
+
+test "PINA: 0x0D => PORTC: 0x01"
+set Pina 0x0D
+continue 5
+expectPortB 0x01
+checkResult
+//
+test "PINA: 0x0F => PORTC: 0x00"
+set Pina 0x0F
+continue 5
+expectPortB 0x00
+checkResult
+
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
