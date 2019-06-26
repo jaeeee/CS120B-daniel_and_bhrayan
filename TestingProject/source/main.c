@@ -40,7 +40,7 @@ int main(void) {
 			if ((holder >= 0x0E) && (holder <= 0x0F)) {
 				PORTC = 0x3F;
 			}
-			if ((holder >= 0x0A) && (holder <= 0x0E)) {
+			if ((holder >= 0x0A) && (holder <= 0x0D)) {
 				PORTC = 0x3E;
 			}
 			if ((holder >= 0x07) && (holder <= 0x09)) {
