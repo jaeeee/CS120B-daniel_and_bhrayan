@@ -55,7 +55,7 @@ int main(void) {
 			}
       lower = PINA & 0x0F; //lower nibble
       upper = PINA & 0xF0; //upper nibble
-      if ((GetBit(upper, 4)) && (GetBit(upper, 5)) !(GetBit(upper, 6)) {
+      if ((GetBit(upper, 4)) && (GetBit(upper, 5)) && !(GetBit(upper, 6)) {
         PORTC = PORTC | 0x80;
       }
     }
