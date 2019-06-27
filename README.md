@@ -1,5 +1,5 @@
 # EE/CS120B Introduction to Embedded Systems
-We will be using C code in order to program our ATMEGA1284 microcontrollers.
+We will be using C code in order to program our ATMEGA1284 microcontrollers. We will be developing on the Linux machines provided by the school so that we can execute necessary commands to synthesize the programs. 
 
 Summer (A) 2019, team members:
 * Daniel Kwong
