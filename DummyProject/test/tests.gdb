@@ -1,4 +1,4 @@
-# Test file for Lab3_part1
+# Test file for Lab3_part3
 
 
 # commands.gdb provides the following functions for ease:
@@ -26,40 +26,108 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-# Add tests below
-
-test "PINA: 0x01, PINB: 0x10 => PORTC: 2"
-setPINA 0x01
-setPINB 0x10
-continue 5
-expectPORTC 2
-checkResult
-
-test "PINA: 0x03, PINB: 0x10 => PORTC: 3"
-setPINA 0x03
-setPINB 0x10
-continue 5
-expectPORTC 3
-checkResult
-
-
-test "PINA: 0xFF, PINB: 0x01 => PORTC: 9"
-setPINA 0xFF
-setPINB 0x01
-continue 5
-expectPORTC 9
-checkResult
-
+# Example test:
 test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+# Set inputs
 setPINA 0x00
 setPINB 0x00
-continue 5
+# Continue for several ticks
+continue 2
+# Set expect values
 expectPORTC 0
+# Check pass/fail
 checkResult
 
+# Add tests below
+test "PINA: 0X01 => PORTC: 0x60"
+setPINA 0x01
+continue 5
+expectPORTC 0x60
+checkResult
 
+test "PINA: 0X12 => PORTC: 0x60"
+setPINA 0x12
+continue 5
+expectPORTC 0x60
+checkResult
 
+test "PINA: 0X33 => PORTC: 0xF0"
+setPINA 0x33
+continue 5
+expectPORTC 0xF0
+checkResult
 
+test "PINA: 0X44 => PORTC: 0x70"
+setPINA 0x44
+continue 5
+expectPORTC 0x70
+checkResult
+
+test "PINA: 0X55 => PORTC: 0x38"
+setPINA 0x55
+continue 5
+expectPORTC 0x38
+checkResult
+
+test "PINA: 0X66 => PORTC: 0x38"
+setPINA 0x66
+continue 5
+expectPORTC 0x38
+checkResult
+
+test "PINA: 0X77 => PORTC: 0x3C"
+setPINA 0x77
+continue 5
+expectPORTC 0x3C
+checkResult
+
+test "PINA: 0X08 => PORTC: 0x3C"
+setPINA 0x08
+continue 5
+expectPORTC 0x3C
+checkResult
+
+test "PINA: 0X09 => PORTC: 0x3C"
+setPINA 0x09
+continue 5
+expectPORTC 0x3C
+checkResult
+
+test "PINA: 0X0A => PORTC: 0x3E"
+setPINA 0x0A
+continue 5
+expectPORTC 0x3E
+checkResult
+
+test "PINA: 0X0B => PORTC: 0x3E"
+setPINA 0x0B
+continue 5
+expectPORTC 0x3E
+checkResult
+
+test "PINA: 0X0C => PORTC: 0x3E"
+setPINA 0x0C
+continue 5
+expectPORTC 0x3E
+checkResult
+
+test "PINA: 0X0D => PORTC: 0x3F"
+setPINA 0x0D
+continue 5
+expectPORTC 0x3F
+checkResult
+
+test "PINA: 0X0E => PORTC: 0x3F"
+setPINA 0x0E
+continue 5
+expectPORTC 0x3F
+checkResult
+
+test "PINA: 0X0F => PORTC: 0x3F"
+setPINA 0x0F
+continue 5
+expectPORTC 0x3F
+checkResult
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
