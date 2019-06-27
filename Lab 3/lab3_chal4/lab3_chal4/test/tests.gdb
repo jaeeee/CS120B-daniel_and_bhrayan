@@ -1,4 +1,4 @@
-# Test file for lab3_chal4
+# Test file for lab3_part4
 
 
 # commands.gdb provides the following functions for ease:
@@ -27,18 +27,62 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+test "PINA: 0x00 => PORTB = 0x00, PORTC: 0x00\n"
 # Set inputs
 setPINA 0x00
-setPINB 0x00
 # Continue for several ticks
-continue 2
+continue 5
 # Set expect values
-expectPORTC 0
+expectPORTB 0x00
+expectPORTC 0x00
 # Check pass/fail
 checkResult
 
 # Add tests below
+
+test "PINA: 0xF0 => PORTB = 0x0F, PORTC: 0x00\n"
+# Set inputs
+setPINA 0xF0
+# Continue for several ticks
+continue 5
+# Set expect values
+expectPORTB 0x0F
+expectPORTC 0x00
+# Check pass/fail
+checkResult
+
+test "PINA: 0x0F => PORTB = 0x00, PORTC: 0xF0\n"
+# Set inputs
+setPINA 0x0F
+# Continue for several ticks
+continue 5
+# Set expect values
+expectPORTB 0x00
+expectPORTC 0xF0
+# Check pass/fail
+checkResult
+
+test "PINA: 0xFF => PORTB = 0x0F, PORTC: 0xF0\n"
+# Set inputs
+setPINA 0xFF
+# Continue for several ticks
+continue 5
+# Set expect values
+expectPORTB 0x0F
+expectPORTC 0xF0
+# Check pass/fail
+checkResult
+
+test "PINA: 0x01 => PORTB = 0x00, PORTC: 0x10\n"
+# Set inputs
+setPINA 0x01
+# Continue for several ticks
+continue 5
+# Set expect values
+expectPORTB 0x00
+expectPORTC 0x10
+# Check pass/fail
+checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
