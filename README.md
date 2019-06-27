@@ -1,5 +1,5 @@
 # EE/CS120B Introduction to Embedded Systems
-Summer 2019 section, team members:
+Summer (A) 2019, team members:
 * Daniel Kwong
 * Bhrayan Escobar
 
