@@ -1,0 +1,6 @@
+Breakpoint 1 at 0xee: file source/main.c, line 21.
+Note: automatically using hardware breakpoints for read-only addresses.
+======================================================
+Running all tests..."
+
+"PINA: 0x00, PINB: 0x00 => PORTC: 0"...set state = INIT"PINA: 0x00, 0x01 => PORTB: 1, state: wait1"..."PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: switch_light"..."PINA: 0x00, 0x01, 0x00, 0x01 => PORTB: 2, state: wait2"..."PINA: 0x00, 0x01, 0x00, 0x01, 0x01 => PORTB: 2, state: Init...Quitting: Remote doesn't know how to detach

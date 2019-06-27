@@ -16,9 +16,10 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 enum states { START, INIT, WAIT1, SWITCH_LIGHTS, WAIT2 } state;
 DDRA = 0x00; DDRB = 0xFF; PORTA = 0xFF; PORTB = 0x00;
+state = START;
     /* Insert your solution below */
     while (1) {
-switch(states) { //transitions
+switch(state) { //transitions
 case START:
 state = INIT;
 break;
@@ -51,7 +52,7 @@ state = WAIT2;
 }
 break;
 }
-switch (states) { //actions
+switch (state) { //actions
 case START:
 break;
 case INIT:
