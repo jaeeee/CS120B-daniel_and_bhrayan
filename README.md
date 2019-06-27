@@ -4,6 +4,7 @@
 # Team
 * Daniel Kwong
 * Bhrayan Escobar
+* Akshay Gulabrao
 
 # Notes
 Below are some notes for personal use
