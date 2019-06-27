@@ -57,7 +57,7 @@ int main(void) {
 			if ((holder >= 0x01) && (holder <= 0x02)) {
 				PORTC = 0x60;
 			}
-      if ((GetBit(upper, 4)) && (GetBit(upper, 5)) && !(GetBit(upper, 6)) {
+      if ((GetBit(upper, 4)) && (GetBit(upper, 5)) && !(GetBit(upper, 6))) {
         PORTC = PORTC | 0x80;
       }
     }
