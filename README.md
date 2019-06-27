@@ -1,7 +1,7 @@
 # EE/CS120B Introduction to Embedded Systems
-We will be using C code in order to program our ATMEGA1284 microcontrollers. We will be developing on the Linux machines provided by the school so that we can execute necessary commands to synthesize the programs. 
+> Summer 2019 We will be using C code in order to program our ATMEGA1284 microcontrollers. We will be developing on the Linux machines provided by the school so that we can execute necessary commands to synthesize the programs. 
 
-Summer (A) 2019, team members:
+# Team
 * Daniel Kwong
 * Bhrayan Escobar
 
@@ -14,3 +14,9 @@ Below are some notes for personal use
 * `avr-gcc -mmcu=atmega1284 -I/usr/csshare/pkgs/simavr/ -Iheader/ -D_SIMULATE_ -Wall -Wl,--undefined=_mmcu,--section-start=.mmcu=910000 -o build/objects/main.elf source/main.c` - compiles the source into main.elf file
 * `simavr -v -v -v -v -m atmega1284 -f 8000000 build/objects/main.elf` runs simulation
 * `gtkwave build/results/Lab2_introToAVR_trace.vcd` - runs waveform simulation
+
+# Tools Required
+* AVR-GCC compiler
+* AVR-GDB debugger
+* AVRDUDE programmer
+* SimAVR simulator
