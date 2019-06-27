@@ -5,6 +5,7 @@
 * Daniel Kwong
 * Bhrayan Escobar
 * Akshay Gulabrao
+* Ramiro Carrillo
 
 # Notes
 Below are some notes for personal use
