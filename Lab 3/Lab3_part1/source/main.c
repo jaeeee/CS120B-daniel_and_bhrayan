@@ -29,12 +29,12 @@ int main(void) {
     PORTA = 0xFF; 
     PORTB = 0xFF;
     PORTC = 0x00;
-    unsigned char count, tempA, tempB = 0x00;
+    unsigned char count, tempA, tempB, i = 0x00;
     /* Insert your solution below */
     while (1) {
       tempA = PINA;
       tempB = PINB;
-      for (unsigned char i = 0; i < 8; i++) {
+      for (i = 0; i < 8; i++) {
         count += GetBit(tempA, i) + GetBit(tempB, i);
       }
       PORTC = count;
