@@ -1,10 +1,7 @@
-Breakpoint 1 at 0x12a: file source/main.c, line 38.
+Breakpoint 1 at 0xea: file source/main.c, line 24.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"PINA: 0x00, PINB: 0x00 => PORTC: 0"..."PINA: 0X01 => PORTC: 0x60"..."PINA: 0X12 => PORTC: 0x60"..."PINA: 0X33 => PORTC: 0xF0"..."PINA: 0X44 => PORTC: 0x70"..."PINA: 0X55 => PORTC: 0x38"..."PINA: 0X66 => PORTC: 0x38"..."PINA: 0X77 => PORTC: 0x3C"..."PINA: 0X08 => PORTC: 0x3C"..."PINA: 0X09 => PORTC: 0x3C"..."PINA: 0X0A => PORTC: 0x3E"..."PINA: 0X0B => PORTC: 0x3E"..."PINA: 0X0C => PORTC: 0x3E"..."PINA: 0X0D => PORTC: 0x3F"..."PINA: 0X00 => PORTC: 0x00"...
-	Expected 0x00 
-	PORTC '0x800028:	0x3f
-"PINA: 0X0E => PORTC: 0x3F"..."PINA: 0X0F => PORTC: 0x3F"...======================================================
+"WEIGHT ABOVE 70:: PIND: 0xFF, PINB: 0x01 => PORTB: 0x02"..."WEIGHT = 70:: PIND: 0x46, PINB: 0x00 => PORTB: 0x02"..."WEIGHT between 5 and 70:: PIND: 0x0F, PINB: 0x00 => PORTB: 0x02"..."WEIGHT less than 5:: PIND: 0x46, PINB: 0x00 => PORTB: 0x02"...======================================================
 Quitting: Remote doesn't know how to detach
