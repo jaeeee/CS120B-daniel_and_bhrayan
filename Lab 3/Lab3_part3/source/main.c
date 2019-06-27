@@ -32,8 +32,12 @@ int main(void) {
     // PORTB = 0xFF;
     PORTC = 0x00;
 		unsigned char holder = 0x00;
+    unsigned char lower = 0x00;
+    unsigned char upper = 0x00;
     /* Insert your solution below */
     while (1) {
+      lower = PINA & 0x0F; //lower nibble
+      upper = PINA & 0xF0; //upper nibble
 			holder = PINA;
 			if ((holder >= 0x0E) && (holder <= 0x0F)) {
 				PORTC = 0x3F;
@@ -53,8 +57,6 @@ int main(void) {
 			if ((holder >= 0x01) && (holder <= 0x02)) {
 				PORTC = 0x60;
 			}
-      lower = PINA & 0x0F; //lower nibble
-      upper = PINA & 0xF0; //upper nibble
       if ((GetBit(upper, 4)) && (GetBit(upper, 5)) && !(GetBit(upper, 6)) {
         PORTC = PORTC | 0x80;
       }
