@@ -1,5 +1,7 @@
 # EE/CS120B Introduction to Embedded Systems
-Daniel Kwong and Bhrayan Escobar
+Summer 2019 section, team members:
+* Daniel Kwong
+* Bhrayan Escobar
 
 # Notes
 Below are some notes for personal use
