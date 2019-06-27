@@ -1,4 +1,6 @@
 # EE/CS120B Introduction to Embedded Systems
+We will be using C code in order to program our ATMEGA1284 microcontrollers.
+
 Summer (A) 2019, team members:
 * Daniel Kwong
 * Bhrayan Escobar
