@@ -91,7 +91,7 @@
             break;
         case STEP_2:
             break;
-        case STEP_3;
+        case STEP_3:
             break;
         case OPEN:
             PORTB=0x01;
