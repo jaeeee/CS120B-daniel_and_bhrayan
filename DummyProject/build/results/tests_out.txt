@@ -1,7 +1,0 @@
-Breakpoint 1 at 0xea: file source/main.c, line 24.
-Note: automatically using hardware breakpoints for read-only addresses.
-======================================================
-Running all tests..."
-
-"WEIGHT ABOVE 70:: PIND: 0xFF, PINB: 0x01 => PORTB: 0x02"..."WEIGHT = 70:: PIND: 0x46, PINB: 0x00 => PORTB: 0x02"..."WEIGHT between 5 and 70:: PIND: 0x0F, PINB: 0x00 => PORTB: 0x02"..."WEIGHT less than 5:: PIND: 0x46, PINB: 0x00 => PORTB: 0x02"...======================================================
-Quitting: Remote doesn't know how to detach
