@@ -1,7 +1,7 @@
 /*	Author: dkwon014
- *  Partner(s) Name: bhrayan escobar, akshay gulabrao, ramiro carrillo
+ *  Partner(s) Name: Bhrayan Escobar
  *	Lab Section:
- *	Assignment: Lab #4  Exercise #1
+ *	Assignment: Lab #4  Exercise #2
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -12,62 +12,69 @@
 #include "simAVRHeader.h"
 #endif
 
+	enum STATES { START, INIT, INCREMENT, RESET, DECREMENT } state;
+	unsigned char holder = 0x00;
+
+void tick() {
+switch(state) {
+case START:
+state = INIT;
+break;
+case INIT:
+if (PINA == 0) {
+state = RESET;
+} else if (PINA == 1) {
+state = INCREMENT;
+} else if (PINA == 2) {
+state = DECREMENT;
+} else {
+state = INIT;
+}
+break;
+case INCREMENT:
+state = INIT;
+break;
+case RESET:
+state = INIT;
+break;
+case DECREMENT:
+state = INIT;
+break;
+}
+
+switch(state) {
+case START:
+break;
+case INIT:
+break;
+case INCREMENT:
+if (holder < 9) {
+holder++;
+}
+break;
+case RESET:
+holder = 0;
+break;
+case DECREMENT:
+if (holder > 0) {
+holder--;
+}
+break;
+}
+
+
+
+}
+
 int main(void) {
     /* Insert DDR and PORT initializations */
-enum states { START, INIT, WAIT1, SWITCH_LIGHTS, WAIT2 } state;
-DDRA = 0x00; DDRB = 0xFF; PORTA = 0xFF; PORTB = 0x00;
+DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 state = START;
-    /* Insert your solution below */
+holder = 7;
     while (1) {
-switch(state) { //transitions
-case START:
-state = INIT;
-break;
-case INIT:
-if ((PINA & 0x01) == 1) {
-state = WAIT1;
-} else {
-state = INIT;
-}
-break;
-case WAIT1:
-if (PINA == 0) {
-state = SWITCH_LIGHTS;
-} else {
-state = WAIT1;
-}
-break;
-case SWITCH_LIGHTS:
-if ((PINA & 0x01) == 1) {
-state = WAIT2;
-} else {
-state = SWITCH_LIGHTS;
-}
-break;
-case WAIT2:
-if ((PINA == 0)) {
-state = INIT;
-} else {
-state = WAIT2;
-}
-break;
-}
-switch (state) { //actions
-case START:
-break;
-case INIT:
-PORTB = 0x01;
-break;
-case WAIT1:
-//nothing
-break;
-case SWITCH_LIGHTS:
-PORTB = 0x02;
-break;
-case WAIT2:
-//nothing
-break;
-}
+//	holder = 7;
+	tick();
+	PORTC = holder;
     }
     return 1;
 }
