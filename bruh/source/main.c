@@ -37,22 +37,22 @@ int main(void) {
     /* Insert your solution below */
     while (1) {
 			holder = (~PINA & 0x0F);
-			if ((holder >= 0x0E) && (holder <= 0x0F)) {
+			if ((holder >= 0x0D) && (holder <= 0x0F)) { //13-15
 				PORTC = 0x3F;
 			}
-			if ((holder >= 0x0A) && (holder <= 0x0D)) {
+			if ((holder >= 0x0A) && (holder <= 0x0C)) { //10-12
 				PORTC = 0x3E;
 			}
-			if ((holder >= 0x07) && (holder <= 0x09)) {
+			if ((holder >= 0x07) && (holder <= 0x09)) { //7-9
 				PORTC = 0x3C;
 			}
-			if ((holder >= 0x05) && (holder <= 0x06)) {
+			if ((holder >= 0x05) && (holder <= 0x06)) { //5-6
 				PORTC = 0x38;
 			}
-			if ((holder >= 0x03) && (holder <= 0x04)) {
+			if ((holder >= 0x03) && (holder <= 0x04)) { //3-4
 				PORTC = 0x70;
 			}
-			if ((holder >= 0x01) && (holder <= 0x02)) {
+			if ((holder >= 0x01) && (holder <= 0x02)) { //1-2
 				PORTC = 0x60;
 			}
 			// PORTC = 0x0F;
