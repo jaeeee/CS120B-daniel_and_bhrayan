@@ -33,26 +33,26 @@ int main(void) {
     PORTA = 0xFF;
     // PORTB = 0xFF;
     PORTC = 0x00;
-		// unsigned char (!PINA) = 0x00;
+		unsigned char holder = 0x00;
     /* Insert your solution below */
     while (1) {
-			// (!PINA) = !(PINA);
-			if (((!PINA) >= 0x0E) && ((!PINA) <= 0x0F)) {
+			holder = !(PINA);
+			if ((holder >= 0x0E) && (holder <= 0x0F)) {
 				PORTC = 0x3F;
 			}
-			if (((!PINA) >= 0x0A) && ((!PINA) <= 0x0D)) {
+			if ((holder >= 0x0A) && (holder <= 0x0D)) {
 				PORTC = 0x3E;
 			}
-			if (((!PINA) >= 0x07) && ((!PINA) <= 0x09)) {
+			if ((holder >= 0x07) && (holder <= 0x09)) {
 				PORTC = 0x3C;
 			}
-			if (((!PINA) >= 0x05) && ((!PINA) <= 0x06)) {
+			if ((holder >= 0x05) && (holder <= 0x06)) {
 				PORTC = 0x38;
 			}
-			if (((!PINA) >= 0x03) && ((!PINA) <= 0x04)) {
+			if ((holder >= 0x03) && (holder <= 0x04)) {
 				PORTC = 0x70;
 			}
-			if (((!PINA) >= 0x01) && ((!PINA) <= 0x02)) {
+			if ((holder >= 0x01) && (holder <= 0x02)) {
 				PORTC = 0x60;
 			}
 			// PORTC = 0x0F;
