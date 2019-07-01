@@ -36,7 +36,7 @@ int main(void) {
 		unsigned char holder = 0x00;
     /* Insert your solution below */
     while (1) {
-			holder = !PINA;
+			holder = !(PINA);
 			if ((holder >= 0x0E) && (holder <= 0x0F)) {
 				PORTC = 0x3F;
 			}
