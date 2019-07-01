@@ -1,4 +1,4 @@
-# Test file for lab4_part2
+# Test file for lab4_part3
 
 
 # commands.gdb provides the following functions for ease:
@@ -26,56 +26,68 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0x01 => PORTC: 8, state = INCREMENT"
-set state = START
-setPINA 0x01
-continue 2
-expectPORTC 8
-expect state INCREMENT
-checkResult
-
-
-test "PINA: 0x00 => PORTC: 0, state = RESET"
-set state = START
+# Example test:
+test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+# Set inputs
 setPINA 0x00
+setPINB 0x00
+# Continue for several ticks
 continue 2
+# Set expect values
 expectPORTC 0
-expect state RESET
+# Check pass/fail
 checkResult
-
-test "PINA: 0x02 => PORTC: 0, state = DECREMENT"
-set state = START
-setPINA 0x02
-continue 2
-expectPORTC 0
-expect state DECREMENT
-checkResult
-
-test "PINA: 0x00, 0x00 => PORTC: 0, state = RESET"
-set state = START
-setPINA 0x00
-continue 2
-setPINA 0x00
-continue 2
-expectPORTC 0
-expect state RESET
-checkResult
-
-test "PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"
-set state = START
-setPINA 0x00
-continue 2
-setPINA 0x01
-continue 2
-expectPORTC 1
-expect state INCREMENT
-checkResult
-
-
-
-
 
 # Add tests below
+
+test "PINA: 0x00 => PORTB: 0, state = INIT"
+set state = START
+setPINA 0x00
+continue 2
+expectPORTB 0
+expect state INIT
+checkResult
+
+test "PINA: 0x00, 0x01 => PORTB: 0, state = STEP_1"
+set state = START
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0
+expect state STEP_1
+checkResult
+
+
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = STEP_2"
+set state = START
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+setPINA 0x00
+continue 2
+expectPORTB 0
+expect state STEP_2
+checkResult
+
+test "PINA: 0x00 => PORTB: 0, state = OPEN"
+set state = STEP_3
+setPINA 0x00
+continue 2
+expectPORTB 0x01
+expect state OPEN
+checkResult
+
+
+test "PINA: 0x80 => PORTB: 0, state = INIT"
+set state = OPEN
+setPINA 0x80
+continue 2
+expectPORTB 0x00
+expect state INIT
+checkResult
+
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
