@@ -26,7 +26,6 @@
     break;
 
         case INIT:
-        
             if( PINA == 1){
                 state= STEP_1;
             }
