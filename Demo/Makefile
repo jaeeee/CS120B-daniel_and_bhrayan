@@ -53,7 +53,6 @@ LDEFAULT=0x42
 L120=0xC2
 HEX=h
 RAW=m
-OP=w
 
 .PHONY: clean test
 all: $(PATHB)main.hex
