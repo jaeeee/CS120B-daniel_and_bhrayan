@@ -55,7 +55,7 @@ int main(void) {
 			if ((holder >= 0x01) && (holder <= 0x02)) {
 				PORTC = 0x60;
 			}
-			// PORTC = 0x0F;
+			PORTC = 0x0F;
     }
     return 1;
 }
