@@ -1,4 +1,4 @@
-# Test file for Demo
+# Test file for lab4_part1
 
 
 # commands.gdb provides the following functions for ease:
@@ -6,7 +6,7 @@
 #       Where <message> is the message to print. Must call this at the beginning of every test
 #       Example: test "PINA: 0x00 => expect PORTC: 0x01"
 #   checkResult
-#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly, 
+#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
 #   expectPORTx <val>
 #       With x as the port (A,B,C,D)
@@ -15,9 +15,9 @@
 #       With x as the port or pin (A,B,C,D)
 #       The value to set the pin to (can be decimal or hexidecimal
 #       Example: setPINA 0x01
-#   printPORTx f OR printPINx f 
+#   printPORTx f OR printPINx f
 #       With x as the port or pin (A,B,C,D)
-#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary 
+#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary
 #       Example: printPORTC d
 #   printDDRx
 #       With x as the DDR (A,B,C,D)
@@ -43,4 +43,65 @@ checkResult
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
-echo ======================================================\n
+echo set state = INIT
+setPINA 0x00
+continue 2
+expectPORTB 0x01
+expect state INIT
+checkResult
+
+
+test "PINA: 0x00, 0x01 => PORTB: 1, state: wait1"
+set state = INIT
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x01
+expect state WAIT1
+checkResult
+
+
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: switch_light"
+set state = INIT
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+setPINA 0x00
+continue 2
+expectPORTB 0x02
+expect state SWITCH_LIGHTS
+checkResult
+
+
+test "PINA: 0x00, 0x01, 0x00, 0x01 => PORTB: 2, state: wait2"
+set state = INIT
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTB 0x02
+expect state WAIT2
+checkResult
+
+
+test "PINA: 0x00, 0x01, 0x00, 0x01, 0x01 => PORTB: 2, state: Init
+set state = INIT
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+setPINA 0x00
+continue 2
+expectPORTB 0x01
+expect state INIT
+checkResult
