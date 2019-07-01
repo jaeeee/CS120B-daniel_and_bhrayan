@@ -36,9 +36,9 @@ int main(void) {
     unsigned char upper = 0x00;
     /* Insert your solution below */
     while (1) {
-      lower = PINA & 0x0F; //lower nibble
-      upper = PINA & 0xF0; //upper nibble
-			holder = PINA;
+      lower = !PINA & 0x0F; //lower nibble
+      upper = !PINA & 0xF0; //upper nibble
+			holder = !PINA;
 			if (((holder & 0x0F) >= 0x0D) && ((holder & 0x0F) <= 0x0F)) { //13-15
 				PORTC = 0x3F;
 			}
