@@ -24,12 +24,15 @@ case START:
 state = INIT;
 break;
 case INIT:
-if (A0) {
+if (A1 && A0) {
+  state = WAIT3;
+}
+else if (A0) {
   state = WAIT1;
 } else if (A1) {
   state = WAIT2;
-} else if (A1 && A0) {
-  state = WAIT3;
+// } else if (A1 && A0) {
+//   state = WAIT3;
 } else {
   state = INIT;
 }
