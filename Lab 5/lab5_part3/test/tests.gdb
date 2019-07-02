@@ -62,6 +62,16 @@ expectPORTC 0x15
 expect state SET1
 checkResult
 
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = SET1
+setPINA 0xFE
+continue 2
+expectPORTC 0x15
+expect state WAIT2
+checkResult
+
+
+
 
 # Add tests below
 
