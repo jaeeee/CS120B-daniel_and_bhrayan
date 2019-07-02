@@ -1,4 +1,4 @@
-# Test file for lab5_part2
+# Test file for lab4_part2
 
 
 # commands.gdb provides the following functions for ease:
@@ -6,7 +6,7 @@
 #       Where <message> is the message to print. Must call this at the beginning of every test
 #       Example: test "PINA: 0x00 => expect PORTC: 0x01"
 #   checkResult
-#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly, 
+#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
 #   expectPORTx <val>
 #       With x as the port (A,B,C,D)
@@ -15,9 +15,9 @@
 #       With x as the port or pin (A,B,C,D)
 #       The value to set the pin to (can be decimal or hexidecimal
 #       Example: setPINA 0x01
-#   printPORTx f OR printPINx f 
+#   printPORTx f OR printPINx f
 #       With x as the port or pin (A,B,C,D)
-#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary 
+#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary
 #       Example: printPORTC d
 #   printDDRx
 #       With x as the DDR (A,B,C,D)
@@ -26,17 +26,54 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-# Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
-# Set inputs
-setPINA 0x00
-setPINB 0x00
-# Continue for several ticks
+test "PINA: 0x01 => PORTC: 8, state = INCREMENT"
+set state = START
+setPINA 0x01
 continue 2
-# Set expect values
-expectPORTC 0
-# Check pass/fail
+expectPORTC 8
+expect state INCREMENT
 checkResult
+
+
+test "PINA: 0x00 => PORTC: 0, state = RESET"
+set state = START
+setPINA 0x00
+continue 2
+expectPORTC 0
+expect state RESET
+checkResult
+
+test "PINA: 0x02 => PORTC: 0, state = DECREMENT"
+set state = START
+setPINA 0x02
+continue 2
+expectPORTC 0
+expect state DECREMENT
+checkResult
+
+test "PINA: 0x00, 0x00 => PORTC: 0, state = RESET"
+set state = START
+setPINA 0x00
+continue 2
+setPINA 0x00
+continue 2
+expectPORTC 0
+expect state RESET
+checkResult
+
+test "PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"
+set state = START
+setPINA 0x00
+continue 2
+setPINA 0x01
+continue 2
+expectPORTC 1
+expect state INCREMENT
+checkResult
+
+
+
+
 
 # Add tests below
 
