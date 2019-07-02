@@ -54,7 +54,7 @@ expectPORTC 0
 expect state WAIT1
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0x01, PORTC: 0x15, state = SET1"
 set state = WAIT1
 setPINA 0x01
 continue 2
@@ -62,7 +62,7 @@ expectPORTC 0x15
 expect state SET1
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0xFE, PORTC: 0, state = WAIT2"
 set state = SET1
 setPINA 0xFE
 continue 2
@@ -70,7 +70,7 @@ expectPORTC 0x15
 expect state WAIT2
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0x01 PORTC: 0x29, state = SET2"
 set state = WAIT2
 setPINA 0x01
 continue 2
@@ -78,7 +78,7 @@ expectPORTC 0x29
 expect state SET2
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0xFE, PORTC: 0x29, state = WAIT3"
 set state = SET2
 setPINA 0xFE
 continue 2
@@ -86,7 +86,7 @@ expectPORTC 0x29
 expect state WAIT3
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0x01, PORTC: 0x33, state = SET3"
 set state = WAIT3
 setPINA 0x01
 continue 2
@@ -94,7 +94,7 @@ expectPORTC 0x33
 expect state SET3
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0xFE, PORTC: 0x33, state = WAIT4"
 set state = SET3
 setPINA 0xFE
 continue 2
@@ -102,7 +102,7 @@ expectPORTC 0x33
 expect state WAIT4
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0x01, PORTC: 0x0C, state = SET4"
 set state = WAIT4
 setPINA 0x01
 continue 2
@@ -110,7 +110,7 @@ expectPORTC 0x0C
 expect state SET4
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0xFE, PORTC: 0x)C, state = WAIT5"
 set state = SET4
 setPINA 0xFE
 continue 2
@@ -118,7 +118,7 @@ expectPORTC 0x0C
 expect state WAIT5
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0x01, PORTC: 0x2D, state = SET5"
 set state = WAIT5
 setPINA 0x01
 continue 2
@@ -126,7 +126,7 @@ expectPORTC 0x2D
 expect state SET5
 checkResult
 
-test "PINA: 0xFE, PORTC: 0, state = SET1"
+test "PINA: 0xFE, PORTC: 0x2D, state = WAIT6"
 set state = SET5
 setPINA 0xFE
 continue 2
