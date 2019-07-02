@@ -12,8 +12,11 @@
 #include "simAVRHeader.h"
 #endif
 
-	enum STATES { START, INIT, INCREMENT, RESET, DECREMENT } state;
-	unsigned char holder = 0x00;
+#define A0 (~PINA & 0x01)
+#define A1 (~PINA & 0x02)
+
+enum STATES { START, INIT, INCREMENT, RESET, DECREMENT } state;
+unsigned char holder = 0x00;
 
 void tick() {
 switch(state) {
@@ -21,11 +24,11 @@ case START:
 state = INIT;
 break;
 case INIT:
-if ((~PINA) == 0) {
+if ((~PINA & 0x00) == 0) {
 state = RESET;
-} else if ((~PINA & 0x01) == 1) {
+} else if (A0) {
 state = INCREMENT;
-} else if ((~PINA & 0x02) == 2) {
+} else if (A1) {
 state = DECREMENT;
 } else {
 state = INIT;
@@ -50,17 +53,14 @@ break;
 case INCREMENT:
 if (holder < 9) {
 holder++;
-PORTC = holder;
 }
 break;
 case RESET:
 holder = 0;
-PORTC = holder;
 break;
 case DECREMENT:
 if (holder > 0) {
 holder--;
-PORTC = holder;
 }
 break;
 }
