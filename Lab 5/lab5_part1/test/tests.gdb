@@ -29,7 +29,7 @@ echo Running all tests..."\n\n
 # Example test:
 test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
 # Set inputs
-setPINA 0x00
+setPINA 0xFF
 setPINB 0x00
 # Continue for several ticks
 continue 2
@@ -40,79 +40,73 @@ checkResult
 
 # Add tests below
 test "PINA: 0X01 => PORTC: 0x60"
-setPINA 0x01
+setPINA 0xFE
 continue 5
 expectPORTC 0x60
 checkResult
 
 test "PINA: 0X02 => PORTC: 0x60"
-setPINA 0x02
+setPINA 0xFD
 continue 5
 expectPORTC 0x60
 checkResult
 
 test "PINA: 0X03 => PORTC: 0x70"
-setPINA 0x03
+setPINA 0xFC
 continue 5
 expectPORTC 0x70
 checkResult
 
 test "PINA: 0X04 => PORTC: 0x70"
-setPINA 0x04
+setPINA 0xFB
 continue 5
 expectPORTC 0x70
 checkResult
 
 test "PINA: 0X05 => PORTC: 0x38"
-setPINA 0x05
+setPINA 0xFA
 continue 5
 expectPORTC 0x38
 checkResult
 
 test "PINA: 0X06 => PORTC: 0x38"
-setPINA 0x06
+setPINA 0xF9
 continue 5
 expectPORTC 0x38
 checkResult
 
 test "PINA: 0X07 => PORTC: 0x3C"
-setPINA 0x07
+setPINA 0xF8
 continue 5
 expectPORTC 0x3C
 checkResult
 
 test "PINA: 0X08 => PORTC: 0x3C"
-setPINA 0x08
+setPINA 0xF7
 continue 5
 expectPORTC 0x3C
 checkResult
 
 test "PINA: 0X09 => PORTC: 0x3C"
-setPINA 0x09
+setPINA 0xF6
 continue 5
 expectPORTC 0x3C
 checkResult
 
 test "PINA: 0X0A => PORTC: 0x3E"
-setPINA 0x0A
+setPINA 0xF5
 continue 5
 expectPORTC 0x3E
 checkResult
 
 test "PINA: 0X0B => PORTC: 0x3E"
-setPINA 0x0B
+setPINA 0xF4
 continue 5
 expectPORTC 0x3E
 checkResult
 
 test "PINA: 0X0C => PORTC: 0x3E"
-setPINA 0x0C
-continue 5
-expectPORTC 0x3E
-checkResult
-
-test "PINA: 0X0D => PORTC: 0x3E"
-setPINA 0x0D
+setPINA 0xF3
 continue 5
 expectPORTC 0x3E
 checkResult
