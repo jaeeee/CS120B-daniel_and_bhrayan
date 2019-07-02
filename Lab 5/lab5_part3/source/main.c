@@ -104,7 +104,11 @@ void tick() {
   }
     break;
     case WAIT6:
+    if (!A0) {
     state = INIT;
+  } else {
+    state = WAIT6;
+  }
     break;
   }
   switch (state) { //actions
