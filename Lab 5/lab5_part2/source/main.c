@@ -70,7 +70,7 @@ case WAIT3:
 if (!A1 || !A0) {
   state = RESET;
 } else {
-  sttate = WAIT3;
+  state = WAIT3;
 }
 break;
 // case WAIT4:
