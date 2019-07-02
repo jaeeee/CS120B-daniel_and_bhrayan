@@ -59,19 +59,8 @@ set state = WAIT1
 setPINA 0x01
 continue 2
 expectPORTC 0x15
-expect state WAIT2
+expect state SET1
 checkResult
-
-test "PINA: 0xFE, PORTC: 0, state = WAIT1"
-set state = WAIT
-setPINA 0xFE
-continue 2
-setPINA 0xFE
-continue 2
-expectPORTC 0x15
-expect state WAIT2
-checkResult
-
 
 
 # Add tests below
