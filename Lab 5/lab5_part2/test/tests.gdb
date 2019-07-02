@@ -37,7 +37,7 @@ checkResult
 
 test "PINA: 0x00 => PORTC: 0, state = RESET"
 set state = START
-setPINA 0x00
+setPINA 0xFF
 continue 2
 expectPORTC 7
 expect state WAIT3
@@ -45,7 +45,7 @@ checkResult
 
 test "PINA: 0x02 => PORTC: 0, state = DECREMENT"
 set state = START
-setPINA 0x02
+setPINA 0xFD
 continue 2
 expectPORTC 7
 expect state WAIT2
@@ -53,9 +53,9 @@ checkResult
 
 test "PINA: 0x00, 0x00 => PORTC: 0, state = RESET"
 set state = START
-setPINA 0x00
+setPINA 0xFF
 continue 2
-setPINA 0x00
+setPINA 0xFF
 continue 2
 expectPORTC 7
 expect state WAIT3
@@ -63,9 +63,9 @@ checkResult
 
 test "PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"
 set state = START
-setPINA 0x00
+setPINA 0xFF
 continue 2
-setPINA 0x01
+setPINA 0xFE
 continue 2
 expectPORTC 7
 expect state WAIT1
