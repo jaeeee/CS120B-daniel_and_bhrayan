@@ -50,14 +50,17 @@ break;
 case INCREMENT:
 if (holder < 9) {
 holder++;
+PORTC = holder;
 }
 break;
 case RESET:
 holder = 0;
+PORTC = holder;
 break;
 case DECREMENT:
 if (holder > 0) {
 holder--;
+PORTC = holder;
 }
 break;
 }
