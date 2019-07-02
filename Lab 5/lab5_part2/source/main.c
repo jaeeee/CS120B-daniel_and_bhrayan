@@ -70,9 +70,9 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 state = START;
-holder = 7;
+// holder = 7;
     while (1) {
-//	holder = 7;
+	holder = 7;
 	tick();
 	PORTC = holder;
     }
