@@ -40,7 +40,7 @@ set state = START
 setPINA 0xFF
 continue 2
 expectPORTC 7
-expect state WAIT3
+expect state INIT
 checkResult
 
 test "PINA: 0x02 => PORTC: 0, state = DECREMENT"
@@ -58,7 +58,7 @@ continue 2
 setPINA 0xFF
 continue 2
 expectPORTC 7
-expect state WAIT3
+expect state INIT
 checkResult
 
 test "PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"
