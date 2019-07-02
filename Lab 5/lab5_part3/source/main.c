@@ -112,6 +112,7 @@ void tick() {
     case START:
     break;
     case INIT:
+    output = 0x00;
       break;
     case WAIT1:
       break;
