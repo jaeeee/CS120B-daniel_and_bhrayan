@@ -30,7 +30,7 @@ test "PINA: 0x01 => PORTC: 8, state = INCREMENT"
 set state = START
 setPINA 0x01
 continue 2
-expectPORTC 7
+expectPORTC 8
 expect state WAIT1
 checkResult
 
@@ -70,8 +70,6 @@ continue 2
 expectPORTC 1
 expect state WAIT1
 checkResult
-
-
 
 
 
