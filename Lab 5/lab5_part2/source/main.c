@@ -61,6 +61,7 @@ holder--;
 }
 break;
 }
+PORTC = holder;
 
 
 
@@ -74,7 +75,7 @@ holder = 7;
     while (1) {
 //	holder = 7;
 	tick();
-	PORTC = holder;
+	// PORTC = holder;
     }
     return 1;
 }
