@@ -70,6 +70,72 @@ expectPORTC 0x15
 expect state WAIT2
 checkResult
 
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = WAIT2
+setPINA 0x01
+continue 2
+expectPORTC 0x29
+expect state SET2
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = SET2
+setPINA 0xFE
+continue 2
+expectPORTC 0x29
+expect state WAIT3
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = WAIT3
+setPINA 0x01
+continue 2
+expectPORTC 0x33
+expect state SET3
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = SET3
+setPINA 0xFE
+continue 2
+expectPORTC 0x33
+expect state WAIT4
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = WAIT4
+setPINA 0x01
+continue 2
+expectPORTC 0x0C
+expect state SET4
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = SET4
+setPINA 0xFE
+continue 2
+expectPORTC 0x0C
+expect state WAIT5
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = WAIT5
+setPINA 0x01
+continue 2
+expectPORTC 0x2D
+expect state SET5
+checkResult
+
+test "PINA: 0xFE, PORTC: 0, state = SET1"
+set state = SET5
+setPINA 0xFE
+continue 2
+expectPORTC 0x2D
+expect state WAIT6
+checkResult
+
+
+
 
 
 
