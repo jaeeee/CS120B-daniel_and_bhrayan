@@ -58,7 +58,7 @@ test "PINA: 0xFE, PORTC: 0, state = SET1"
 set state = SET1
 setPINA 0xFE
 continue 2
-expectPORTC 0x15
+expectPORTC 0x00
 expect state WAIT2
 checkResult
 
@@ -68,7 +68,7 @@ setPINA 0xFE
 continue 2
 setPINA 0xFE
 continue 2
-expectPORTC 0x15
+expectPORTC 0x00
 expect state WAIT2
 checkResult
 
