@@ -28,7 +28,7 @@ echo Running all tests..."\n\n
 
 test "PINA: 0x01 => PORTC: 8, state = WAIT1"
 set state = START
-setPINA 0x01
+setPINA 0xFE
 continue 2
 expectPORTC 7
 expect state WAIT1
