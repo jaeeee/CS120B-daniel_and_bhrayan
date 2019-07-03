@@ -29,6 +29,13 @@ echo Running all tests..."\n\n
 test "TEST JUAN"
 set state = START
 setPINA 0xFF
+expectPORTC 1
+expect state LIGHT_1
+checkResult
+
+test "TEST JUAN"
+set state = START
+setPINA 0xFF
 continue 2
 expectPORTC 2
 expect state LIGHT_2
@@ -37,39 +44,11 @@ checkResult
 test "TEST JUAN"
 set state = START
 setPINA 0xFF
-continue 2
-expectPORTC 1
-continue 2
-expectPORTC 2
-expect state LIGHT_2
-checkResult
-
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
-continue 2
-expectPORTC 1
 continue 2
 expectPORTC 2
 continue 2
 expectPORTC 4
 expect state LIGHT_3
-checkResult
-
-test "TEST JUAN"
-set state = LIGHT_1
-setPINA 0xFF
-continue 2
-expectPORTC 2
-expect state LIGHT_2
-checkResult
-
-test "TEST JUAN"
-set state = LIGHT_3
-setPINA 0xFF
-continue 2
-expectPORTC 1
-expect state LIGHT_1
 checkResult
 
 # Add tests below
