@@ -47,15 +47,15 @@ set state = LIGHT_2
 setPINA  0xFE
 continue 1
 expect state PAUSE
-expectPORTC 0x04
+expectPORTC 0x02
 checkResult
 
 test " PINA : 0xFF, => PORTC= 0x01, state= LIGHT_2"
 set state = PAUSE
 setPINA  0xFF
 continue 1
-expect state LIGHT_3
-expectPORTC 0x04
+expect state LIGHT_2
+expectPORTC 0x02
 checkResult
 
 test " PINA : 0xFF, => PORTC= 0x04, state= LIGHT_3"
