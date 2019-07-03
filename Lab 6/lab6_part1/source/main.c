@@ -87,7 +87,7 @@ void tick() {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRB 0xFF;
+    DDRB = 0xFF;
     PORTB = 0x00;
     TimerSet(1000); //set timer here
     TimerOn(); //turn on timer
