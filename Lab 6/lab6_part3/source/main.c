@@ -139,7 +139,7 @@ int main(void) {
 DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 state = START;
 holder = 7;
-TimerSet(50); //set timer here
+TimerSet(300); //set timer here
 TimerOn(); //turn on timer
 state = START; //change to START state
     while (1) {
