@@ -1,0 +1,24 @@
+Breakpoint 1 at 0x37e: file source/main.c, line 145.
+Note: automatically using hardware breakpoints for read-only addresses.
+======================================================
+Running all tests..."
+
+"PINA: 0x01 => PORTC: 8, state = INCREMENT"...
+	Expected 8 
+	PORTC '0x800028:	0x07
+
+	Expected INCREMENT but got state:6"PINA: 0x00 => PORTC: 0, state = RESET"...
+	Expected 0 
+	PORTC '0x800028:	0x07
+
+	Expected RESET but got state:7"PINA: 0x02 => PORTC: 0, state = DECREMENT"...
+	Expected 0 
+	PORTC '0x800028:	0x07
+
+	Expected DECREMENT but got state:5"PINA: 0x00, 0x00 => PORTC: 0, state = RESET"...
+	Expected RESET but got state:1"PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"...
+	Expected 1 
+	PORTC '0x800028:	0x00
+
+	Expected INCREMENT but got state:1======================================================
+Quitting: Remote doesn't know how to detach
