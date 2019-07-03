@@ -51,7 +51,7 @@
  	_avr_timer_M = M;
  	_avr_timer_cntcurr = _avr_timer_M;
  }
- 
+
 #define A0 (~PINA & 0x01)
 #define A1 (~PINA & 0x02)
 
@@ -139,6 +139,9 @@ int main(void) {
 DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 state = START;
 holder = 7;
+TimerSet(50); //set timer here
+TimerOn(); //turn on timer
+state = START; //change to START state
     while (1) {
 //	holder = 7;
 	tick();
