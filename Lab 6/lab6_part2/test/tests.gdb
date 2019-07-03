@@ -1,4 +1,4 @@
-# Test file for lab4_part2
+# Test file for lab6_part2
 
 
 # commands.gdb provides the following functions for ease:
@@ -26,54 +26,17 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0x01 => PORTC: 8, state = INCREMENT"
-set state = START
-setPINA 0x01
-continue 2
-expectPORTC 8
-expect state INCREMENT
-checkResult
-
-
-test "PINA: 0x00 => PORTC: 0, state = RESET"
-set state = START
+# Example test:
+test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+# Set inputs
 setPINA 0x00
+setPINB 0x00
+# Continue for several ticks
 continue 2
+# Set expect values
 expectPORTC 0
-expect state RESET
+# Check pass/fail
 checkResult
-
-test "PINA: 0x02 => PORTC: 0, state = DECREMENT"
-set state = START
-setPINA 0x02
-continue 2
-expectPORTC 0
-expect state DECREMENT
-checkResult
-
-test "PINA: 0x00, 0x00 => PORTC: 0, state = RESET"
-set state = START
-setPINA 0x00
-continue 2
-setPINA 0x00
-continue 2
-expectPORTC 0
-expect state RESET
-checkResult
-
-test "PINA: 0x00, 001 => PORTC: 1, state = INCREMENT"
-set state = START
-setPINA 0x00
-continue 2
-setPINA 0x01
-continue 2
-expectPORTC 1
-expect state INCREMENT
-checkResult
-
-
-
-
 
 # Add tests below
 
