@@ -29,6 +29,7 @@ echo Running all tests..."\n\n
 test "TEST JUAN"
 set state = START
 setPINA 0xFF
+continue 2
 expectPORTC 1
 expect state LIGHT_1
 checkResult
