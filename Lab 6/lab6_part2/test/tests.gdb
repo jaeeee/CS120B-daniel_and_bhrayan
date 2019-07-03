@@ -4,7 +4,7 @@
 # commands.gdb provides the following functions for ease:
 #   test "<message>"
 #       Where <message> is the message to print. Must call this at the beginning of every test
-#       Example: test "PINA: 0x00 => expect PORTC: 0x01"
+#       Example: test "PINA: 0xFF => expect PORTC: 0x01"
 #   checkResult
 #       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
@@ -27,10 +27,10 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+test "PINA: 0xFF, PINB: 0xFF => PORTC: 0"
 # Set inputs
-setPINA 0x00
-setPINB 0x00
+setPINA 0xFF
+setPINB 0xFF
 # Continue for several ticks
 continue 2
 # Set expect values
@@ -40,17 +40,17 @@ checkResult
 
 # Add tests below
 
-test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_1"
+test " PINA : 0xFF, => PORTC= 0x01, state= LIGHT_1"
 set state = START
-setPINA  0x00
+setPINA  0xFF
 continue 1
 expect state LIGHT_1
 expectPORTC 0x01
 checkResult
 
-test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
+test " PINA : 0xFF, => PORTC= 0x01, state= LIGHT_2"
 set state = LIGHT_1
-setPINA  0x00
+setPINA  0xFF
 continue 1
 expect state LIGHT_2
 expectPORTC 0x02
@@ -64,17 +64,17 @@ expect state PAUSE
 expectPORTC 0x04
 checkResult
 
-test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
+test " PINA : 0xFF, => PORTC= 0x01, state= LIGHT_2"
 set state = PAUSE
-setPINA  0x00
+setPINA  0xFF
 continue 1
 expect state LIGHT_2
 expectPORTC 0x02
 checkResult
 
-test " PINA : 0x00, => PORTC= 0x04, state= LIGHT_3"
+test " PINA : 0xFF, => PORTC= 0x04, state= LIGHT_3"
 set state = LIGHT_2
-setPINA  0x00
+setPINA  0xFF
 continue 1
 expect state LIGHT_3
 expectPORTC 0x04
