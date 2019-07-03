@@ -14,6 +14,7 @@ Below are some notes for personal use
 * `avr-gcc -mmcu=atmega1284 -I/usr/csshare/pkgs/simavr/ -Iheader/ -D_SIMULATE_ -Wall -Wl,--undefined=_mmcu,--section-start=.mmcu=910000 -o build/objects/main.elf source/main.c` - compiles the source into main.elf file
 * `simavr -v -v -v -v -m atmega1284 -f 8000000 build/objects/main.elf` runs simulation
 * `gtkwave build/results/Lab2_introToAVR_trace.vcd` - runs waveform simulation
+* `avrdude -c atmelice_isp -p atmega1284 -U hfuse:w:0xD9:m` - disable JTAG
 
 # Tools Required
 * AVR-GCC compiler
