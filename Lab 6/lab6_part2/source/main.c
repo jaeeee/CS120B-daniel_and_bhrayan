@@ -78,6 +78,9 @@ void tick() {
       state = WAIT_1;
     }
     break;
+    case PAUSE_1:
+    state = LIGHT_3;
+    break;
     case LIGHT_2:
     if (button) {
       state = WAIT_1;
