@@ -97,11 +97,11 @@ int main(void) {
     /* Insert your solution below */
     while (1) {
       tick();
+            PORTC = output;
       while (!TimerFlag) {
 
       }
       TimerFlag = 0;
-      PORTC = output;
     }
     return 1;
 }
