@@ -88,13 +88,13 @@ void tick() {
     if (!button) {
     switch(FLAGERINO) {
       case 1:
-      state = LIGHT_1:
+      state = LIGHT_1;
       break;
       case 2:
-      state = LIGHT_2:
+      state = LIGHT_2;
       break;
       case 3:
-      state = LIGHT_3:
+      state = LIGHT_3;
       break;
     }
   } else {
