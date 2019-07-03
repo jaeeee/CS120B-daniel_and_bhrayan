@@ -102,7 +102,7 @@ void tick() {
   }
     break;
     default:
-    state = START:
+    state = START;
     break;
   }
   switch(state) {
@@ -124,7 +124,7 @@ void tick() {
     output = output;
     break;
     default:
-    state = START:
+    state = START;
     break;
   }
 }
