@@ -1,174 +1,155 @@
+/*	Author: dkwon014
+ *  Partner(s) Name: Bhrayan Escobar
+ *	Lab Section:
+ *	Assignment: Lab #6 Exercise #3
+ *	Exercise Description: [optional - include for your own benefit]
+ *
+ *	I acknowledge all content contained herein, excluding template or example
+ *	code, is my own original work.
+ */
+ #include <avr/io.h>
+ #include <avr/interrupt.h>
+ #ifdef _SIMULATE_
+ #include "simAVRHeader.h"
+ #endif
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
+ volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
 
-volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
+ // Internal variables for mapping AVR's ISR to our cleaner TimerISR model.
+ unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
+ unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
-enum State_Machine {initalize, LED_1, LED_2, LED_3, wait_release, button_press, stop, wait_release_2} LEDs;	//state machine to hold the LEDS
-unsigned char temp_b;		// global variable to hold the values of the pins on the ATMEL chip
-unsigned char temp_a;
+ void TimerOn() {
+   TCCR1B = 0x0B;
+   OCR1A = 125;
+   TIMSK1 = 0x02;
+   TCNT1 = 0;
+   _avr_timer_cntcurr = _avr_timer_M;
+   SREG |= 0x80;
+ }
 
-// Internal variables for mapping AVR's ISR to our cleaner TimerISR model.
-unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
-unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
+ void TimerOff() {
+   TCCR1B = 0x00;
+ }
 
-void TimerOn() {
-	// AVR timer/counter controller register TCCR1
-	TCCR1B = 0x0B;// bit3 = 0: CTC mode (clear timer on compare)
-	// bit2bit1bit0=011: pre-scaler /64
-	// 00001011: 0x0B
-	// SO, 8 MHz clock or 8,000,000 /64 = 125,000 ticks/s
-	// Thus, TCNT1 register will count at 125,000 ticks/s
+ void TimerISR() {
+   TimerFlag = 1;
+ }
 
-	// AVR output compare register OCR1A.
-	OCR1A = 125;	// Timer interrupt will be generated when TCNT1==OCR1A
-	// We want a 1 ms tick. 0.001 s * 125,000 ticks/s = 125
-	// So when TCNT1 register equals 125,
-	// 1 ms has passed. Thus, we compare to 125.
-	// AVR timer interrupt mask register
-	TIMSK1 = 0x02; // bit1: OCIE1A -- enables compare match interrupt
+ // In our approach, the C programmer does not touch this ISR, but rather TimerISR()
+ ISR(TIMER1_COMPA_vect) {
+ 	// CPU automatically calls when TCNT1 == OCR1 (every 1 ms per TimerOn settings)
+ 	_avr_timer_cntcurr--; // Count down to 0 rather than up to TOP
+ 	if (_avr_timer_cntcurr == 0) { // results in a more efficient compare
+ 		TimerISR(); // Call the ISR that the user uses
+ 		_avr_timer_cntcurr = _avr_timer_M;
+ 	}
+ }
 
-	//Initialize avr counter
-	TCNT1=0;
+ // Set TimerISR() to tick every M ms
+ void TimerSet(unsigned long M) {
+ 	_avr_timer_M = M;
+ 	_avr_timer_cntcurr = _avr_timer_M;
+ }
 
-	_avr_timer_cntcurr = _avr_timer_M;
-	// TimerISR will be called every _avr_timer_cntcurr milliseconds
+#define A0 (~PINA & 0x01)
+#define A1 (~PINA & 0x02)
 
-	//Enable global interrupts
-	SREG |= 0x80; // 0x80: 1000000
+enum STATES { START, INIT, INCREMENT, RESET, DECREMENT, WAIT1, WAIT2, WAIT3 } state;
+unsigned char holder = 0x00;
+
+void tick() {
+switch(state) {
+case START:
+state = INIT;
+break;
+case INIT:
+if (A1 && A0) {
+  state = WAIT3;
+}
+else if (A0) {
+  state = WAIT1;
+} else if (A1) {
+  state = WAIT2;
+} else {
+  state = INIT;
+}
+break;
+case INCREMENT:
+state = INIT;
+break;
+case RESET:
+state = INIT;
+break;
+case DECREMENT:
+state = INIT;
+break;
+case WAIT1:
+if (!A0) {
+  state = INCREMENT;
+} else {
+  state = WAIT1;
+}
+break;
+case WAIT2:
+if (!A1) {
+  state = DECREMENT;
+} else {
+  state = WAIT2;
+}
+break;
+case WAIT3:
+if ((A1) || (!A0)) {
+  state = RESET;
+} else {
+  state = WAIT3;
+}
+break;
 }
 
-void TimerOff() {
-	TCCR1B = 0x00; // bit3bit1bit0=000: timer off
+switch(state) {
+case START:
+break;
+case INIT:
+break;
+case INCREMENT:
+if (holder < 9) {
+holder++;
+}
+break;
+case RESET:
+holder = 0;
+break;
+case DECREMENT:
+if (holder > 0) {
+holder--;
+}
+break;
+case WAIT1:
+break;
+case WAIT2:
+break;
+case WAIT3:
+break;
+}
 }
 
-void TimerISR() {
-	TimerFlag = 1;
-}
+int main(void) {
+    /* Insert DDR and PORT initializations */
+DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
+state = START;
+holder = 7;
+TimerSet(300); //set timer here
+TimerOn(); //turn on timer
+state = START; //change to START state
+    while (1) {
+//	holder = 7;
+	tick();
+  while (!TimerFlag) {
 
-// In our approach, the C programmer does not touch this ISR, but rather TimerISR()
-ISR(TIMER1_COMPA_vect) {
-	// CPU automatically calls when TCNT1 == OCR1 (every 1 ms per TimerOn settings)
-	_avr_timer_cntcurr--; // Count down to 0 rather than up to TOP
-	if (_avr_timer_cntcurr == 0) { // results in a more efficient compare
-		TimerISR(); // Call the ISR that the user uses
-		_avr_timer_cntcurr = _avr_timer_M;
-	}
-}
-
-// Set TimerISR() to tick every M ms
-void TimerSet(unsigned long M) {
-	_avr_timer_M = M;
-	_avr_timer_cntcurr = _avr_timer_M;
-}
-void Tick_LEDS()
-{
-	temp_a = ~PINA & 0x01;
-	switch(LEDs)
-	{
-		// initalize case to ensure PORTB is zero
-		case initalize:
-		temp_b = 0x00;
-		temp_a = 0x00;
-		LEDs = LED_1;
-		break;
-
-		// case to set the first LED
-		case LED_1:
-		temp_b = 0x01;
-		if(temp_a == 0x01)
-		{
-			LEDs = button_press;
-		}
-		else
-		{
-			LEDs = LED_2;
-		}
-
-		break;
-
-		// case to set the second LED
-		case LED_2:
-		temp_b = 0x02;
-			if(temp_a == 0x01)
-			{
-				LEDs = button_press;
-			}
-			else
-			{
-				LEDs = LED_3;
-			}
-
-		break;
-
-		// case to set the third LED
-		case LED_3:
-		temp_b = 0x04;
-			if(temp_a == 0x01)
-			{
-				LEDs = button_press;
-			}
-			else
-			{
-				LEDs = LED_1;
-			}
-		break;
-
-		case button_press:
-			if(temp_a == 0x01)
-			{
-				LEDs = button_press;
-			}
-			else
-			{
-				LEDs = stop;
-			}
-		break;
-
-		case stop:
-			if(temp_a == 0x00)
-			{
-				LEDs = stop;
-			}
-			else
-			{
-				LEDs = wait_release_2;
-			}
-
-		case wait_release_2:
-		{
-			temp_b = temp_b;
-			if(temp_a == 0x01)
-			{
-				LEDs = wait_release_2;
-			}
-			else
-			{
-				LEDs = initalize;
-			}
-		}
-		default:
-		LEDs = initalize;
-		break;
-	}
-}
-
-int main(void)
-{
-	DDRC = 0xFF; // set port B to outputs
-	DDRA = 0x00; // set port A to outputs
-    PORTC = 0x00; // Init port B to 0s
-	PORTA = 0xFF; // Init port A to 1s
-
-	TimerSet(300);
-	TimerOn();
-	LEDs = initalize;
-	while (1)
-		{
-			Tick_LEDS();
-			PORTC = temp_b;
-			while(!TimerFlag);
-				TimerFlag = 0;
-
-		}
+  }
+  TimerFlag = 0;
+        PORTC = holder;
+    }
+    return 1;
 }
