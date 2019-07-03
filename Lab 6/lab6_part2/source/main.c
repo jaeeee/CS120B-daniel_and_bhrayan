@@ -123,7 +123,7 @@ void tick() {
     break;
     case LIGHT_3:
     output = 0x04;
-    save = 3'
+    save = 3;
     break;
     case WAIT:
     break;
