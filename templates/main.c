@@ -1,5 +1,5 @@
 // Project: $name
-// Author(s): $USER
+// Author(s): dkwon014
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"

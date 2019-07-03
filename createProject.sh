@@ -8,7 +8,7 @@ read -p 'Microcontroller [atmega1284]: ' mmcu
 read -p 'Clock Frequency [8000000]: ' freq
 echo "Creating project..."
 
-if [ -z $name ] 
+if [ -z $name ]
 then
     echo 'Must have a project name';
     exit 1;
@@ -31,9 +31,9 @@ echo "Creating project templates for source, tests, and Makefile..."
 # Create the main.c file
 touch $name/source/main.c
 cat > $name/source/main.c << EOF
-/*	Author: $USER
+/*	Author: dkwon014 (Daniel Kwong)
  *  Partner(s) Name: $partner
- *	Lab Section:
+ *	Lab Section: A21
  *	Assignment: Lab #  Exercise #
  *	Exercise Description: [optional - include for your own benefit]
  *
@@ -98,7 +98,7 @@ FILE mystdout = FDEV_SETUP_STREAM(uart_putchar,NULL,_FDEV_SETUP_WRITE);
 EOF
 
 # Create commands file for debugger
-cat $SCRIPTDIR/templates/commands.gdb > $name/test/commands.gdb 
+cat $SCRIPTDIR/templates/commands.gdb > $name/test/commands.gdb
 
 # Create init file for debugger (sets break point)
 cp $SCRIPTDIR/templates/initDebugger.gdb $name/test/initDebugger.gdb
