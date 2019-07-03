@@ -40,6 +40,44 @@ checkResult
 
 # Add tests below
 
+test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_1"
+set state = START
+setPINA  0x00
+continue 1
+expected state LIGHT_1
+expectedPORTC 0x01
+checkResult
+
+test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
+set state = LIGHT_1
+setPINA  0x00
+continue 1
+expected state LIGHT_2
+expectedPORTC 0x02
+checkResult
+
+test " PINA : 0x01, => PORTC= 0x01, state= PAUSE"
+set state = LIGHT_2
+setPINA  0x01
+continue 1
+expected state PAUSE
+expectedPORTC 0x04
+checkResult
+
+test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
+set state = PAUSE
+setPINA  0x00
+continue 1
+expected state LIGHT_2
+expectedPORTC 0x02
+
+test " PINA : 0x00, => PORTC= 0x04, state= LIGHT_3"
+set state = LIGHT_2
+setPINA  0x00
+continue 1
+expected state LIGHT_3
+expectedPORTC 0x04
+
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
