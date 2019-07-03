@@ -6,7 +6,7 @@
 #       Where <message> is the message to print. Must call this at the beginning of every test
 #       Example: test "PINA: 0x00 => expect PORTC: 0x01"
 #   checkResult
-#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly, 
+#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
 #   expectPORTx <val>
 #       With x as the port (A,B,C,D)
@@ -15,9 +15,9 @@
 #       With x as the port or pin (A,B,C,D)
 #       The value to set the pin to (can be decimal or hexidecimal
 #       Example: setPINA 0x01
-#   printPORTx f OR printPINx f 
+#   printPORTx f OR printPINx f
 #       With x as the port or pin (A,B,C,D)
-#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary 
+#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary
 #       Example: printPORTC d
 #   printDDRx
 #       With x as the DDR (A,B,C,D)
@@ -26,16 +26,50 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-# Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
-# Set inputs
-setPINA 0x00
-setPINB 0x00
-# Continue for several ticks
+test "TEST JUAN"
+set state = START
+setPINA 0xFF
 continue 2
-# Set expect values
-expectPORTC 0
-# Check pass/fail
+expectPORTC 1
+expect state LIGHT_1
+checkResult
+
+test "TEST JUAN"
+set state = START
+setPINA 0xFF
+continue 2
+expectPORTC 1
+continue 2
+expectPORTC 2
+expect state LIGHT_2
+checkResult
+
+test "TEST JUAN"
+set state = START
+setPINA 0xFF
+continue 2
+expectPORTC 1
+continue 2
+expectPORTC 2
+continue 2
+expectPORT 4
+expect state LIGHT_3
+checkResult
+
+test "TEST JUAN"
+set state = LIGHT_1
+setPINA 0xFF
+continue 2
+expectPORTC 2
+expect state LIGHT_2
+checkResult
+
+test "TEST JUAN"
+set state = LIGHT_3
+setPINA 0xFF
+continue 2
+expectPORTC 1
+expect state LIGHT_1
 checkResult
 
 # Add tests below
