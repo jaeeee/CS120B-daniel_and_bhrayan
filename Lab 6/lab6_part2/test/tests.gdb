@@ -6,7 +6,7 @@
 #       Where <message> is the message to print. Must call this at the beginning of every test
 #       Example: test "PINA: 0x00 => expect PORTC: 0x01"
 #   checkResult
-#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly, 
+#       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
 #   expectPORTx <val>
 #       With x as the port (A,B,C,D)
@@ -15,9 +15,9 @@
 #       With x as the port or pin (A,B,C,D)
 #       The value to set the pin to (can be decimal or hexidecimal
 #       Example: setPINA 0x01
-#   printPORTx f OR printPINx f 
+#   printPORTx f OR printPINx f
 #       With x as the port or pin (A,B,C,D)
-#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary 
+#       With f as a format option which can be: [d] decimal, [x] hexadecmial (default), [t] binary
 #       Example: printPORTC d
 #   printDDRx
 #       With x as the DDR (A,B,C,D)
@@ -44,40 +44,40 @@ test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_1"
 set state = START
 setPINA  0x00
 continue 1
-expected state LIGHT_1
-expectedPORTC 0x01
+expect state LIGHT_1
+expectPORTC 0x01
 checkResult
 
 test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
 set state = LIGHT_1
 setPINA  0x00
 continue 1
-expected state LIGHT_2
-expectedPORTC 0x02
+expect state LIGHT_2
+expectPORTC 0x02
 checkResult
 
 test " PINA : 0x01, => PORTC= 0x01, state= PAUSE"
 set state = LIGHT_2
 setPINA  0x01
 continue 1
-expected state PAUSE
-expectedPORTC 0x04
+expect state PAUSE
+expectPORTC 0x04
 checkResult
 
 test " PINA : 0x00, => PORTC= 0x01, state= LIGHT_2"
 set state = PAUSE
 setPINA  0x00
 continue 1
-expected state LIGHT_2
-expectedPORTC 0x02
+expect state LIGHT_2
+expectPORTC 0x02
 checkResult
 
 test " PINA : 0x00, => PORTC= 0x04, state= LIGHT_3"
 set state = LIGHT_2
 setPINA  0x00
 continue 1
-expected state LIGHT_3
-expectedPORTC 0x04
+expect state LIGHT_3
+expectPORTC 0x04
 checkResult
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
