@@ -101,6 +101,9 @@ void tick() {
     state = PAUSE;
   }
     break;
+    default:
+    state = START:
+    break;
   }
   switch(state) {
     case START:
@@ -116,6 +119,12 @@ void tick() {
     case LIGHT_3:
     output = 0x04;
       FLAGERINO = 3;
+    break;
+    case PAUSE:
+    output = output;
+    break;
+    default:
+    state = START:
     break;
   }
 }
