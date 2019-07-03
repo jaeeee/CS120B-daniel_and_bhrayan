@@ -135,7 +135,7 @@ int main(void) {
     PORTA = 0xFF;
     DDRC = 0xFF;
     PORTC = 0x00;
-    TimerSet(300); //set timer here
+    TimerSet(50); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
     // tick();
