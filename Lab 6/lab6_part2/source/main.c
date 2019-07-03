@@ -97,6 +97,7 @@ void tick() {
       state = LIGHT_3;
       break;
     }
+    FLAGERINO = 0;
   } else {
     state = PAUSE;
   }
