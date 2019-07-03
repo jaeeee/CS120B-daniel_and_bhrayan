@@ -15,15 +15,11 @@
 
 volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
 
-#define button (PINA && 0x01)
-
-unsigned char count;
-
 // Internal variables for mapping AVR's ISR to our cleaner TimerISR model.
 unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
 unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
-enum STATES { START, LIGHT_1, WAIT_1, PAUSE_1, LIGHT_2, LIGHT_3 } state;
+enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 unsigned char output = 0x00;
 
 void TimerOn() {
@@ -65,47 +61,20 @@ void tick() {
     state = LIGHT_1;
     break;
     case LIGHT_1:
-    if (button) {
-      state = WAIT_1;
-    } else {
     state = LIGHT_2;
-  }
-    break;
-    case WAIT_1:
-    if (!button) {
-      state = PAUSE_1;
-    } else {
-      state = WAIT_1;
-    }
-    break;
-    case PAUSE_1:
-    state = LIGHT_3;
     break;
     case LIGHT_2:
-    if (button) {
-      state = WAIT_1;
-    } else {
     state = LIGHT_3;
-  }
     break;
     case LIGHT_3:
-    if (button) {
-      state = WAIT_1;
-    } else {
     state = LIGHT_1;
     break;
-  }
   }
   switch(state) {
     case START:
     break;
     case LIGHT_1:
     output = 0x01;
-    break;
-    case WAIT_1:
-    break;
-    case PAUSE_1:
-    //keeps previous
     break;
     case LIGHT_2:
     output = 0x02;
@@ -118,8 +87,6 @@ void tick() {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0x00;
-    PORTA = 0xFF;
     DDRC = 0xFF;
     PORTC = 0x00;
     TimerSet(200); //set timer here
@@ -134,7 +101,7 @@ int main(void) {
 
       }
       TimerFlag = 0;
-      PORTC = output;
+            PORTC = output;
     }
     return 1;
 }
