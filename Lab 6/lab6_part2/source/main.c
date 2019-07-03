@@ -19,8 +19,11 @@ volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer
 unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
 unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
-enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
+#define button (~PINA & 0x01)
+
+enum STATES { START, LIGHT_1, WAIT, PAUSE, LIGHT_2, LIGHT_3 } state;
 unsigned char output = 0x00;
+unsigned char save = 0x00;
 
 void TimerOn() {
   TCCR1B = 0x0B;
@@ -61,7 +64,11 @@ void tick() {
     state = LIGHT_1;
     break;
     case LIGHT_1:
+    if (button) {
+      state = WAIT;
+    } else {
     state = LIGHT_2;
+    }
     break;
     case LIGHT_2:
     state = LIGHT_3;
@@ -69,18 +76,60 @@ void tick() {
     case LIGHT_3:
     state = LIGHT_1;
     break;
+    case WAIT:
+    if (!button) {
+      state = PAUSE;
+    } else {
+      state = WAIT;
+    }
+    break;
+    case PAUSE:
+    if (button) {
+      state = WAIT2;
+    } else {
+      state = PAUSE;
+    }
+    break;
+    case WAIT2:
+    if (!button) {
+      switch(save) {
+        case 1:
+        state = LIGHT_1;
+        break;
+        case 2:
+        state = LIGHT_2;
+        break;
+        case 3:
+        state = LIGHT_3;
+        break;
+          default:
+          state = LIGHT_1;
+      }
+    } else {
+      state = WAIT2;
+    }
+    break;
   }
   switch(state) {
     case START:
     break;
     case LIGHT_1:
     output = 0x01;
+    save = 1;
     break;
     case LIGHT_2:
     output = 0x02;
+    save = 2;
     break;
     case LIGHT_3:
     output = 0x04;
+    save = 3'
+    break;
+    case WAIT:
+    break;
+    case WAIT2:
+    break;
+    case PAUSE:
     break;
   }
 }
