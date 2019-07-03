@@ -52,7 +52,7 @@ expectPORTC 1
 continue 2
 expectPORTC 2
 continue 2
-expectPORT 4
+expectPORTC 4
 expect state LIGHT_3
 checkResult
 
