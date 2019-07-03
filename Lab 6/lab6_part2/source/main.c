@@ -21,7 +21,7 @@ unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
 #define button (~PINA & 0x01)
 
-enum STATES { START, LIGHT_1, WAIT, PAUSE, LIGHT_2, LIGHT_3 } state;
+enum STATES { START, LIGHT_1, WAIT, WAIT2, PAUSE, LIGHT_2, LIGHT_3 } state;
 unsigned char output = 0x00;
 unsigned char save = 0x00;
 
