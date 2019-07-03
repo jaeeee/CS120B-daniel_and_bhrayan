@@ -135,7 +135,7 @@ int main(void) {
     DDRA = 0x00;
     PORTA = 0xFF;
     DDRC = 0xFF;
-    PORTC = 0x00;
+    PORTB = 0x00;
     TimerSet(50); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
@@ -148,7 +148,7 @@ int main(void) {
 
       }
       TimerFlag = 0;
-            PORTC = output;
+            PORTB = output;
     }
     return 1;
 }

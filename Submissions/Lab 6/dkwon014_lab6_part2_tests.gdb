@@ -1,10 +1,10 @@
-# Test file for lab6_part1
+# Test file for lab6_part2
 
 
 # commands.gdb provides the following functions for ease:
 #   test "<message>"
 #       Where <message> is the message to print. Must call this at the beginning of every test
-#       Example: test "PINA: 0x00 => expect PORTB: 0x01"
+#       Example: test "PINA: 0xFF => expect PORTB: 0x01"
 #   checkResult
 #       Verify if the test passed or failed. Prints "passed." or "failed." accordingly,
 #       Must call this at the end of every test.
@@ -26,64 +26,45 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "TEST JUAN"
+test " PINA : 0xFF, => PORTB= 0x01, state= LIGHT_1"
 set state = START
-setPINA 0xFF
+setPINA  0xFF
 continue 1
-expectPORTB 1
 expect state LIGHT_1
+expectPORTB 0x01
 checkResult
 
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
+test " PINA : 0xFF, => PORTB= 0x01, state= LIGHT_2"
+set state = LIGHT_1
+setPINA  0xFF
 continue 1
-expectPORTB 1
-expect state LIGHT_1
-continue 1
-expectPORTB 2
 expect state LIGHT_2
+expectPORTB 0x02
 checkResult
 
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
+test " PINA : 0x01, => PORTB= 0x01, state= PAUSE"
+set state = LIGHT_2
+setPINA  0xFE
 continue 1
-expectPORTB 1
-expect state LIGHT_1
-continue 2
-expectPORTB 4
+expect state PAUSE
+expectPORTB 0x02
+checkResult
+
+test " PINA : 0xFF, => PORTB= 0x01, state= LIGHT_2"
+set state = PAUSE
+setPINA  0xFF
+continue 1
+expect state LIGHT_2
+expectPORTB 0x02
+checkResult
+
+test " PINA : 0xFF, => PORTB= 0x04, state= LIGHT_3"
+set state = LIGHT_2
+setPINA  0xFF
+continue 1
 expect state LIGHT_3
+expectPORTB 0x04
 checkResult
-
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
-continue 1
-expectPORTB 1
-expect state LIGHT_1
-checkResult
-
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
-continue 2
-expectPORTB 2
-expect state LIGHT_2
-checkResult
-
-test "TEST JUAN"
-set state = START
-setPINA 0xFF
-continue 2
-expectPORTB 2
-continue 2
-expectPORTB 1
-expect state LIGHT_1
-checkResult
-
-# Add tests below
-
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
