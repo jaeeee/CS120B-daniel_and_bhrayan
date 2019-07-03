@@ -89,7 +89,7 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     DDRC = 0xFF;
     PORTC = 0x00;
-    TimerSet(1000); //set timer here
+    TimerSet(250); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
     // tick();
@@ -97,11 +97,11 @@ int main(void) {
     /* Insert your solution below */
     while (1) {
       tick();
-            PORTC = output;
       while (!TimerFlag) {
 
       }
       TimerFlag = 0;
+            PORTC = output;
     }
     return 1;
 }
