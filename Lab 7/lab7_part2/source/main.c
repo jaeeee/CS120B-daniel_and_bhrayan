@@ -71,6 +71,7 @@ void tick() {
     } else {
     state = LIGHT_2;
   }
+// }
     break;
     case LIGHT_2:
     if (button) {
@@ -78,6 +79,9 @@ void tick() {
     } else {
     state = LIGHT_3;
   }
+  // if (score > 0) {
+  // score--;
+// }
     break;
     case LIGHT_3:
     if (button) {
@@ -85,23 +89,30 @@ void tick() {
     } else {
     state = LIGHT_1;
   }
+  // if (score > 0) {
+  // score--;
+// }
     break;
     case PAUSE:
     if (!button) {
     switch(FLAGERINO) {
       case 1:
       state = LIGHT_1;
+      score++;
       break;
       case 2:
       state = LIGHT_2;
+      score++;
       break;
       case 3:
       state = LIGHT_3;
+      score++;
       break;
     }
     FLAGERINO = 0;
   } else {
     state = PAUSE;
+    // score--;
   }
     break;
     default:
@@ -110,27 +121,35 @@ void tick() {
   }
   switch(state) {
     case START:
+    if (score > 0) {
+    score--;
+  }
     break;
     case LIGHT_1:
     output = 0x01;
     FLAGERINO = 1;
+    // score++;
     break;
     case LIGHT_2:
     output = 0x02;
       FLAGERINO = 2;
+      // score++;
     break;
     case LIGHT_3:
     output = 0x04;
       FLAGERINO = 3;
+      // score++;
     break;
     case PAUSE:
     output = output;
     break;
     default:
     state = START;
+    // score--;
     break;
   }
 }
+
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0x00;
@@ -150,10 +169,9 @@ int main(void) {
     /* Insert your solution below */
     score = 5;
     while (1) {
-                                  // PORTC = output;
+    LCD_ClearScreen();                              // PORTC = output;
       tick();
 
-LCD_ClearScreen();
                   if (score >= 9) {
                     LCD_DisplayString(1, "YOU WON (VICTORY)!");
                     // return;
@@ -165,7 +183,7 @@ LCD_ClearScreen();
 
       }
       TimerFlag = 0;
-      PORTC = output;
+      // PORTC = output;
     }
     return 1;
 }
