@@ -149,7 +149,7 @@ int main(void) {
     while (1) {
       tick();
             PORTC = output;
-            LCD_WriteData(9);
+            LCD_WriteData(9 + '0');
             // LCD_DisplayString(1, "hi");
             while (!TimerFlag) {
 
