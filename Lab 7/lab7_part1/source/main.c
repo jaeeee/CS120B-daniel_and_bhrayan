@@ -73,9 +73,9 @@ if (A1 && A0) {
   state = WAIT3;
 }
 else if (A0) {
-  state = WAIT1;
+  state = INCREMENT;
 } else if (A1) {
-  state = WAIT2;
+  state = DECREMENT;
 // } else if (A1 && A0) {
 //   state = WAIT3;
 } else {
