@@ -71,6 +71,7 @@ void tick() {
     } else {
     state = LIGHT_2;
   }
+  score--;
     break;
     case LIGHT_2:
     if (button) {
@@ -78,6 +79,7 @@ void tick() {
     } else {
     state = LIGHT_3;
   }
+    score--;
     break;
     case LIGHT_3:
     if (button) {
@@ -85,6 +87,7 @@ void tick() {
     } else {
     state = LIGHT_1;
   }
+    score--;
     break;
     case PAUSE:
     if (!button) {
@@ -105,7 +108,7 @@ void tick() {
     FLAGERINO = 0;
   } else {
     state = PAUSE;
-    score--;
+    // score--;
   }
     break;
     default:
@@ -135,7 +138,7 @@ void tick() {
     break;
     default:
     state = START;
-    score--;
+    // score--;
     break;
   }
 }
