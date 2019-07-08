@@ -168,6 +168,8 @@ LCD_ClearScreen();
                   PORTC = output;
                   if (score >= 9) {
                     LCD_DisplayString(1, "YOU WON (VICTORY)!");
+                    // return;
+                    break;
                   } else {
             LCD_WriteData(score + '0');
           }
