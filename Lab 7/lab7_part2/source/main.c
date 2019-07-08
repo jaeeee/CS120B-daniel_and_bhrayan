@@ -71,7 +71,7 @@ void tick() {
     } else {
     state = LIGHT_2;
   }
-  if (score >= 0) {
+  if (score > 0) {
   score--;
 }
     break;
@@ -81,7 +81,7 @@ void tick() {
     } else {
     state = LIGHT_3;
   }
-  if (score >= 0) {
+  if (score > 0) {
   score--;
 }
     break;
@@ -91,7 +91,7 @@ void tick() {
     } else {
     state = LIGHT_1;
   }
-  if (score >= 0) {
+  if (score > 0) {
   score--;
 }
     break;
