@@ -135,6 +135,7 @@ void tick() {
     break;
     default:
     state = START;
+    count--;
     break;
   }
 }
@@ -162,7 +163,11 @@ int main(void) {
 
 LCD_ClearScreen();
                   PORTC = output;
+                  if (score >= 9) {
+                    LCD_DisplayString(1, "YOU WON (VICTORY)!");
+                  } else {
             LCD_WriteData(score + '0');
+          }
       while (!TimerFlag) {
 
       }
