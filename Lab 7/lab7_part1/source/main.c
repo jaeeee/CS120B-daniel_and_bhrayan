@@ -166,8 +166,8 @@ int main(void) {
     PORTC = 0x00;
     DDRD = 0xFF;
     PORTD = 0x00;
-    TimerSet(50); //set timer here
-    TimerOn(); //turn on timer
+    // TimerSet(50); //set timer here
+    // TimerOn(); //turn on timer
     state = START; //change to START state
     // tick();
     // whil
@@ -177,12 +177,12 @@ int main(void) {
                   LCD_Cursor(1);
       tick();
             PORTC = holder;
-            holder++;
+            // holder++;
             LCD_WriteData(holder + '0');
             // LCD_DisplayString(1, "hi");
-            while (!TimerFlag) {
-            }
-            TimerFlag = 0;
+            // while (!TimerFlag) {
+            // }
+            // TimerFlag = 0;
     }
     // return 1;
 }
