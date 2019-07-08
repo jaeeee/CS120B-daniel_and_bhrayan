@@ -71,7 +71,9 @@ void tick() {
     } else {
     state = LIGHT_2;
   }
+  if (score >= 0) {
   score--;
+}
     break;
     case LIGHT_2:
     if (button) {
@@ -79,7 +81,9 @@ void tick() {
     } else {
     state = LIGHT_3;
   }
-    score--;
+  if (score >= 0) {
+  score--;
+}
     break;
     case LIGHT_3:
     if (button) {
@@ -87,7 +91,9 @@ void tick() {
     } else {
     state = LIGHT_1;
   }
-    score--;
+  if (score >= 0) {
+  score--;
+}
     break;
     case PAUSE:
     if (!button) {
