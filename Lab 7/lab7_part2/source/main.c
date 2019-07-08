@@ -135,7 +135,7 @@ void tick() {
     break;
     default:
     state = START;
-    count--;
+    score--;
     break;
   }
 }
