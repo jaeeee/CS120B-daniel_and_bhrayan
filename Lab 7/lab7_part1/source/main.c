@@ -1,44 +1,30 @@
 /*	Author: dkwon014
  *  Partner(s) Name: Bhrayan Escobar
  *	Lab Section:
- *	Assignment: Lab #5 Exercise #2
+ *	Assignment: Lab #6 Exercise #2
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
 #include <avr/io.h>
-#ifdef _SIMULATE_
+#include <avr/interrupt.h>
 #include "io.h"
-// #include "io.c"
+#ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-
-// int main(void) {
-//   DDRC = 0xFF; PORTC = 0x00;
-//   DDRD = 0xFF; PORTD = 0x00;
-//
-//   LCD_init();
-//   LCD_DisplayString(1, "Hello World");
-//   while(1) {
-//     continue;
-//   }
-// }
-
-
-#define A0 (~PINA & 0x01)
-#define A1 (~PINA & 0x02)
-
-// enum STATES { START, INIT, INCREMENT, RESET, DECREMENT, WAIT1, WAIT2, WAIT3 } state;
-// unsigned char holder = 0x00;
-// unsigned char count;
-
 
 volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
 
 // Internal variables for mapping AVR's ISR to our cleaner TimerISR model.
 unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
 unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
+
+enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3, PAUSE } state;
+unsigned char output = 0x00;
+unsigned char FLAGERINO;
+
+#define button (~PINA & 0x01)
 
 void TimerOn() {
   TCCR1B = 0x0B;
@@ -73,197 +59,99 @@ void TimerSet(unsigned long M) {
 	_avr_timer_cntcurr = _avr_timer_M;
 }
 
-// void tick() {
-// switch(state) {
-// case START:
-// state = INIT;
-// break;
-// case INIT:
-// if (A1 && A0) {
-//   state = WAIT3;
-// }
-// else if (A0) {
-//   state = WAIT1;
-// } else if (A1) {
-//   state = WAIT2;
-// } else {
-//   state = INIT;
-// }
-// break;
-// case INCREMENT:
-// state = INIT;
-// break;
-// case RESET:
-// state = INIT;
-// break;
-// case DECREMENT:
-// state = INIT;
-// break;
-// case WAIT1:
-// if (!A0) {
-//   state = INCREMENT;
-// } else {
-//   state = WAIT1;
-// }
-// break;
-// case WAIT2:
-// if (!A1) {
-//   state = DECREMENT;
-// } else {
-//   state = WAIT2;
-// }
-// break;
-// case WAIT3:
-// if ((A1) || (!A0)) {
-//   state = RESET;
-// } else {
-//   state = WAIT3;
-// }
-// break;
-// }
-//
-// switch(state) {
-// case START:
-// break;
-// case INIT:
-// break;
-// case INCREMENT:
-// if (holder < 9) {
-// holder++;
-// }
-// break;
-// case RESET:
-// holder = 0;
-// break;
-// case DECREMENT:
-// if (holder > 0) {
-// holder--;
-// }
-// break;
-// case WAIT1:
-// break;
-// case WAIT2:
-// break;
-// case WAIT3:
-// break;
-// // case WAIT4:
-// // break;
-// }
-// // PORTC = holder;
-// }
-//
-// int main(void) {
-//     /* Insert DDR and PORT initializations */
-// DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
-// DDRD = 0xFF; PORTD = 0x00;
-// // TimerSet(1000);
-// // TimerOn();
-// LCD_init();
-// LCD_ClearScreen();
-// state = START;
-// holder = 0;
-//     while (1) {
-//     LCD_Cursor(1);
-// 	tick();
-//   // PORTC = holder;
-//   // LCD_DisplayString(1, "TESTING");
-//   LCD_WriteData(holder + '0');
-//   // LCD_DisplayString(1, "HELLO!!!!!!!");
-//   while(!TimerFlag) {}
-//   TimerFlag = 0;
-//     }
-//     return 1;
-// }
-
-
-enum States {start, wait, increment, decrement, reset} state;
-
-unsigned char buttonA0;
-unsigned char buttonA1;
-unsigned char count;
-
-void Tick() {
-	buttonA0 = (~PINA & 0x01);
-	buttonA1 = (~PINA & 0x02);
-
-	switch (state) {
-		case start:
-		state = wait;
-		break;
-		case wait:
-		if(buttonA0 && !buttonA1) {
-			state = increment;
-			} else if(!buttonA0 && buttonA1) {
-			state = decrement;
-			} else if(buttonA0 && buttonA1) {
-			state = reset;
-		} else
-		state = wait;
-		break;
-		case increment:
-		if(buttonA0 && !buttonA1) {
-			state = increment;
-			} else if(buttonA0 && buttonA1) {
-			state = reset;
-		} else
-		state = wait;
-		break;
-		case decrement:
-		if(!buttonA0 && buttonA1) {
-			state = decrement;
-			} else if(buttonA0 && buttonA1) {
-			state = reset;
-		} else
-		state = wait;
-		break;
-		case reset:
-		state = (buttonA0 && buttonA1) ? reset : wait;
-		break;
-		default:
-		state = start;
-		break;
-	}
-	switch (state) { // State actions
-		case wait:
-		break;
-		case increment:
-		if(count < 9)
-		++count;
-		break;
-		case decrement:
-		if(count > 0)
-		--count;
-		break;
-		case reset:
-		count = 0;
-		break;
-		default:
-		state = start;
-		break;
-
-	}
+void tick() {
+  switch(state) {
+    case START:
+    state = LIGHT_1;
+    break;
+    case LIGHT_1:
+    if (button) {
+      state = PAUSE;
+    } else {
+    state = LIGHT_2;
+  }
+    break;
+    case LIGHT_2:
+    if (button) {
+      state = PAUSE;
+    } else {
+    state = LIGHT_3;
+  }
+    break;
+    case LIGHT_3:
+    if (button) {
+      state = PAUSE;
+    } else {
+    state = LIGHT_1;
+  }
+    break;
+    case PAUSE:
+    if (!button) {
+    switch(FLAGERINO) {
+      case 1:
+      state = LIGHT_1;
+      break;
+      case 2:
+      state = LIGHT_2;
+      break;
+      case 3:
+      state = LIGHT_3;
+      break;
+    }
+    FLAGERINO = 0;
+  } else {
+    state = PAUSE;
+  }
+    break;
+    default:
+    state = START;
+    break;
+  }
+  switch(state) {
+    case START:
+    break;
+    case LIGHT_1:
+    output = 0x01;
+    FLAGERINO = 1;
+    break;
+    case LIGHT_2:
+    output = 0x02;
+      FLAGERINO = 2;
+    break;
+    case LIGHT_3:
+    output = 0x04;
+      FLAGERINO = 3;
+    break;
+    case PAUSE:
+    output = output;
+    break;
+    default:
+    state = START;
+    break;
+  }
 }
 
 int main(void) {
-	DDRA = 0x00; PORTA = 0xFF; // A input
-	DDRC = 0xFF; PORTC = 0x00; // LCD data lines
-	DDRD = 0xFF; PORTD = 0x00; // LCD control lines
+    /* Insert DDR and PORT initializations */
+    DDRA = 0x00;
+    PORTA = 0xFF;
+    DDRC = 0xFF;
+    PORTC = 0x00;
+    TimerSet(50); //set timer here
+    TimerOn(); //turn on timer
+    state = START; //change to START state
+    // tick();
+    // whil
+    LCD_init();
+    /* Insert your solution below */
+    while (1) {
+      tick();
+            PORTC = output;
+            LCD_WriteData(9);
+            while (!TimerFlag) {
 
-	TimerSet(1000);
-	TimerOn();
-
-	// Initializes the LCD display
-	LCD_init();
-	LCD_ClearScreen();
-
-	state = start;
-	count = 0x00;
-
-	while(1){
-		LCD_Cursor(1);
-		Tick();
-		LCD_WriteData(count + '0');
-		while(!TimerFlag){}
-		TimerFlag = 0;
-	}
+            }
+            TimerFlag = 0;
+    }
+    return 1;
 }
