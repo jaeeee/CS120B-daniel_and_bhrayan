@@ -167,6 +167,7 @@ holder = 0;
 	tick();
   // LCD_DisplayString(1, "TESTING");
   LCD_WriteData(holder + '0');
+  LCD_DisplayString(1, "HELLO!!!!!!!");
   while(!TimerFlag) {}
   TimerFlag = 0;
     }
