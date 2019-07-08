@@ -165,6 +165,7 @@ holder = 0;
     while (1) {
     LCD_Cursor(1);
 	tick();
+  PORTC = holder;
   // LCD_DisplayString(1, "TESTING");
   LCD_WriteData(holder + '0');
   // LCD_DisplayString(1, "HELLO!!!!!!!");
