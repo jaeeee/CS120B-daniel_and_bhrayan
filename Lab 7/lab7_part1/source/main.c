@@ -28,9 +28,9 @@
 
 #define A0 (~PINA & 0x01)
 #define A1 (~PINA & 0x02)
-
-enum STATES { START, INIT, INCREMENT, RESET, DECREMENT, WAIT1, WAIT2, WAIT3 } state;
-unsigned char holder = 0x00;
+// 
+// enum STATES { START, INIT, INCREMENT, RESET, DECREMENT, WAIT1, WAIT2, WAIT3 } state;
+// unsigned char holder = 0x00;
 // unsigned char count;
 
 
