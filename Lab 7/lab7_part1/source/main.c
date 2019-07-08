@@ -177,6 +177,7 @@ int main(void) {
                   LCD_Cursor(1);
       tick();
             PORTC = holder;
+            holder++;
             LCD_WriteData(holder + '0');
             // LCD_DisplayString(1, "hi");
             while (!TimerFlag) {
