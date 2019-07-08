@@ -156,8 +156,8 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 DDRD = 0xFF; PORTD = 0x00;
-TimerSet(1000);
-TimerOn();
+// TimerSet(1000);
+// TimerOn();
 LCD_init();
 LCD_ClearScreen();
 state = START;
