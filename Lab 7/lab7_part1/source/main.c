@@ -174,15 +174,14 @@ int main(void) {
     LCD_init();
     /* Insert your solution below */
     while (1) {
+                  LCD_Cursor(1);
       tick();
             PORTC = holder;
-
             LCD_WriteData(holder + '0');
             // LCD_DisplayString(1, "hi");
             while (!TimerFlag) {
-
             }
             TimerFlag = 0;
     }
-    return 1;
+    // return 1;
 }
