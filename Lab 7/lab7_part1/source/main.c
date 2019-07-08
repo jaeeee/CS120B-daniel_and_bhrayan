@@ -174,7 +174,7 @@ int main(void) {
     LCD_init();
     /* Insert your solution below */
     while (1) {
-                  LCD_Cursor(1);
+                  // LCD_Cursor(1);
       tick();
             PORTC = holder;
             // holder++;
