@@ -156,8 +156,8 @@ int main(void) {
     PORTA = 0xFF;
     DDRC = 0xFF;
     PORTC = 0x00;
-    DDRD = 0xFF;
-    PORTD = 0x00;
+    // DDRD = 0xFF;
+    // PORTD = 0x00;
     state = START;
     TimerSet(50);
     TimerOn();
