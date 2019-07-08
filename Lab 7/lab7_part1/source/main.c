@@ -166,7 +166,7 @@ holder = 7;
     LCD_Cursor(1);
 	tick();
 	// PORTC = holder;
-  LCD_WriteString(1, "TESTING");
+  LCD_DisplayString(1, "TESTING");
   LCD_WriteData(holder + '0');
   while(!TimerFlag) {}
   TimerFlag = 0;
