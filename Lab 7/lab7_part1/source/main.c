@@ -173,6 +173,7 @@ int main(void) {
     // whil
     LCD_init();
     /* Insert your solution below */
+    LCD_Cursor(1);
     while (1) {
                   // LCD_Cursor(1);
       tick();
