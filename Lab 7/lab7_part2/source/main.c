@@ -175,7 +175,7 @@ LCD_ClearScreen();
                   if (score >= 9) {
                     LCD_DisplayString(1, "YOU WON (VICTORY)!");
                     // return;
-                    break;
+                    // break;
                   } else {
             LCD_WriteData(score + '0');
           }
