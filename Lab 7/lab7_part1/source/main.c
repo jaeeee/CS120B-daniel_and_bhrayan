@@ -161,7 +161,7 @@ TimerOn();
 LCD_init();
 LCD_ClearScreen();
 state = START;
-// holder = 0;
+holder = 10000;
     while (1) {
     LCD_Cursor(1);
 	tick();
