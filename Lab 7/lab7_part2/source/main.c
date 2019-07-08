@@ -90,17 +90,21 @@ void tick() {
     switch(FLAGERINO) {
       case 1:
       state = LIGHT_1;
+      score++;
       break;
       case 2:
       state = LIGHT_2;
+      score++;
       break;
       case 3:
       state = LIGHT_3;
+      score++;
       break;
     }
     FLAGERINO = 0;
   } else {
     state = PAUSE;
+    score--;
   }
     break;
     default:
@@ -113,17 +117,17 @@ void tick() {
     case LIGHT_1:
     output = 0x01;
     FLAGERINO = 1;
-    score++;
+    // score++;
     break;
     case LIGHT_2:
     output = 0x02;
       FLAGERINO = 2;
-      score++;
+      // score++;
     break;
     case LIGHT_3:
     output = 0x04;
       FLAGERINO = 3;
-      score++;
+      // score++;
     break;
     case PAUSE:
     output = output;
