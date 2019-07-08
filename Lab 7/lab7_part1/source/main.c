@@ -176,6 +176,7 @@ int main(void) {
     LCD_Cursor(1);
     while (1) {
                   // LCD_Cursor(1);
+                  LCD_ClearScreen();
       tick();
             PORTC = holder;
             // holder++;
