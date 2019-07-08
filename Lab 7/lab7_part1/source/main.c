@@ -20,6 +20,8 @@
 
 enum STATES { START, INIT, INCREMENT, RESET, DECREMENT, WAIT1, WAIT2, WAIT3 } state;
 unsigned char holder = 0x00;
+// unsigned char count;
+
 
 volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
 
@@ -153,8 +155,8 @@ holder = 7;
     while (1) {
     LCD_Cursor(1);
 	tick();
-	PORTC = holder;
-  LCD_WriteData(count + '0');
+	// PORTC = holder;
+  LCD_WriteData(holder + '0');
   while(!TimerFlag) {}
   TimerFlag = 0;
     }
