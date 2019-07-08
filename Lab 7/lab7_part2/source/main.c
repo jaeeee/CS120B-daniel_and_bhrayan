@@ -169,6 +169,7 @@ int main(void) {
     /* Insert your solution below */
     score = 5;
     while (1) {
+                                  PORTC = output;
       tick();
 
 LCD_ClearScreen();
@@ -179,7 +180,6 @@ LCD_ClearScreen();
                   } else {
             LCD_WriteData(score + '0');
           }
-                            PORTC = output;
       while (!TimerFlag) {
 
       }
