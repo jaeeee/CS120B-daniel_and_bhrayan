@@ -158,20 +158,15 @@ int main(void) {
     PORTC = 0x00;
     DDRD = 0xFF;
     PORTD = 0x00;
-        state = START; //change to START state
-    TimerSet(50); //set timer here
-    TimerOn(); //turn on timer
-    // tick();
-    // whil
+    state = START;
+    TimerSet(50);
+    TimerOn();
     LCD_init();
-    /* Insert your solution below */
     LCD_Cursor(1);
-    /* Insert your solution below */
     score = 5;
     while (1) {
-    LCD_ClearScreen();                              // PORTC = output;
+    LCD_ClearScreen();
       tick();
-
                   if (score >= 9) {
                     LCD_DisplayString(1, "YOU WON (VICTORY)!");
                     // return;
@@ -183,7 +178,7 @@ int main(void) {
 
       }
       TimerFlag = 0;
-      PORTC = output;
+      // PORTC = output;
     }
     return 1;
 }
