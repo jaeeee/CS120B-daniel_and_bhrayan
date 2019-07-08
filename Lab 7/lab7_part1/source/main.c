@@ -156,8 +156,8 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
 DDRD = 0xFF; PORTD = 0x00;
-// TimerSet(1000);
-// TimerOn();
+TimerSet(1000);
+TimerOn();
 LCD_init();
 LCD_ClearScreen();
 state = START;
@@ -165,7 +165,7 @@ holder = 0;
     while (1) {
     LCD_Cursor(1);
 	tick();
-  PORTC = holder;
+  // PORTC = holder;
   // LCD_DisplayString(1, "TESTING");
   LCD_WriteData(holder + '0');
   // LCD_DisplayString(1, "HELLO!!!!!!!");
