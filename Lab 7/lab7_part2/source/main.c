@@ -109,7 +109,7 @@ void tick() {
       score++;
       break;
     }
-    score--;
+    // score--;
     FLAGERINO = 0;
   } else {
     state = PAUSE;
@@ -117,6 +117,7 @@ void tick() {
   }
     break;
     default:
+    score--;
     state = START;
     break;
   }
