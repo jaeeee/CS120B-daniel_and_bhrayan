@@ -9,6 +9,7 @@
  */
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "io.h"
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
@@ -155,6 +156,7 @@ int main(void) {
     /* Insert your solution below */
     LCD_Cursor(1);
     /* Insert your solution below */
+    score = 5;
     while (1) {
       tick();
 
