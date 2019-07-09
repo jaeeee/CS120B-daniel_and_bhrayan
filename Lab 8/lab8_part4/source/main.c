@@ -34,20 +34,20 @@ while(1) {
   if (x <= 0) {
     output = 0x00;
   } else if (x >= max) {
-    output = 0x80;
+    output = 0xFF;
   } else if (x >= 175) {
-    output = 0x40;
+    output = 0x7F;
   } else if (x >= 150) {
-    output = 0x20;
+    output = 0x3F;
   } else if (x >= 125) {
-    output = 0x10;
+    output = 0x1F;
   } else if (x >= 100) {
-    output = 0x08;
+    output = 0x0F;
   } else if (x >= 75) {
-    output = 0x04;
+    output = 0x07;
   } else if (x >= 50) {
-    output = 0x02;
-  } else if (x >= 50) {
+    output = 0x03;
+  } else if (x < 50) {
     output = 0x01;
   }
   PORTB = output;
