@@ -91,6 +91,7 @@ void tick() {
 			state = WAIT;
 			break;
 		}
+    break;
 		case PLAYC:
 		if (button == 0x01) {
 			state = PLAYC;
