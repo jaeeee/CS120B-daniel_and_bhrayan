@@ -186,12 +186,12 @@ int main(void) {
     state = START; //change to START state
     // tick();
     // whil
-    LCD_init();
+    // LCD_init();
     /* Insert your solution below */
-    LCD_Cursor(1);
+    // LCD_Cursor(1);
     while (1) {
                   // LCD_Cursor(1);
-                  LCD_ClearScreen();
+                  // LCD_ClearScreen();
       tick();
             // PORTC = holder;
             // // holder++;
