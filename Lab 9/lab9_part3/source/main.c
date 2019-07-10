@@ -73,20 +73,32 @@ void tick() {
 		}
 		break;
 		case PLAY:
-		switch(button) {
-			case 0x01:
-			state = HOLDOFF;
-			break;
-			case 0x02:
-			state = WAITUP;
-			break;
-			case 0x04:
-			state = WAITDOWN;
-			break;
-			default:
-			state = PLAY;
-			break;
-		}
+		// switch(button) {
+		// 	case 0x01:
+		// 	state = HOLDOFF;
+		// 	break;
+		// 	case 0x02:
+		// 	state = WAITUP;
+		// 	break;
+		// 	case 0x04:
+		// 	state = WAITDOWN;
+		// 	break;
+		// 	default:
+		// 	state = PLAY;
+		// 	break;
+		// }
+    	set_PWM(NOTES[1]);
+          asm("nop");
+      	set_PWM(NOTES[3]);
+            asm("nop");
+        	set_PWM(NOTES[5]);
+              asm("nop");
+          	set_PWM(NOTES[3]);
+                asm("nop");
+            	set_PWM(NOTES[1]);
+                  asm("nop");
+              	set_PWM(NOTES[7]);
+    asm("nop");
 		break;
 		case UP:
 		state = PLAY;
