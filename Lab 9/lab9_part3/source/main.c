@@ -88,7 +88,7 @@ unsigned char i;
 void tick() {
 	switch(state) {
     case FIRST:
-    set_PWM(NOTES[0]);
+    set_PWM(NOTES[6]);
     state = SECOND;
     // i++;
     break;
