@@ -1,22 +1,16 @@
-/*	Partner(s) Name & E-mail:
-* Blake Berry, bberr006@ucr.edu
-* Christian Campos , ccamp032@ucr.edu
-*	Lab Section: 022
-*	Assignment: Lab #9 Exercise #1
-*
-* Using the ATmega1284’s PWM functionality, design a system that uses three buttons to select one of
-* three tones to be generated on the speaker.
-* When a button is pressed, the tone mapped to it is generated on the speaker.
-*
-*	I acknowledge all content contained herein, excluding template or example
-*	code, is my own original work.
-*/
-
-
-
-
+/*	Author: dkwon014
+ *  Partner(s) Name: Bhrayan Escobar
+ *	Lab Section:
+ *	Assignment: Lab #9  Exercise #1
+ *	Exercise Description: [optional - include for your own benefit]
+ *
+ *	I acknowledge all content contained herein, excluding template or example
+ *	code, is my own original work.
+ */
 #include <avr/io.h>
-#include <avr/interrupt.h>
+#ifdef _SIMULATE_
+#include "simAVRHeader.h"
+#endif
 
 // 0.954 hz is lowest frequency possible with this function,
 // based on settings in PWM_on()
@@ -58,86 +52,73 @@ void PWM_off() {
 	TCCR0B = 0x00;
 }
 
+//part 1 code
+#define button (~PINA & 0x07)
+enum STATES { WAIT, PLAYC, PLAYD, PLAYE } state;
 
-enum States{wait, cFour, dFour, eFour}state;
-
-unsigned char button = 0x00;
-
-void Tick(){
-
-	switch(state){
-		case wait:
-		if(button == 0x01){
-			state = cFour;
+void tick() {
+	switch(state) {
+		case WAIT:
+		switch(button) {
+			case 0x01:
+			state = PLAYC;
+			break;
+			case 0x02:
+			state = PLAYD;
+			break;
+			case 0x04:
+			state = PLAYE;
+			break;
+			default:
+			state = WAIT;
+			break;
 		}
-		else if(button == 0x02){
-			state = dFour;
-		}
-		else if(button == 0x04){
-			state = eFour;
-		}
-		else{
-			state = wait;
+		case PLAYC:
+		if (button == 0x01) {
+			state = PLAYC;
+		} else {
+			state = WAIT;
 		}
 		break;
-		case cFour:
-		if(button == 0x01){
-			state = cFour;
-		}
-		else{
-			state = wait;
-		}
-		break;
-		case dFour:
-		if(button == 0x02){
-			state = dFour;
-		}
-		else{
-			state = wait;
+		case PLAYD:
+		if (button == 0x02) {
+			state = PLAYD;
+		} else {
+			state = WAIT;
 		}
 		break;
-		case eFour:
-		if(button == 0x04){
-			state = eFour;
+		case PLAYE:
+		if (button == 0x04) {
+			state = PLAYE;
+		} else {
+			state = WAIT;
 		}
-		else{
-			state = wait;
-		}
-		break;
-		default:
 		break;
 	}
-
-	switch(state){
-		case wait:
+	switch(state) {
+		case WAIT:
 		set_PWM(0);
 		break;
-		case cFour:
+		case PLAYC:
 		set_PWM(261.63);
 		break;
-		case dFour:
+		case PLAYD:
 		set_PWM(293.66);
 		break;
-		case eFour:
+		case PLAYE:
 		set_PWM(329.63);
-		break;
-		default:
 		break;
 	}
 }
 
-
-int main(void)
-{
-	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs, initialize to 1s
-	DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
-
+int main(void) {
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRB = 0xFF; PORTB = 0x00;
 	PWM_on();
-
-	state = wait;
-
-	while(1){
-		button = ~PINA & 0x07;
-		Tick();
+	state = WAIT;
+	while(1) {
+		tick();
 	}
+      // set_PWM(261.63);
+  return 1;
 }
