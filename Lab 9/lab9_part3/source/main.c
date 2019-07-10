@@ -80,7 +80,7 @@ void PWM_off() {
 
 #define button (~PINA & 0x07)
 double NOTES[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
-enum STATES { OFF, ON, HOLDON, HOLDOFF, PLAY } state;
+enum STATES { OFF, ON, HOLDON, HOLDOFF, PLAY, PLAY2 } state;
 unsigned char i;
 
 void tick() {
@@ -110,34 +110,12 @@ void tick() {
 		}
 		break;
 		case PLAY:
-		// switch(button) {
-      // i
-		// }
-    set_PWM(NOTES[i]);
-    i++;
-    // set_PWM(NO)
-    state = PLAY;
+    // state = PLAY;
+    state = PLAY2;
 		break;
-		// case UP:
-		// state = PLAY;
-		// break;
-		// case WAITUP:
-		// if (button == 0x02) {
-		// 	state = WAITUP;
-		// } else {
-		// 	state = UP;
-		// }
-		// break;
-		// case DOWN:
-		// state = PLAY;
-		// break;
-		// case WAITDOWN:
-		// if (button == 0x04) {
-		// 	state = WAITDOWN;
-		// } else {
-		// 	state = DOWN;
-		// }
-		// break;
+    case PLAY2:
+    state = OFF;
+    break;
 	}
 	switch(state) {
 		case OFF:
@@ -152,23 +130,11 @@ void tick() {
 		case HOLDOFF:
 		break;
 		case PLAY:
-		// set_PWM(NOTES[i]);
+		    set_PWM(349.23);
 		break;
-		// case UP:
-		// //nvm fixed
-		// if (i < 7) { //not sure about this
-		// 	i++;
-		// }
-		// break;
-		// case WAITUP:
-		// break;
-		// case DOWN:
-		// if (i > 0) {
-		// 	i--;
-		// }
-		// break;
-		// case WAITDOWN:
-		// break;
+    case PLAY2:
+    set_PWM(493.88);
+    break;
 	}
 }
 
