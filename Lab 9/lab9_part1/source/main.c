@@ -70,6 +70,11 @@ void PWM_on() {
   TCCR3B = (1 << WGM32) | (1 << CS31) | (1 << CS30);
   set_PWM(0);
 }
+
+void PWM_off() {
+  TCCR3A = 0x00;
+  TCCR3B = 0x00;
+}
 //part 1 code
 #define button (~PINA & 0x07)
 enum STATES { WAIT, PLAYC, PLAYD, PLAYE } state;
