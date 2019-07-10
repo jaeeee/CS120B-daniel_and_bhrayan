@@ -119,5 +119,6 @@ int main(void) {
 	while(1) {
 		tick();
 	}
+      set_PWM(261.63);
   return 1;
 }
