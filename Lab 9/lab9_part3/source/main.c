@@ -11,11 +11,11 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-
-#include <avr/io.h>
-#ifdef _SIMULATE_
-#include "simAVRHeader.h"
-#endif
+// 
+// #include <avr/io.h>
+// #ifdef _SIMULATE_
+// #include "simAVRHeader.h"
+// #endif
 
 void set_PWM(double frequency) {
   static double current_frequency;
