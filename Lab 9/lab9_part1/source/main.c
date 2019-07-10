@@ -117,8 +117,7 @@ int main(void) {
 	PWM_on();
 	state = WAIT;
 	while(1) {
-		// tick();
-    set_PWM(261.63);
+		tick();
 	}
       // set_PWM(261.63);
   return 1;
