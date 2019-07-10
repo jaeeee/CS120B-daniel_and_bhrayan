@@ -177,7 +177,7 @@ int main(void) {
 	DDRB = 0xFF; PORTB = 0x00;
 
 	PWM_on();
-  TimerSet(1);
+  TimerSet(50);
   TimerOn();
 
 	state = OFF;
