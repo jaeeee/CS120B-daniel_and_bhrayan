@@ -88,27 +88,41 @@ unsigned char i;
 void tick() {
 	switch(state) {
     case FIRST:
-    set_PWM(NOTES[0]);
     state = SECOND;
     break;
     case SECOND:
-    set_PWM(NOTES[1]);
     state = THIRD;
     break;
     case THIRD:
-      set_PWM(NOTES[2]);
       state = FOURTH;
     break;
     case FOURTH:
-      set_PWM(NOTES[3]);
       state = FIFTH;
     break;
     case FIFTH:
-    set_PWM(NOTES[4]);
 state = OFF;
     break;
     case OFF:
     PWM_off();
+    break;
+  }
+  switch(state) {
+    case FIRST:
+        set_PWM(NOTES[0]);
+        break;
+    case SECOND:
+        set_PWM(NOTES[1]);
+        break;
+    case THIRD:
+          set_PWM(NOTES[2]);
+          break;
+    case FOURTH:
+          set_PWM(NOTES[3]);
+          break;
+    case FIFTH:
+        set_PWM(NOTES[4]);
+        break;
+    case OFF:
     break;
   }
 }
