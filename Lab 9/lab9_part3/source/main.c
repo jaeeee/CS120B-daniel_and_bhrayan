@@ -125,11 +125,11 @@ state = OFF;
 int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
-	PWM_on();
+	state = FIRST;
+  PWM_on();
   TimerSet(50);
   TimerOff();
-	state = FIRST;
-  i = 0;
+  // i = 0;
 	while(1) {
 		tick();
     while (!TimerFlag) {}
