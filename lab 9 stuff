@@ -191,7 +191,8 @@ void tick() {
 		set_PWM(NOTES[i]);
 		break;
 		case UP:
-		if (i < 8) { //not sure about this
+		//nvm fixed
+		if (i < 7) { //not sure about this
 			i++;
 		}
 		break;
