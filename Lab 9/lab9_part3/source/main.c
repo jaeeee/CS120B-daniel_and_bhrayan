@@ -195,14 +195,12 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
 	PWM_on();
-  TimerSet(100);
+  TimerSet(50);
   TimerOff();
 	state = OFF;
 	while(1) {
 		tick();
-    while (!TimerFlag) {
-
-    }
+    while (!TimerFlag) {}
     TimerFlag = 0;
 	}
 }
