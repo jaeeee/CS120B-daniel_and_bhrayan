@@ -11,7 +11,7 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-// 
+//
 // #include <avr/io.h>
 // #ifdef _SIMULATE_
 // #include "simAVRHeader.h"
@@ -127,7 +127,7 @@ void tick() {
 		case UP:
 		//nvm fixed
 		if (i < 7) { //not sure about this
-			i += 2;
+			i++;
 		}
 		break;
 		case WAITUP:
