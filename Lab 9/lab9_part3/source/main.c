@@ -118,7 +118,7 @@ int main(void) {
 	DDRB = 0xFF; PORTB = 0x00;
 	state = FIRST;
   PWM_on();
-  TimerSet(35000);
+  TimerSet(100);
   TimerOn();
   // i = 0;
 	while(1) {
