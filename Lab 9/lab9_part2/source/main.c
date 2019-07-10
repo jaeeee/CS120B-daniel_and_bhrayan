@@ -39,6 +39,7 @@ void PWM_off() {
 #define button (~PINA & 0x07)
 double NOTES[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
 enum STATES { OFF, ON, HOLDON, HOLDOFF, PLAY, UP, WAITUP, DOWN, WAITDOWN } state;
+unsigned char i;
 
 void tick() {
 	switch(state) {
@@ -69,7 +70,7 @@ void tick() {
 		case PLAY:
 		switch(button) {
 			case 0x01:
-			state = WAITOFF;
+			state = HOLDOFF;
 			break;
 			case 0x02:
 			state = WAITUP;
