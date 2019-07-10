@@ -127,12 +127,12 @@ int main(void) {
 	DDRB = 0xFF; PORTB = 0x00;
 	state = FIRST;
   PWM_on();
-  TimerSet(50);
-  TimerOff();
+  // TimerSet(50);
+  // TimerOff();
   // i = 0;
 	while(1) {
 		tick();
-    while (!TimerFlag) {}
-    TimerFlag = 0;
-	}
+    // while (!TimerFlag) {}
+    // TimerFlag = 0;
+	}  
 }
