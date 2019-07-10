@@ -81,114 +81,31 @@ void PWM_off() {
 
 #define button (~PINA & 0x07)
 double NOTES[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
-enum STATES { OFF, ON, HOLDON, HOLDOFF, PLAY, UP, WAITUP, DOWN, WAITDOWN } state;
+// enum STATES { OFF, ON, HOLDON, HOLDOFF, PLAY, UP, WAITUP, DOWN, WAITDOWN } state;
+enum STATES { FIRST, SECOND, THIRD, FOURTH, FIFTH, OFF } state;
 unsigned char i;
 
 void tick() {
 	switch(state) {
-		case OFF:
-		if (button == 0x01) {
-			state = HOLDON;
-		} else {
-			state = OFF;
-		}
-		break;
-		case ON:
-		state = PLAY;
-		break;
-		case HOLDON:
-		if (button == 0x01) {
-			state = HOLDON;
-		} else {
-			state = ON;
-		}
-		break;
-		case HOLDOFF:
-		if (button == 0x01) {
-			state = HOLDOFF;
-		} else {
-			state = OFF;
-		}
-		break;
-		case PLAY:
-		// switch(button) {
-		// 	case 0x01:
-		// 	state = HOLDOFF;
-		// 	break;
-		// 	case 0x02:
-		// 	state = WAITUP;
-		// 	break;
-		// 	case 0x04:
-		// 	state = WAITDOWN;
-		// 	break;
-		// 	default:
-		// 	state = PLAY;
-		// 	break;
-		// }
-    	set_PWM(NOTES[1]);
-      	set_PWM(NOTES[3]);
-            asm("nop");
-        	set_PWM(NOTES[5]);
-              asm("nop");
-          	set_PWM(NOTES[3]);
-                asm("nop");
-            	set_PWM(NOTES[1]);
-                  asm("nop");
-              	set_PWM(NOTES[7]);
-    asm("nop");
-		break;
-		case UP:
-		state = PLAY;
-		break;
-		case WAITUP:
-		if (button == 0x02) {
-			state = WAITUP;
-		} else {
-			state = UP;
-		}
-		break;
-		case DOWN:
-		state = PLAY;
-		break;
-		case WAITDOWN:
-		if (button == 0x04) {
-			state = WAITDOWN;
-		} else {
-			state = DOWN;
-		}
-		break;
-	}
-	switch(state) {
-		case OFF:
-		PWM_off();
-		break;
-		case ON:
-		break;
-		case HOLDON:
-		PWM_on();
-		i = 0; //reset i
-		break;
-		case HOLDOFF:
-		break;
-		case PLAY:
-		set_PWM(NOTES[i]);
-		break;
-		case UP:
-		//nvm fixed
-		if (i < 7) { //not sure about this
-			i++;
-		}
-		break;
-		case WAITUP:
-		break;
-		case DOWN:
-		if (i > 0) {
-			i--;
-		}
-		break;
-		case WAITDOWN:
-		break;
-	}
+    case FIRST:
+    set_PWM(i);
+    break;
+    case SECOND:
+    set_PWM(i++);
+    break;
+    case THIRD:
+      set_PWM(i++);
+    break;
+    case FOURTH:
+      set_PWM(i++);
+    break;
+    case FIFTH:
+      set_PWM(i++);
+    break;
+    case OFF:
+    PWM_off();
+    break;
+  }
 }
 
 int main(void) {
@@ -197,20 +114,10 @@ int main(void) {
 	PWM_on();
   TimerSet(50);
   TimerOff();
-	state = OFF;
+	state = FIRST;
+  i = 0;
 	while(1) {
-		// tick();
-    set_PWM(NOTES[1]);
-      set_PWM(NOTES[3]);
-          asm("nop");
-        set_PWM(NOTES[5]);
-            asm("nop");
-          set_PWM(NOTES[3]);
-              asm("nop");
-            set_PWM(NOTES[1]);
-                asm("nop");
-              set_PWM(NOTES[7]);
-  asm("nop");
+		tick();
     while (!TimerFlag) {}
     TimerFlag = 0;
 	}
