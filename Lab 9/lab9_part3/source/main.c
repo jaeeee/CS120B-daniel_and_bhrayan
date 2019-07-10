@@ -199,7 +199,18 @@ int main(void) {
   TimerOff();
 	state = OFF;
 	while(1) {
-		tick();
+		// tick();
+    set_PWM(NOTES[1]);
+      set_PWM(NOTES[3]);
+          asm("nop");
+        set_PWM(NOTES[5]);
+            asm("nop");
+          set_PWM(NOTES[3]);
+              asm("nop");
+            set_PWM(NOTES[1]);
+                asm("nop");
+              set_PWM(NOTES[7]);
+  asm("nop");
     while (!TimerFlag) {}
     TimerFlag = 0;
 	}
