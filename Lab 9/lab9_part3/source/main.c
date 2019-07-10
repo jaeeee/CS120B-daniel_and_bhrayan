@@ -62,7 +62,7 @@ void set_PWM(double frequency) {
     else { TCCR3B |= 0x03; }
     if (frequency < 0.954) { OCR3A = 0xFFFF; }
     else if (frequency > 31250) { OCR3A = 0x0000; }
-    else { OCR3A = (short) (8000000 / (1280 * frequency)) - 1; }
+    else { OCR3A = (short) (8000000 / (128 * frequency)) - 1; }
     TCNT3 = 0;
     current_frequency = frequency;
   }
