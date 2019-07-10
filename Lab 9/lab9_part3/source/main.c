@@ -120,7 +120,7 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
 	PWM_on();
-  TimerSet(50);
+  TimerSet(350);
   TimerOff();
 	state = FIRST;
   i = 0;
