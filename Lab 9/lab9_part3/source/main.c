@@ -90,6 +90,7 @@ void tick() {
     case FIRST:
     set_PWM(NOTES[i]);
     state = SECOND;
+    i++;
     break;
     case SECOND:
     // set_PWM(i++);
@@ -125,7 +126,7 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
 	PWM_on();
-  TimerSet(350);
+  TimerSet(50);
   TimerOff();
 	state = FIRST;
   i = 0;
