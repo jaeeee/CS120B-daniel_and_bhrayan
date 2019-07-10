@@ -152,7 +152,7 @@ void tick() {
 		case HOLDOFF:
 		break;
 		case PLAY:
-		set_PWM(NOTES[i]);
+		// set_PWM(NOTES[i]);
 		break;
 		// case UP:
 		// //nvm fixed
