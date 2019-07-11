@@ -58,7 +58,7 @@ void tick2() {
     state2 = OFF2;
     break;
     case OFF2:
-    state2 = ON2;
+    state2 = START2;
     break;
   }
   switch(state) {
