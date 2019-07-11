@@ -1,107 +1,117 @@
-/*	Author: dkwon014
- *  Partner(s) Name: Bhrayan Escobar
- *	Lab Section:
- *	Assignment: Lab #10 Exercise #1
- *	Exercise Description: [optional - include for your own benefit]
- *
- *	I acknowledge all content contained herein, excluding template or example
- *	code, is my own original work.
- */
+
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#ifdef _SIMULATE_
-#include "simAVRHeader.h"
-#endif
+#include "timer.h"
 
-volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer should clear to 0.
+enum BL_States { BL_SMStart, BL_LedOff, BL_LedOn } BL_State;
+enum TL_States { TL_SMStart, TL_T0, TL_T1, TL_T2 } TL_State;
+enum CL_States { CL_SMStart, Combine} CL_State;
 
-// Internal variables for mapping AVR's ISR to our cleaner TimerISR model.
-unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
-unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
+unsigned char threeLed = 0x00;
+unsigned char blinkLed = 0x00;
 
-enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
-unsigned char output = 0x00;
-
-void TimerOn() {
-  TCCR1B = 0x0B;
-  OCR1A = 125;
-  TIMSK1 = 0x02;
-  TCNT1 = 0;
-  _avr_timer_cntcurr = _avr_timer_M;
-  SREG |= 0x80;
-}
-
-void TimerOff() {
-  TCCR1B = 0x00;
-}
-
-void TimerISR() {
-  TimerFlag = 1;
-}
-
-// In our approach, the C programmer does not touch this ISR, but rather TimerISR()
-ISR(TIMER1_COMPA_vect) {
-	// CPU automatically calls when TCNT1 == OCR1 (every 1 ms per TimerOn settings)
-	_avr_timer_cntcurr--; // Count down to 0 rather than up to TOP
-	if (_avr_timer_cntcurr == 0) { // results in a more efficient compare
-		TimerISR(); // Call the ISR that the user uses
-		_avr_timer_cntcurr = _avr_timer_M;
+void TickFct_BlinkLed() {
+	switch(BL_State){
+		case BL_SMStart:
+		BL_State = BL_LedOff;
+		break;
+		case BL_LedOff:
+		BL_State = BL_LedOn;
+		break;
+		case BL_LedOn:
+		BL_State = BL_LedOff;
+		break;
+		default:
+		break;
+	}
+	switch(BL_State){
+		case BL_SMStart:
+		blinkLed = 0x00;
+		break;
+		case BL_LedOff:
+		blinkLed = 0x00;
+		break;
+		case BL_LedOn:
+		blinkLed = 0x01;
+		break;
+		default:
+		break;
 	}
 }
 
-// Set TimerISR() to tick every M ms
-void TimerSet(unsigned long M) {
-	_avr_timer_M = M;
-	_avr_timer_cntcurr = _avr_timer_M;
+void TickFct_ThreeLeds() {
+	switch(TL_State){
+		case TL_SMStart:
+		TL_State = TL_T0;
+		break;
+		case TL_T0:
+		TL_State = TL_T1;
+		break;
+		case TL_T1:
+		TL_State = TL_T2;
+		break;
+		case TL_T2:
+		TL_State = TL_T0;
+		break;
+		default:
+		break;
+	}
+	switch(TL_State){
+		case TL_SMStart:
+		threeLed = 0x00;
+		break;
+		case TL_T0:
+		threeLed = 0x01;
+		break;
+		case TL_T1:
+		threeLed = 0x02;
+		break;
+		case TL_T2:
+		threeLed = 0x04;
+		break;
+		default:
+		break;
+	}
 }
 
-void tick() {
-  switch(state) {
-    case START:
-    state = LIGHT_1;
-    break;
-    case LIGHT_1:
-    state = LIGHT_2;
-    break;
-    case LIGHT_2:
-    state = LIGHT_3;
-    break;
-    case LIGHT_3:
-    state = LIGHT_1;
-    break;
-  }
-  switch(state) {
-    case START:
-    break;
-    case LIGHT_1:
-    output = 0x01;
-    break;
-    case LIGHT_2:
-    output = 0x02;
-    break;
-    case LIGHT_3:
-    output = 0x04;
-    break;
-  }
+void TickFct_CombineLeds() {
+	switch(CL_State){
+		case CL_SMStart:
+		CL_State = Combine;
+		break;
+		case Combine:
+		CL_State = Combine;
+		break;
+		default:
+		break;
+	}
+	switch(CL_State){
+		case CL_SMStart:
+		PORTC = 0x00;
+		break;
+		case Combine:
+		PORTC = (blinkLed << 3) | threeLed;
+		break;
+		default:
+		break;
+	}
 }
 
-int main(void) {
-    /* Insert DDR and PORT initializations */
-    DDRC = 0xFF;
-    PORTC = 0x00;
-        state = START; //change to START state
-    TimerSet(200); //set timer here
-    TimerOn(); //turn on timer
-    // tick();
-    // whil
-    /* Insert your solution below */
-    while (1) {
-      tick();
-      while (!TimerFlag) {
+int main(void)
+{
+	DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
 
-      }
-      TimerFlag = 0;
-            PORTC = output;
-    }
-    return 1;
+	TimerSet(1000);
+	TimerOn();
+	BL_State = BL_SMStart;
+	TL_State = TL_SMStart;
+	CL_State = CL_SMStart;
+	while (1) {
+		TickFct_BlinkLed();    // Tick the BlinkLed synchSM
+		TickFct_ThreeLeds();   // Tick the threeLed synchSM
+		TickFct_CombineLeds();
+		while (!TimerFlag){}   // Wait for timer period
+		TimerFlag = 0;         // Lower flag raised by timer
+	}
 }
