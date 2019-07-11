@@ -104,11 +104,11 @@ void tick3() {
     // state3 = OFF3;
     break;
     case OFF3:
-    PORTC = 0 | output2 | output;
+    PORTC = 0x00 | output2 | output;
     // state3 = ON3;
     break;
     case ON3:
-    PORTC = 0x04 | output2 | output;
+    PORTC = 0x10 | output2 | output;
     break;
   }
 }
