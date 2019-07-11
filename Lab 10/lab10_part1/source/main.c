@@ -15,7 +15,7 @@
 #endif
 
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
-enum STATES_2 { START, ON, OFF } state2;
+enum STATES_2 { START2, ON2, OFF2 } state2;
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
 
@@ -51,23 +51,23 @@ void tick() {
 
 void tick2() {
   switch(state2) {
-    case START:
-    state2 = ON;
+    case START2:
+    state2 = ON2;
     break;
-    case ON:
-    state2 = OFF;
+    case ON2:
+    state2 = OFF2;
     break;
-    case OFF:
-    state2 = ON;
+    case OFF2:
+    state2 = ON2;
     break;
   }
   switch(state) {
-    case START:
+    case START2:
     break;
-    case ON:
+    case ON2:
     output2 = 0x08;
     break;
-    case OFF:
+    case OFF2:
     break;
   }
 }
@@ -79,7 +79,7 @@ int main(void) {
     TimerSet(1000); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
-    state2 = START;
+    state2 = START2;
     // tick();
     // whil
     /* Insert your solution below */
