@@ -101,7 +101,7 @@ int main(void) {
 
       }
       TimerFlag = 0;
-            PORTC = output;
+            PORTB = output;
     }
     return 1;
 }
