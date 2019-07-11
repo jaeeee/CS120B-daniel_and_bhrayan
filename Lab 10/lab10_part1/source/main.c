@@ -89,9 +89,9 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     DDRC = 0xFF;
     PORTC = 0x00;
+        state = START; //change to START state
     TimerSet(1000); //set timer here
     TimerOn(); //turn on timer
-    state = START; //change to START state
     // tick();
     // whil
     /* Insert your solution below */
