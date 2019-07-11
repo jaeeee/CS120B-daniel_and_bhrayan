@@ -101,9 +101,9 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     DDRC = 0xFF;
     PORTC = 0x00;
-    unsigned char BLINK_TIMER = 300;
-    unsigned char FLASH_TIMER = 1000;
-    unsigned char PERIOD = 100;
+    unsigned long BLINK_TIMER = 300;
+    unsigned long FLASH_TIMER = 1000;
+    unsigned long PERIOD = 100;
     TimerSet(PERIOD); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
