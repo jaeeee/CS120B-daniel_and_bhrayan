@@ -14,9 +14,12 @@
 #include "simAVRHeader.h"
 #endif
 
+#define A2 (PINA & 0x03)
+
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 enum STATES_2 { START2, ON2, OFF2 } state2;
 // enum STATES_3 { START3, COMBINE } state3;
+enum STATES_3 { START3, OFF3, ON3, HOLD3 } state3;
 
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
@@ -75,6 +78,32 @@ void tick2() {
     break;
   }
 }
+
+void tick3() {
+  switch(state3) {
+    case START3:
+    state3 = OFF3;
+    break;
+    case OFF3:
+    state3 = ON3;
+    break;
+    case ON3:
+    state3 = START3;
+    break;
+  }
+  switch(state3) {
+    case START3:
+    // state3 = OFF3;
+    break;
+    case OFF3:
+    PORTC = 0 | output2 | output;
+    // state3 = ON3;
+    break;
+    case ON3:
+    PORTC = 0x04 | output2 | output;
+    break;
+  }
+}
 //
 // void tick3() {
 //   switch(state3) {
@@ -104,7 +133,8 @@ int main(void) {
     PORTC = 0x00;
     unsigned long BLINK_TIMER = 300;
     unsigned long FLASH_TIMER = 1000;
-    unsigned long PERIOD = 100;
+    unsigned long BUTTON_TIMER = 2;
+    unsigned long PERIOD = 1;
     TimerSet(PERIOD); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
@@ -122,6 +152,10 @@ int main(void) {
       tick2();
       FLASH_TIMER = 0;
     }
+    if (BUTTON_TIMER >= 2) {
+      tick3();
+      BUTTON_TIMER = 0;
+    }
       // tick3();
       // PORTC = output | output2;
       while (!TimerFlag) {
@@ -130,6 +164,7 @@ int main(void) {
       TimerFlag = 0;
       BLINK_TIMER += PERIOD;
       FLASH_TIMER += PERIOD;
+      BUTTON_TIMER += PERIOD;
     }
     return 1;
 }
