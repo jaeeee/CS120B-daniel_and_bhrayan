@@ -81,7 +81,7 @@ void tick3() {
     state3 = COMBINE;
     break;
     case COMBINE:
-    state3 = START3;
+    state3 = COMBINE;
     break;
   }
   switch(state3) {
