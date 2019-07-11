@@ -90,7 +90,7 @@ int main(void) {
     DDRC = 0xFF;
     PORTC = 0x00;
         state = START; //change to START state
-    TimerSet(1000); //set timer here
+    TimerSet(200); //set timer here
     TimerOn(); //turn on timer
     // tick();
     // whil
