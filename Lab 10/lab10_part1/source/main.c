@@ -15,7 +15,9 @@
 #endif
 
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
+enum STATES_2 { START, ON, OFF } state2;
 unsigned char output = 0x00;
+unsigned char output2 = 0x00;
 
 void tick() {
   switch(state) {
@@ -47,6 +49,29 @@ void tick() {
   }
 }
 
+void tick2() {
+  switch(state2) {
+    case START:
+    state2 = ON;
+    break;
+    case ON:
+    state2 = OFF;
+    break;
+    case OFF:
+    state2 = ON;
+    break;
+  }
+  switch(state) {
+    case START:
+    break;
+    case ON:
+    output2 = 0x08;
+    break;
+    case OFF:
+    break;
+  }
+}
+
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRC = 0xFF;
@@ -54,16 +79,18 @@ int main(void) {
     TimerSet(1000); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
+    state2 = START;
     // tick();
     // whil
     /* Insert your solution below */
     while (1) {
       tick();
+      tick2();
       while (!TimerFlag) {
 
       }
       TimerFlag = 0;
-            PORTC = output;
+            PORTC = output | output2;
     }
     return 1;
 }
