@@ -89,7 +89,7 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     // DDRA = 0x00; PORTA = 0xFF;
     threeLEDs = START;
-    DDRB = 0xFF; PORTB = 0x00;
+    DDRC = 0xFF; PORTC = 0x00;
     TimerSet(1000);
     TimerOn();
     /* Insert your solution below */
@@ -99,7 +99,7 @@ int main(void) {
 
       }
       TimerFlag = 0;
-            PORTB = output;
+            PORTC = output;
     }
     // }
     return 1;
