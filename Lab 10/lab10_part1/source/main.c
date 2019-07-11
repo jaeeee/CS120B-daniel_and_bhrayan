@@ -86,7 +86,7 @@ void tick3() {
   }
   switch(state3) {
     case START3:
-    PORTB = 0x00;
+    PORTC = 0x00;
     break;
     case COMBINE:
     PORTC = output2 | output;
