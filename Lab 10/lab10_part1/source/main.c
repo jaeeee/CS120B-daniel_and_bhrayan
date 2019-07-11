@@ -68,6 +68,7 @@ void tick2() {
     output2 = 0x08;
     break;
     case OFF2:
+    output2 = 0x00;
     break;
   }
 }
