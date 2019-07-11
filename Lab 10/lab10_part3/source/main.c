@@ -23,6 +23,7 @@ enum STATES_3 { START3, OFF3, ON3 } state3;
 
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
+unsigned char cnt;
 
 void tick() {
   switch(state) {
@@ -85,6 +86,7 @@ void tick3() {
     state3 = OFF3;
     break;
     case OFF3:
+    cnt = 0;
     if (A2) {
     state3 = ON3;
   } else {
@@ -92,9 +94,10 @@ void tick3() {
   }
     break;
     case ON3:
-    if (A2) {
+    if (A2 && cnt < 2) {
     state3 = ON3;
   } else {
+    cnt++
     state3 = OFF3;
   }
     break;
