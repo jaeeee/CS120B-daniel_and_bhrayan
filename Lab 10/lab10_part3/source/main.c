@@ -97,7 +97,7 @@ void tick3() {
     if (A2 && cnt < 2) {
     state3 = ON3;
   } else {
-    cnt++
+    cnt++;
     state3 = OFF3;
   }
     break;
