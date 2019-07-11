@@ -1,14 +1,13 @@
 /*	Author: dkwon014
  *  Partner(s) Name: Bhrayan Escobar
  *	Lab Section:
- *	Assignment: Lab #10 Exercise #1
+ *	Assignment: Lab #  Exercise #
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
@@ -19,8 +18,9 @@ volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer
 unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms.
 unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
-enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
-unsigned char output = 0x00;
+unsigned char output;
+enum THREELEDS { START, LIGHT_1, LIGHT_2, LIGHT_3 } threeLEDs;
+// enum
 
 void TimerOn() {
   TCCR1B = 0x0B;
@@ -55,22 +55,22 @@ void TimerSet(unsigned long M) {
 	_avr_timer_cntcurr = _avr_timer_M;
 }
 
-void tick() {
-  switch(state) {
+void tick_threeLEDs() {
+  switch(threeLEDs) {
     case START:
-    state = LIGHT_1;
+    threeLEDs = LIGHT_1;
     break;
     case LIGHT_1:
-    state = LIGHT_2;
+    threeLEDs = LIGHT_2;
     break;
     case LIGHT_2:
-    state = LIGHT_3;
+    threeLEDs = LIGHT_3;
     break;
     case LIGHT_3:
-    state = LIGHT_1;
+    threeLEDs = LIGHT_1;
     break;
   }
-  switch(state) {
+  switch(threeLEDs) {
     case START:
     break;
     case LIGHT_1:
@@ -87,21 +87,20 @@ void tick() {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRC = 0xFF;
-    PORTC = 0x00;
-    TimerSet(200); //set timer here
-    TimerOn(); //turn on timer
-    state = START; //change to START state
-    // tick();
-    // whil
+    // DDRA = 0x00; PORTA = 0xFF;
+    threeLEDs = START;
+    DDRC = 0xFF; PORTC = 0x00;
+    TimerSet(50);
+    TimerOn();
     /* Insert your solution below */
     while (1) {
-      tick();
+      tick_threeLEDs();
       while (!TimerFlag) {
 
       }
       TimerFlag = 0;
             PORTC = output;
     }
+    // }
     return 1;
 }
