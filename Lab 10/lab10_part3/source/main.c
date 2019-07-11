@@ -85,10 +85,18 @@ void tick3() {
     state3 = OFF3;
     break;
     case OFF3:
+    if (A2) {
     state3 = ON3;
+  } else {
+    state3 = OFF3;
+  }
     break;
     case ON3:
-    state3 = START3;
+    if (A2) {
+    state3 = ON3;
+  } else {
+    start3 = OFF3;
+  }
     break;
   }
   switch(state3) {
