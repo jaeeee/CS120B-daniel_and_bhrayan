@@ -16,7 +16,7 @@
 
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 enum STATES_2 { START2, ON2, OFF2 } state2;
-// enum STATES_3 { START3, COMBINE } state3;
+enum STATES_3 { START3, COMBINE } state3;
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
 
@@ -75,6 +75,25 @@ void tick2() {
   }
 }
 
+void tick3() {
+  switch(state3) {
+    case START3:
+    state3 = COMBINE;
+    break;
+    case COMBINE:
+    state3 = COMBINE;
+    break;
+  }
+  switch(state3) {
+    case START3:
+    PORTB = 0x00;
+    break;
+    case COMBINE:
+    PORTC = output2 | output;
+    break;
+  }
+}
+
 
 
 
@@ -92,7 +111,8 @@ int main(void) {
     while (1) {
       tick();
       tick2();
-      PORTC = output | output2;
+      tick3();
+      // PORTC = output | output2;
       while (!TimerFlag) {
 
       }
