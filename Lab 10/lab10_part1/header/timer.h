@@ -46,4 +46,4 @@ void TimerSet(unsigned long M) {
 	_avr_timer_cntcurr = _avr_timer_M;
 }
 
-#endif
+// #endif
