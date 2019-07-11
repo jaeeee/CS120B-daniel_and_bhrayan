@@ -103,7 +103,8 @@ int main(void) {
     PORTC = 0x00;
     unsigned char BLINK_TIMER = 300;
     unsigned char FLASH_TIMER = 1000;
-    TimerSet(100); //set timer here
+    unsigned char PERIOD = 100;
+    TimerSet(PERIOD); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
     state2 = START2;
@@ -126,6 +127,8 @@ int main(void) {
 
       }
       TimerFlag = 0;
+      BLINK_TIMER += PERIOD;
+      FLASH_TIMER += PERIOD;
     }
     return 1;
 }
