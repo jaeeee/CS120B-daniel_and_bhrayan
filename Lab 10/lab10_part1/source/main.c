@@ -87,11 +87,11 @@ int main(void) {
     while (1) {
       tick();
       tick2();
+      PORTC = output | output2;
       while (!TimerFlag) {
 
       }
       TimerFlag = 0;
-            PORTC = output | output2;
     }
     return 1;
 }
