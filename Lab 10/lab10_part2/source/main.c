@@ -101,7 +101,9 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     DDRC = 0xFF;
     PORTC = 0x00;
-    TimerSet(1000); //set timer here
+    unsigned char BLINK_TIMER = 300;
+    unsigned char FLASH_TIMER = 1000;
+    TimerSet(100); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state
     state2 = START2;
@@ -110,8 +112,14 @@ int main(void) {
     // whil
     /* Insert your solution below */
     while (1) {
+      if (BLINK_TIMER >= 300) {
       tick();
+      BLINK_TIMER = 0;
+    }
+    if (FLASH_TIMER >= 1000) {
       tick2();
+      FLASH_TIMER = 0;
+    }
       tick3();
       // PORTC = output | output2;
       while (!TimerFlag) {
