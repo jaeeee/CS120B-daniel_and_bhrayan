@@ -86,10 +86,10 @@ void tick3() {
   }
   switch(state3) {
     case START3:
-    PORTC = 0x00;
+    PORTB = 0x00;
     break;
     case COMBINE:
-    PORTC = output2 | output;
+    PORTB = output2 | output;
     break;
   }
 }
@@ -99,8 +99,8 @@ void tick3() {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRC = 0xFF;
-    PORTC = 0x00;
+    DDRB = 0xFF;
+    PORTB = 0x00;
     TimerSet(125); //set timer here
     TimerOn(); //turn on timer
     state = START; //change to START state

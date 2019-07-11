@@ -107,11 +107,11 @@ void tick3() {
     // state3 = OFF3;
     break;
     case OFF3:
-    PORTC = 0x00 | output2 | output;
+    PORTB = 0x00 | output2 | output;
     // state3 = ON3;
     break;
     case ON3:
-    PORTC = 0x10 | output2 | output;
+    PORTB = 0x10 | output2 | output;
     break;
   }
 }
@@ -140,8 +140,8 @@ void tick3() {
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRC = 0xFF;
-    PORTC = 0x00;
+    DDRB = 0xFF;
+    PORTB = 0x00;
     unsigned long BLINK_TIMER = 300;
     unsigned long FLASH_TIMER = 1000;
     unsigned long BUTTON_TIMER = 2;
