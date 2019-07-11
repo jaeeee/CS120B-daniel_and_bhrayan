@@ -58,16 +58,16 @@ void TimerSet(unsigned long M) {
 void tick_threeLEDs() {
   switch(threeLEDs) {
     case START:
-    state = LIGHT_1;
+    threeLEDs = LIGHT_1;
     break;
     case LIGHT_1:
-    state = LIGHT_2;
+    threeLEDs = LIGHT_2;
     break;
     case LIGHT_2:
-    state = LIGHT_3;
+    threeLEDs = LIGHT_3;
     break;
     case LIGHT_3:
-    state = LIGHT_1;
+    threeLEDs = LIGHT_1;
     break;
   }
   switch(threeLEDs) {
