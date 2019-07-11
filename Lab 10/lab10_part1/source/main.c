@@ -63,6 +63,7 @@ void tick2() {
   }
   switch(state) {
     case START2:
+    output2 = 0x00;
     break;
     case ON2:
     output2 = 0x08;
