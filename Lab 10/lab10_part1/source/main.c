@@ -32,7 +32,7 @@ void tick() {
     state = LIGHT_3;
     break;
     case LIGHT_3:
-    state = START;
+    state = LIGHT_1;
     break;
   }
   switch(state) {
