@@ -19,7 +19,7 @@
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 enum STATES_2 { START2, ON2, OFF2 } state2;
 // enum STATES_3 { START3, COMBINE } state3;
-enum STATES_3 { START3, OFF3, ON3, HOLD3 } state3;
+enum STATES_3 { START3, OFF3, ON3 } state3;
 
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
