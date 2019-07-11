@@ -16,6 +16,7 @@
 
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 enum STATES_2 { START2, ON2, OFF2 } state2;
+// enum STATES_3 { START3, COMBINE } state3;
 unsigned char output = 0x00;
 unsigned char output2 = 0x00;
 
@@ -58,10 +59,10 @@ void tick2() {
     state2 = OFF2;
     break;
     case OFF2:
-    state2 = START2;
+    state2 = START;
     break;
   }
-  switch(state) {
+  switch(state2) {
     case START2:
     output2 = 0x00;
     break;
@@ -73,6 +74,9 @@ void tick2() {
     break;
   }
 }
+
+
+
 
 int main(void) {
     /* Insert DDR and PORT initializations */
