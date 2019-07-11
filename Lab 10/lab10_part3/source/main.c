@@ -95,7 +95,7 @@ void tick3() {
     if (A2) {
     state3 = ON3;
   } else {
-    start3 = OFF3;
+    state3 = OFF3;
   }
     break;
   }
