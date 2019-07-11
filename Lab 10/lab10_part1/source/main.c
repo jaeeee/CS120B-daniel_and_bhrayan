@@ -16,7 +16,7 @@ unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks
 
 void TimerOn() {
   TCCR1B = 0x0B;
-  OCR1A = 1000;
+  OCR1A = 100;
   TIMSK1 = 0x02;
   TCNT1 = 0;
   _avr_timer_cntcurr = _avr_timer_M;
