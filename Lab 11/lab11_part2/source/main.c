@@ -39,7 +39,6 @@ int tick(int state) {
     }
     break;
     }
-  }
   return state;
 }
 
