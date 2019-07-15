@@ -21,7 +21,7 @@ enum STATES { STATE_OUT };
 
 unsigned char holderB = 0x00;
 unsigned char i;
-constt unsigned char bruh[10] = {'i', 'l', 'o', 'v', 'e', ',', ',' ',' ,'C', 'S'};
+const unsigned char bruh[10] = {'i', 'l', 'o', 'v', 'e', ',', ',' ',' ,'C', 'S'};
 
 int tick(int state) {
   // unsigned char keypad_input;
