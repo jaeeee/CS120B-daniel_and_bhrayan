@@ -34,7 +34,7 @@ int tick(int state) {
   switch(state) {
     case STATE_OUT:
     for (i = 1; i < 10; i++) {
-      LCD_cursor(i);
+      LCD_Cursor(i);
       LCD_WriteData(bruh[i]);
     }
     break;
