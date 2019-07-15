@@ -14,7 +14,7 @@
 #include "simAVRHeader.h"
 #endif
 
-#define A2 (~PINA & 0x04)
+#define A2 (~PINA & 0x01)
 
 enum STATES { START, LIGHT_1, LIGHT_2, LIGHT_3 } state;
 enum STATES_2 { START2, ON2, OFF2 } state2;
