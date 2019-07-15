@@ -35,7 +35,7 @@ int tick(int state) {
     case STATE_OUT:
     for (i = 1; i < 10; i++) {
       LCD_Cursor(i);
-      LCD_WriteData("HELLO WORLD!!!");
+      LCD_DisplayString(1, "HELLO WORLD!!");
     }
     break;
     }
