@@ -7,13 +7,13 @@
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
- #include <avr/io.h>
- #include <avr/interrupt.h>
- #include "timer.h"
- #include "io.c"
- #include "keypad.h"
- #include "scheduler.h"
 #ifdef _SIMULATE_
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include "timer.h"
+#include "io.c"
+#include "keypad.h"
+#include "scheduler.h"
 // #include "./.."
 // #include "io.h"
 // #include "simAVRHeader.h"
