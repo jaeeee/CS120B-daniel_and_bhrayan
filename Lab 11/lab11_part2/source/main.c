@@ -33,10 +33,12 @@ int tick(int state) {
   // keypad_input = GetKeypadKey();
   switch(state) {
     case STATE_OUT:
-    for (i = 1; i < 10; i++) {
-      LCD_Cursor(i);
+    // for (i = 1; i < 10; i++) {
+      // LCD_Cursor(i);
+      LCD_ClearScreen();
+      LCD_Cursor(1);
       LCD_DisplayString(1, "HELLO WORLD!!");
-    }
+    // }
     break;
     }
   return state;
