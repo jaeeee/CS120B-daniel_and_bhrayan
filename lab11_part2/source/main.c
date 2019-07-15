@@ -34,8 +34,8 @@ int tick(int state) {
     }
     break;
     }
-    state = STATE_OUT;
-    PORTB = holderB;
+    // state = STATE_OUT;
+    // PORTB = holderB;
     break;
   }
   return state;
