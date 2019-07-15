@@ -10,11 +10,12 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
-#include "io.h"
-#include "simAVRHeader.h"
-#include "timer.h"
-#include "scheduler.h"
-#include "keypad.h"
+#include "./.."
+// #include "io.h"
+// #include "simAVRHeader.h"
+// #include "timer.h"
+// #include "scheduler.h"
+// #include "keypad.h"
 #endif
 
 enum STATES { STATE_OUT };
