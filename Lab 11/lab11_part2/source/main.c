@@ -36,10 +36,11 @@ int tick(int state) {
     }
     // state = STATE_OUT;
     // PORTB = holderB;
-    break;
+    // break;
   }
   return state;
 }
+
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0xFF; PORTA = 0x00;
