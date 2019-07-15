@@ -8,13 +8,14 @@
 
 enum SM1_States{SM1_output};
 unsigned char counter = 1;
+unsigned char i;
 unsigned char tmpB = 0x00;
 const unsigned char phrase[67]={' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','C','S','1','2','0','B',' ','i','s',' ','L','e','g','e','n','d','.','.','.','w','a','i','t',' ','f','o','r',' ','i','t',' ','D','A','R','Y','!',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
 int SMTick1(int state){
 	switch(state){
 		case SM1_output:
-			for(int i = 1; i <= 16; i++){
+			for(i = 1; i <= 16; i++){
 				LCD_Cursor(i);
 				LCD_WriteData(phrase[counter+i-2]);
 				if(counter+i+1 == 68){
