@@ -19,11 +19,21 @@
 enum STATES { STATE_OUT };
 
 unsigned char holderB = 0x00;
+const unsigned char YES[66]={ ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','C','S','1','2','0','B',' ','i','s',' ','L','e','g','e','n','d','.','.','.','w','a','i','t',' ','f','o','r',' ','i','t',' ','D','A','R','Y','!',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+unsigned char limiter = 1;
 
 int tick(int state) {
   switch(state) {
     case STATE_OUT:
-    LCD_DisplayString(1, "CS120 HI");
+    for (int i = 1; i <= 16; i++) {
+      LCD_Cursor(i);
+      LCD_WriteData(YES[limiter+i-2]);
+      if (limiter+i+1 == 66) {
+        limiter = 1;
+      }
+    }
+    limiter++;
+    // LCD_DisplayString(1, "CS120 HI");
     break;
   }
   return state;
