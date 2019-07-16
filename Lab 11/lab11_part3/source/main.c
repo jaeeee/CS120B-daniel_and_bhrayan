@@ -80,27 +80,27 @@ int tick(int state) {
       			case 'A':
       			holderB = 0x0A;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x37);
       			break;
       			case 'B':
       			holderB = 0x0B;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x37);
       			break;
       			case 'C':
       			holderB = 0x0C;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x37);
       			break;
       			case 'D':
       			holderB = 0x0D;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x37);
       			break;
       			case '*':
       			holderB = 0x0E;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x1C);
       			break;
       			case '0':
       			holderB = 0x00;
@@ -110,12 +110,12 @@ int tick(int state) {
       			case '#':
       			holderB = 0x0F;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            LCD_WriteData(holderB + 0x14);
       			break;
       			default:
       			// holderB = 0x1B;
-            LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
+            // LCD_Cursor(1);
+            // LCD_WriteData(holderB + '0');
       			break;
     }
     state = STATE_OUT;
@@ -145,7 +145,7 @@ int main(void) {
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
-	   TimerSet(10);
+	   TimerSet(1000);
 	   TimerOn();
      LCD_init();
 
