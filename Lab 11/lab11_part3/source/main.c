@@ -145,23 +145,23 @@ int tick(int state) {
     saved = holderB;
     break;
     case BUTTON_PRESSED:
-    // LCD_Cursor(1);
-    // switch(flag) {
-    //   case 1:
-    //   LCD_WriteData(saved + '0');
-    //   break;
-    //   case 2:
-    //   LCD_WriteData(saved + 0x37);
-    //   break;
-    //   case 3:
-    //   LCD_WriteData(saved + 0x1C);
-    //   break;
-    //   case 4:
-    //   LCD_WriteData(saved + 0x14);
-    //   break;
-    // }
     LCD_Cursor(1);
-    LCD_WriteData(saved + '0');
+    switch(flag) {
+      case 1:
+      LCD_WriteData(saved + '0');
+      break;
+      case 2:
+      LCD_WriteData(saved + 0x37);
+      break;
+      case 3:
+      LCD_WriteData(saved + 0x1C);
+      break;
+      case 4:
+      LCD_WriteData(saved + 0x14);
+      break;
+    }
+    // LCD_Cursor(1);
+    // LCD_WriteData(saved + '0');
     // LCD_WriteData(holderB + '0');
     if (keypad_input != NULL) {
       state = STATE_OUT;
@@ -172,9 +172,9 @@ int tick(int state) {
     break;
   }
   // flag;
-  if (PORTB != 0x00) {
-    flag = 1;
-  }
+  // if (PORTB != 0x00) {
+    // flag = 1;
+  // }
   return state;
 }
 int main(void) {
