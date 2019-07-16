@@ -193,7 +193,7 @@ int main(void) {
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
-	   TimerSet(10);
+	   TimerSet(20);
 	   TimerOn();
      LCD_init();
 
