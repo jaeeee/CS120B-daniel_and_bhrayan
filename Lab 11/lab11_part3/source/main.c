@@ -114,7 +114,7 @@ int tick(int state) {
       			break;
       			default:
             LCD_Cursor(1);
-            LCD_DisplayString("NOTHING");
+            LCD_DisplayString(1,"NOTHING");
       			// holderB = 0x1B;
             // LCD_Cursor(1);
             // LCD_WriteData(holderB + '0');
