@@ -19,7 +19,7 @@
 enum STATES { STATE_OUT };
 
 unsigned char holderB;
-unsigned char flag = 0;
+unsigned char flag;
 int tick(int state) {
   unsigned char keypad_input;
   keypad_input = GetKeypadKey();
@@ -127,6 +127,10 @@ int tick(int state) {
     PORTB = holderB;
     holderB = PORTB;
     break;
+  }
+  // flag;
+  if (PORTB != 0x00) {
+    flag = 1;
   }
   return state;
 }
