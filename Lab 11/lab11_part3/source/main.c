@@ -25,7 +25,7 @@ int tick(int state) {
   keypad_input = GetKeypadKey();
   switch(state) {
     case STATE_OUT:
-    if (flag) {
+    if (flag && keypad_input == NULL) {
       LCD_Cursor(1);
       LCD_WriteData(holderB + '0');
     }
@@ -150,7 +150,7 @@ int main(void) {
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
-	   TimerSet(10);
+	   TimerSet(100);
 	   TimerOn();
      LCD_init();
 
