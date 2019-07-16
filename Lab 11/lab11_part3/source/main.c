@@ -19,15 +19,15 @@
 enum STATES { STATE_OUT };
 
 unsigned char holderB;
-
+unsigned char flag;
 int tick(int state) {
   unsigned char keypad_input;
   keypad_input = GetKeypadKey();
   switch(state) {
     case STATE_OUT:
-    if (keypad_input == NULL) {
+    if (keypad_input == NULL && flag) {
       LCD_Cursor(1);
-      LCD_DisplayString(1,"NOTHING");
+      LCD_WriteData(holderB + '0');
     }
     switch(keypad_input) {
       case '\0':
