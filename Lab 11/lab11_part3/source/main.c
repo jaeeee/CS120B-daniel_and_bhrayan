@@ -20,6 +20,7 @@ enum STATES { STATE_OUT, BUTTON_PRESSED };
 
 unsigned char holderB;
 unsigned char flag;
+unsigned char saved;
 int tick(int state) {
   unsigned char keypad_input;
   keypad_input = GetKeypadKey();
@@ -141,21 +142,22 @@ int tick(int state) {
     state = BUTTON_PRESSED;
     PORTB = holderB;
     // holderB = PORTB;
+    saved = holderB;
     break;
     case BUTTON_PRESSED:
     LCD_Cursor(1);
     switch(flag) {
       case 1:
-      LCD_WriteData(holderB + '0');
+      LCD_WriteData(saved + '0');
       break;
       case 2:
-      LCD_WriteData(holderB + 0x37);
+      LCD_WriteData(saved + 0x37);
       break;
       case 3:
-      LCD_WriteData(holderB + 0x1C);
+      LCD_WriteData(saved + 0x1C);
       break;
       case 4:
-      LCD_WriteData(holderB + 0x14);
+      LCD_WriteData(saved + 0x14);
       break;
     }
     // LCD_WriteData(holderB + '0');
