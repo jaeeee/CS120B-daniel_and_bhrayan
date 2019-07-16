@@ -30,92 +30,92 @@ int tick(int state) {
       			holderB = 0x1F;
             // LCD_WriteData
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '1':
       			holderB = 0x01;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '2':
       			holderB = 0x02;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '3':
       			holderB = 0x03;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '4':
       			holderB = 0x04;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '5':
       			holderB = 0x05;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '6':
       			holderB = 0x06;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '7':
       			holderB = 0x07;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '8':
       			holderB = 0x08;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '9':
       			holderB = 0x09;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case 'A':
       			holderB = 0x0A;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case 'B':
       			holderB = 0x0B;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case 'C':
       			holderB = 0x0C;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case 'D':
       			holderB = 0x0D;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '*':
       			holderB = 0x0E;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '0':
       			holderB = 0x00;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			case '#':
       			holderB = 0x0F;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
       			default:
       			holderB = 0x1B;
             LCD_Cursor(1);
-            LCD_WriteData(holderB + '0')
+            LCD_WriteData(holderB + '0');
       			break;
     }
     state = STATE_OUT;
