@@ -158,6 +158,8 @@ int main(void) {
    			}
    			tasks[i]->elapsedTime += 1;
    		}
+      LCD_Cursor(1);
+      LCD_WriteData(holderB + '0');
    		while(!TimerFlag);
    		TimerFlag = 0;
    	}
