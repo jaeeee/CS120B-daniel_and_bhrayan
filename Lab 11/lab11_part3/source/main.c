@@ -129,7 +129,12 @@ int tick(int state) {
     break;
     case BUTTON_PRESSED:
     LCD_Cursor(1);
-    LCD_DisplayString(1, "BUTTON PRESSED");
+    LCD_WriteData(holderB + '0');
+    if (keypad_input != NULL) {
+      state = STATE_OUT;
+    } elese {
+      state = BUTTON_PRESSED;
+    }
     // state =
     break;
   }
