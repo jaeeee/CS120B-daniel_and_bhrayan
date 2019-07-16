@@ -49,7 +49,7 @@ void LCD_WriteData(unsigned char Data) {
    delay_ms(1);
 }
 
-void LCD_DisplayString( unsigned char column, const char* string) {
+void LCD_DisplayString( unsigned char column, const unsigned char* string) {
    LCD_ClearScreen();
    unsigned char c = column;
    while(*string) {
