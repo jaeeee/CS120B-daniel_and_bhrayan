@@ -27,6 +27,7 @@ enum STATES { STATE_OUT };
 unsigned char holderB = 0x00;
 unsigned char i;
 const unsigned char bruh[10] = {'i', 'l', 'o', 'v', 'e', ',', ',', ',' ,'C', 'S'};
+// const unsigned char
 
 int tick(int state) {
   // unsigned char keypad_input;
@@ -37,7 +38,7 @@ int tick(int state) {
       // LCD_Cursor(i);
       LCD_ClearScreen();
       LCD_Cursor(1);
-LCD_DisplayString(1, "YOU WON (VICTORY)!");
+LCD_DisplayString(1, "hello");
     // }
     break;
     }
