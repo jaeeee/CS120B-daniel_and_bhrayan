@@ -113,6 +113,8 @@ int tick(int state) {
             LCD_WriteData(holderB + 0x14);
       			break;
       			default:
+            LCD_Cursor(1);
+            LCD_DisplayString("NOTHING");
       			// holderB = 0x1B;
             // LCD_Cursor(1);
             // LCD_WriteData(holderB + '0');
@@ -158,8 +160,8 @@ int main(void) {
    			}
    			tasks[i]->elapsedTime += 1;
    		}
-      LCD_Cursor(1);
-      LCD_WriteData(holderB + '0');
+      // LCD_Cursor(1);
+      // LCD_WriteData(holderB + '0');
    		while(!TimerFlag);
    		TimerFlag = 0;
    	}
