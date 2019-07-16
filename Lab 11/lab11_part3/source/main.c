@@ -132,7 +132,7 @@ int tick(int state) {
     LCD_WriteData(holderB + '0');
     if (keypad_input != NULL) {
       state = STATE_OUT;
-    } elese {
+    } else {
       state = BUTTON_PRESSED;
     }
     // state =
