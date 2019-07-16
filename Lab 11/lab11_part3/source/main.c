@@ -125,7 +125,7 @@ int tick(int state) {
     }
     state = BUTTON_PRESSED;
     PORTB = holderB;
-    holderB = PORTB;
+    // holderB = PORTB;
     break;
     case BUTTON_PRESSED:
     LCD_Cursor(1);
@@ -164,7 +164,7 @@ int main(void) {
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
-	   TimerSet(100);
+	   TimerSet(10);
 	   TimerOn();
      LCD_init();
 
