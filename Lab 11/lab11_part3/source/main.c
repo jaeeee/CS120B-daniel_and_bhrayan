@@ -120,6 +120,7 @@ int tick(int state) {
     }
     state = STATE_OUT;
     PORTB = holderB;
+    holderB = PORTB;
     break;
   }
   return state;
