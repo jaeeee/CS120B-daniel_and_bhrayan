@@ -25,6 +25,8 @@ int tick(int state) {
   keypad_input = GetKeypadKey();
   switch(state) {
     case STATE_OUT:
+    LCD_Cursor(1);
+    LCD_DisplayString(1,"NOTHING");
     switch(keypad_input) {
       case '\0':
       			holderB = 0x1F;
@@ -113,8 +115,6 @@ int tick(int state) {
             LCD_WriteData(holderB + 0x14);
       			break;
       			default:
-            LCD_Cursor(1);
-            LCD_DisplayString(1,"NOTHING");
       			// holderB = 0x1B;
             // LCD_Cursor(1);
             // LCD_WriteData(holderB + '0');
