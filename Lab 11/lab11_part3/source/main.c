@@ -31,13 +31,13 @@ int tick(int state) {
     //   LCD_WriteData(holderB + '0');
     // }
     switch(keypad_input) {
-      case '\0':
-      			// holderB = 0x1F;
-            flag = 1;
-            // LCD_WriteData
-            LCD_Cursor(1);
-            LCD_WriteData(holderB + '0');
-      			break;
+      // case '\0':
+      // 			// holderB = 0x1F;
+      //       flag = 1;
+      //       // LCD_WriteData
+      //       LCD_Cursor(1);
+      //       LCD_WriteData(holderB + '0');
+      // 			break;
       			case '1':
             flag = 1;
       			holderB = 0x01;
