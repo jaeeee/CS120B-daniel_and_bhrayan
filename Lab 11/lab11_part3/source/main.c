@@ -16,7 +16,7 @@
 #include "io.c"
 #endif
 
-enum STATES { STATE_OUT };
+enum STATES { STATE_OUT, BUTTON_PRESSED };
 
 unsigned char holderB;
 unsigned char flag;
@@ -123,9 +123,14 @@ int tick(int state) {
             // LCD_WriteData(holderB + '0');
       			break;
     }
-    state = STATE_OUT;
+    state = BUTTON_PRESSED;
     PORTB = holderB;
     holderB = PORTB;
+    break;
+    case BUTTON_PRESSED:
+    LCD_Cursor(1);
+    LCD_DisplayString(1, "BUTTON PRESSED");
+    // state =
     break;
   }
   // flag;
