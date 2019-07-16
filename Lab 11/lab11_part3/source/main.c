@@ -18,7 +18,7 @@
 
 enum STATES { STATE_OUT };
 
-unsigned char holderB = 0x00;
+unsigned char holderB;
 
 int tick(int state) {
   unsigned char keypad_input;
