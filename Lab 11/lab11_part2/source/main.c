@@ -13,6 +13,7 @@
 #include "timer.h"
 #include "scheduler.h"
 #include "keypad.h"
+#include "io.c"
 #endif
 
 enum STATES { STATE_OUT };
