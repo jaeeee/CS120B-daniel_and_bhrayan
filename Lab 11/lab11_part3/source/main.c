@@ -32,7 +32,7 @@ int tick(int state) {
     // }
     switch(keypad_input) {
       case '\0':
-      			holderB = 0x1F;
+      			// holderB = 0x1F;
             flag = 1;
             // LCD_WriteData
             LCD_Cursor(1);
