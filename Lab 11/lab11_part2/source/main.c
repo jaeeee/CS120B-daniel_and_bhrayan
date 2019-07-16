@@ -26,7 +26,7 @@ const unsigned char YES[66]={' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '
 int tick(int state) {
   switch(state) {
     case STATE_OUT:
-    for (int i = 1; i <= 16; i++) {
+    for (i = 1; i <= 16; i++) {
       LCD_Cursor(i);
       LCD_WriteData(YES[limiter+i-2]);
       if (limiter+i+1 == 66) {
