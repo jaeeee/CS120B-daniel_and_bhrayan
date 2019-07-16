@@ -140,8 +140,8 @@ int main(void) {
 
 	   // Task 1
 	   task1.state = 0;//Task initial state.
-	   task1.period = 2;//Task Period.
-	   task1.elapsedTime = 2;//Task current elapsed time.
+	   task1.period = 10;//Task Period.
+	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
 	   TimerSet(10);
