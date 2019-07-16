@@ -37,7 +37,7 @@ int tick(int state) {
       // LCD_Cursor(i);
       LCD_ClearScreen();
       LCD_Cursor(1);
-      LCD_DisplayString(1, "HELLO WORLD!!");
+LCD_DisplayString(1, "YOU WON (VICTORY)!");
     // }
     break;
     }
