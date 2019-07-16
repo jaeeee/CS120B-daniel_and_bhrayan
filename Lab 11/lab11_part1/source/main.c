@@ -88,9 +88,11 @@ int tick(int state) {
 }
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0xFF; PORTA = 0x00;
+    // DDRA = 0xFF; PORTA = 0x00;
+    //NEW DDRA
+    DDRA = 0xF0; PORTA = 0x0F;
     DDRB = 0xFF; PORTB= 0x00;
-    DDRC = 0xF0; PORTC = 0x0F;
+    // DDRC = 0xF0; PORTC = 0x0F;
     DDRD = 0xFF; PORTD = 0x00;
 
     // unsigned long int
