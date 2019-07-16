@@ -146,6 +146,7 @@ int main(void) {
 
 	   TimerSet(10);
 	   TimerOn();
+     LCD_init();
 
      unsigned short i; // Scheduler for-loop iterator
    	while(1) {
