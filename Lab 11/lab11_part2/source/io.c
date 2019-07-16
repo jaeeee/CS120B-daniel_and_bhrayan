@@ -6,7 +6,7 @@
 #define SET_BIT(p,i) ((p) |= (1 << (i)))
 #define CLR_BIT(p,i) ((p) &= ~(1 << (i)))
 #define GET_BIT(p,i) ((p) & (1 << (i)))
-          
+
 /*-------------------------------------------------------------------------*/
 
 #define DATA_BUS PORTC		// port connected to pins 7-14 of LCD display
@@ -28,7 +28,7 @@ void LCD_init(void) {
 	LCD_WriteCommand(0x06);
 	LCD_WriteCommand(0x0f);
 	LCD_WriteCommand(0x01);
-	delay_ms(10);						 
+	delay_ms(10);
 }
 
 void LCD_WriteCommand (unsigned char Command) {
