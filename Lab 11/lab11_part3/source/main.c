@@ -32,27 +32,31 @@ int tick(int state) {
     switch(keypad_input) {
       case '\0':
       			holderB = 0x1F;
+            flag = 1;
             // LCD_WriteData
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '1':
-            // flag = 1;
+            flag = 1;
       			holderB = 0x01;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '2':
+            flag = 1;
       			holderB = 0x02;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '3':
+            flag = 1;
       			holderB = 0x03;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '4':
+            flag = 1;
       			holderB = 0x04;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
@@ -63,56 +67,67 @@ int tick(int state) {
             LCD_WriteData(holderB + '0');
       			break;
       			case '6':
+            flag = 1;
       			holderB = 0x06;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '7':
+            flag = 1;
       			holderB = 0x07;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '8':
+            flag = 1;
       			holderB = 0x08;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '9':
+            flag = 1;
       			holderB = 0x09;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case 'A':
+            flag = 2;
       			holderB = 0x0A;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x37);
       			break;
       			case 'B':
+            flag = 2;
       			holderB = 0x0B;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x37);
       			break;
       			case 'C':
+            flag = 2;
       			holderB = 0x0C;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x37);
       			break;
       			case 'D':
+            flag = 2;
       			holderB = 0x0D;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x37);
       			break;
       			case '*':
+            flag = 3;
       			holderB = 0x0E;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x1C);
       			break;
       			case '0':
+            flag = 1;
       			holderB = 0x00;
             LCD_Cursor(1);
             LCD_WriteData(holderB + '0');
       			break;
       			case '#':
+            flag = 4;
       			holderB = 0x0F;
             LCD_Cursor(1);
             LCD_WriteData(holderB + 0x14);
@@ -129,7 +144,21 @@ int tick(int state) {
     break;
     case BUTTON_PRESSED:
     LCD_Cursor(1);
-    LCD_WriteData(holderB + '0');
+    switch(flag) {
+      case 1:
+      LCD_WriteData(holderB + '0');
+      break;
+      case 2:
+      LCD_WriteData(holderB + 0x37);
+      break;
+      case 3:
+      LCD_WriteData(holderB + 0x1C);
+      break;
+      case 4:
+      LCD_WriteData(holderB + 0x14);
+      break;
+    }
+    // LCD_WriteData(holderB + '0');
     if (keypad_input != NULL) {
       state = STATE_OUT;
     } else {
