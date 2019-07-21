@@ -198,14 +198,23 @@ int tick(int state) {
         EEPROM_Write(0x01, 7); //write highscore
         EEPROM_Write(0x00, 0); //write top player
         // sendMenu();
-    PORTA = 0xFF;
-    transmit_data(0x00);
+    // PORTA = 0x01;
+    // PORTB =
+    // PORTB = ~0xFE;
+    // transmit_data(0x00);
     // PORTA = 0xFF;
+    updateMatrix(1, 5);
     // transmit_data(0x2E);
     // transmit_data2(0x38);
     break;
   }
   return state;
+}
+
+void updateMatrix(unsigned char x, unsigned char y) {
+  // unsigned char hexVal1, unsigned char hexVal2;
+  PORTA |= x;
+  PORTB |= ~y;
 }
 
 void sendMenu() {
