@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <stdio.h>
 #include "io.h"
+#include "constants.h"
 
 #define SET_BIT(p,i) ((p) |= (1 << (i)))
 #define CLR_BIT(p,i) ((p) &= ~(1 << (i)))
