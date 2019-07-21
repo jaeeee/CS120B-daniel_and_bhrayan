@@ -49,6 +49,21 @@ void LCD_WriteData(unsigned char Data) {
    delay_ms(1);
 }
 
+/**
+FUNCTION TO CREATE A CUSTOM ASCII CHARACTER :) PRETTY COOL THO
+**/
+void LCD_createChar(unsigned char indx, unsigned char *ptr) {
+  unsigned char i;
+  if (indx < 8) {
+    LCD_WriteCommand(0x40 + indx*8);
+    for (i = 0; i < 8; i++) {
+      LCD_WriteData(ptr[i]);
+    }
+  }
+  LCD_WriteCommand(0x80);
+  // LCD_WriteData(indx);
+}
+
 void LCD_DisplayString( unsigned char column, const unsigned char* string) {
    LCD_ClearScreen();
    unsigned char c = column;
