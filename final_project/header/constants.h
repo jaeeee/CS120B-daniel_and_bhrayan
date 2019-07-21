@@ -2,6 +2,11 @@
 #define CONSTANTS_H
 
 
+// unsigned char
+
+unsigned char ROW_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
+unsigned char COLUMN_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
+
 unsigned char player1[8] = {
   0x1F,
   0x1F,

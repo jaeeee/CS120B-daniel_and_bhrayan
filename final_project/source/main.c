@@ -20,8 +20,8 @@
 
 //button configuration
 /** MENU SELECTION (1-5) **/
-#define BUTTON1 (~PINA & 0x01) //up (p1)
-#define BUTTON2 (~PINA & 0x02) //down (p1)
+#define BUTTON1 (~PIND & 0x01) //up (p1)
+#define BUTTON2 (~PIND & 0x02) //down (p1)
 #define BUTTON3 (~PINA & 0x04) //up (p2)
 #define BUTTON4 (~PINA & 0x08) //down (p2)
 #define BUTTON5 (~PINA & 0x10) //reset?
@@ -29,6 +29,9 @@
 unsigned char highScore;
 unsigned char myPlayer; //0x00, 0x01, 0x02, 0x03
 unsigned char bestPlayer;
+unsigned char playerX = 0;
+unsigned char playerY = 0;
+unsigned char currentDirection = 1;
 
 enum STATES { STATE_OUT };
 
@@ -137,85 +140,64 @@ void transmit_data(unsigned char data) {
 	PORTA = 0x00;
 }
 
-// void transmit_data (unsigned char data) {
-//     /* BOT_SR uses A0 - A3  -- controls  GREEN (x), use '~' on data */
-//     // if (SR == BOT_SR) {
-//         // data = ~data;
-//         for (int i = 7; i >= 0; --i) {
-//             // Sets SRCLR to 1 allowing data to be set
-//             // Also clears SRCLK in preparation of sending data
-//             PORTA &= 0xF8; PORTA |= 0x08;
-//             // set SER = next bit of data to be sent.
-//             PORTA |= ((data >> i) & 0x01);
-//             // set SRCLK = 1. Rising edge shifts next bit of data into the shift register
-//             PORTA |= 0x04;
-//         }
-//         // set RCLK = 1. Rising edge copies data from the “Shift” register to the “Storage” register
-//         PORTA |= 0x02;
-//         // clears all lines in preparation of a new transmission
-//         PORTA &= 0xF0;
-//     }
-//
-// //A4-A7
-//     void transmit_data2(unsigned char data) {
-//       data = ~data;
-//       for (int i = 7; i >= 0; --i) {
-//           // Sets SRCLR to 1 allowing data to be set
-//           // Also clears SRCLK in preparation of sending data
-//           PORTA &= 0x8F; PORTA |= 0x80;
-//           // set SER = next bit of data to be sent.
-//           PORTA |= ((data >> i) & 0x01) << 4;
-//           // set SRCLK = 1. Rising edge shifts next bit of data into the shift register
-//           PORTA |= 0x40;
-//       }
-//       // set RCLK = 1. Rising edge copies data from the “Shift” register to the “Storage” register
-//       PORTA |= 0x20;
-//       // clears all lines in preparation of a new transmission
-//       PORTA &= 0x0F;
-//     }
-
-// void transmit_data(unsigned char data) {
-// 	int i;
-// 	for (i = 7; i >= 0 ; --i) {
-// 		// Sets SRCLR to 1 allowing data to be set
-// 		// Also clears SRCLK in preparation of sending data
-// 		PORTA = 0x08;
-// 		// set SER = next bit of data to be sent.
-// 		PORTA |= ((data >> i) & 0x01);
-// 		// set SRCLK = 1. Rising edge shifts next bit of data into the shift register
-// 		PORTA |= 0x04;
-// 	}
-//
-// 	// set RCLK = 1. Rising edge copies data from the “Shift” register to the “Storage” register
-// 	PORTA |= 0x02;
-// 	// clears all lines in preparation of a new transmission
-// 	PORTA = 0x00;
-// }
-
 int tick(int state) {
   switch(state) {
     case STATE_OUT:
         EEPROM_Write(0x01, 7); //write highscore
         EEPROM_Write(0x00, 0); //write top player
-        // sendMenu();
-    // PORTA = 0x01;
-    // PORTB =
-    // PORTB = ~0xFE;
-    // transmit_data(0x00);
-    // PORTA = 0xFF;
-    updateMatrix(1, 5);
-    // transmit_data(0x2E);
-    // transmit_data2(0x38);
+      updateMatrixSingle(playerX, playerY);
+      if(BUTTON1) {
+        moveCharacter(1);
+      }
+      if (BUTTON2) {
+        moveCharacter(0);
+      }
+      // moveCharacter(1);
     break;
   }
   return state;
 }
 
-void updateMatrix(unsigned char x, unsigned char y) {
+
+void updateMatrix() { //writes on matrix
+// PORTA |=
+}
+
+//column value must be NOTed
+void updateMatrixSingle(unsigned char x, unsigned char y) {
+  if (currentDirection == 1) {
+  y = ROW_VALUES[y] + ROW_VALUES[y+1];
+} else {
+  y = ROW_VALUES[y] + ROW_VALUES[y-1];
+}
+  // x = HEX_VALUES[x];
+  unsigned char convertedY = ~y;
   // unsigned char hexVal1, unsigned char hexVal2;
   PORTA |= x;
-  PORTB |= ~y;
+  PORTB = convertedY;
 }
+
+void moveCharacter(unsigned char pos) {
+switch(pos) {
+  case 0:
+  if (playerY > 1 && currentDirection == 0) {
+    playerY--;
+  } else {
+    currentDirection = 1;
+    moveCharacter(1);
+  }
+  break;
+  case 1:
+  if (playerY <= 5 && currentDirection == 1) {
+    playerY++;
+  } else {
+    currentDirection = 0;
+    moveCharacter(0);
+  }
+  break;
+}
+}
+
 
 void sendMenu() {
   LCD_init();
@@ -246,39 +228,36 @@ int main(void) {
         // DDRA = 0x03; PORTA = 0xFC; //KEYPAD AS keypad_input
         DDRA = 0xFF; PORTA = 0x00;
       	DDRC = 0xFF; PORTC = 0x00;
-        DDRD = 0xFF; PORTD = 0x00;  //ORIGINAL
-        // DDRD = 0x40; PORTD = 0xBF;
-    // PORTA &= ~(1 << LATCH) & ~(1 << CLOCK); //sets latch and clock low
-
+        DDRD = 0xFC; PORTD = 0x03;  //ORIGINAL
     static task task1;
     task *tasks[] = { &task1};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
-
-    // PORTA = 0x3F;
-    // PORTB = 0xFF;
-	   // Task 1
 	   task1.state = 0;//Task initial state.
 	   task1.period = 30;//Task Period.
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
 
-	   TimerSet(10);
+	   TimerSet(100);
 	   TimerOn();
-     // LCD_init();
      sendMenu();
      unsigned short i; // Scheduler for-loop iterator
+     playerX = 1;
+     playerY = 0;
    	while(1) {
-   		for ( i = 0; i < numTasks; i++ ) {
-   			if ( tasks[i]->elapsedTime == tasks[i]->period ) {
-   				tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-   				tasks[i]->elapsedTime = 0;
-   			}
-   			tasks[i]->elapsedTime += 1;
-   		}
-      // LCD_Cursor(1);
-      // LCD_WriteData(holderB + '0');
-   		while(!TimerFlag);
-   		TimerFlag = 0;
+   		// for ( i = 0; i < numTasks; i++ ) {
+   		// 	if ( tasks[i]->elapsedTime == tasks[i]->period ) {
+   		// 		tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+   		// 		tasks[i]->elapsedTime = 0;
+   		// 	}
+   		// 	tasks[i]->elapsedTime += 1;
+   		// }
+   		// while(!TimerFlag);
+   		// TimerFlag = 0;
+      if (!BUTTON1) {
+        PORTA = 0xFF;
+      } else {
+        PORTA = 0x00;
+      }
    	}
     return 0;
 }
