@@ -21,9 +21,10 @@
 
 //button configuration
 /** MENU SELECTION (1-5) **/
-#define F_CPU 1000000 UL# define BUTTON1(~PIND & 0x01) //right
-#define BUTTON2(~PIND & 0x02) //left
-#define BUTTON3(~PINA & 0x04)
+#define F_CPU 1000000 UL
+#define BUTTON1 (~PIND & 0x01) //right
+#define BUTTON2 (~PIND & 0x02) //left
+#define BUTTON3 (~PINA & 0x04)
 // #define BUTTON4 (~PINA & 0x08) //down (p2)
 // #define BUTTON5 (~PINA & 0x10) //reset?
 
@@ -32,7 +33,7 @@ unsigned char myPlayer; //0x00, 0x01, 0x02, 0x03
 unsigned char bestPlayer;
 unsigned char playerX = 0;
 unsigned char playerY = 0;
-unsigned char currentDirection = 1;
+unsigned char currentDirection = 1; //trajectory of player
 unsigned char gameState; //status of the game
 unsigned char mousePos;
 unsigned char score;
@@ -274,7 +275,8 @@ int fall_tick(int state) {
     state = CALCULATE;
     break;
   case CALCULATE:
-    if (COLUMNS[0] == playerCoords[0] || COLUMNS[0] == playerCoords[1]) {
+    // if (COLUMNS[0] == playerCoords[0] || COLUMNS[0] == playerCoords[1]) {
+    if (COLUMNS[0] != playerCoords[0] && COLUMNS[0] != playerCoords[1]) {
       if (score >= 9) {
         state = FALL_START;
         gameState = 0x00;
@@ -284,11 +286,14 @@ int fall_tick(int state) {
       } else {
         score++;
         state = SPAWN;
+        // state =
         // task2.elapsedTime+=5;
         sendInGame();
       }
     } else {
       state = FALL_START;
+      gameState = 0x00;
+      sendLose();
     }
     break;
   }
@@ -361,6 +366,30 @@ void sendWin() {
   LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
 }
 
+void sendLose() {
+  // highScore = EEPROM_Read(0x01);
+  // if (score > highScore) {
+  //   EEPROM_Write(0x01, score); //write highscore
+  //   EEPROM_Write(0x00, myPlayer); //write top player
+  // }
+  //save high scores
+  // if ()
+  score = 0;
+  ROWS[0] = 0;
+  COLUMNS[0] = 0;
+  ROWS[1] = 0;
+  COLUMNS[1] = 0;
+  LCD_init();
+  LCD_ClearScreen();
+  // LCD_DisplayString_NO_CLEAR(1, "Player ");
+  // LCD_Cursor(7);
+  // LCD_WriteData(myPlayer);
+  // LCD_Cursor(mousePos); //cursor pos
+  LCD_DisplayString(5, "LOSER: ");
+  LCD_WriteData(myPlayer);
+  LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
+}
+
 void sendMenu() {
   score = 0;
   ROWS[0] = 0;
@@ -429,7 +458,7 @@ int main(void) {
   task1.TickFct = & tick; //Function pointer for the tick.
   //TASK 2 (FALLING)
   task2.state = 0;
-  task2.period = 50;
+  task2.period = 20;
   task2.elapsedTime = 0;
   task2.TickFct = & fall_tick;
 
@@ -446,17 +475,19 @@ int main(void) {
   PORTA = 0xFF;
   while (1) {
     if (gameState == 0x00) { //game not going on rn
+      PORTA = 0xFF;
+      PORTB = 0x00;
       // sendMenu();
       menu_tick();
     }
     if (gameState == 0x01) { //playing
       displayLEDMatrix();
       for (i = 0; i < numTasks; i++) {
-        if (tasks[i] - > elapsedTime == tasks[i] - > period) {
-          tasks[i] - > state = tasks[i] - > TickFct(tasks[i] - > state);
-          tasks[i] - > elapsedTime = 0;
+        if (tasks[i]-> elapsedTime == tasks[i]-> period) {
+          tasks[i]-> state = tasks[i] -> TickFct(tasks[i]-> state);
+          tasks[i]-> elapsedTime = 0;
         }
-        tasks[i] - > elapsedTime += 1;
+        tasks[i]-> elapsedTime += 1;
       }
       while (!TimerFlag);
       TimerFlag = 0;
