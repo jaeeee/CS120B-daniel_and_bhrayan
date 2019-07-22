@@ -26,7 +26,7 @@
 #define BUTTON2 (~PIND & 0x02) //left
 #define BUTTON3 (~PIND & 0x04)
 #define DEFAULT_SPEED 60
-#define MOVES_PER_TICK 3
+// #define MOVES_PER_TICK 3
 
 // #define BUTTON4 (~PINA & 0x08) //down (p2)
 // #define BUTTON5 (~PINA & 0x10) //reset?
@@ -41,7 +41,7 @@ unsigned char gameState; //status of the game
 unsigned char mousePos;
 int score;
 unsigned char speed = DEFAULT_SPEED;
-unsigned char moves = MOVES_PER_TICK;
+// unsigned char moves = MOVES_PER_TICK;
 
 /**
 GAME DATA (MATRIX)
@@ -299,7 +299,7 @@ int fall_tick(int state) {
         // sendInGame();
       } else {
         score++;
-        moves++;
+        // moves++;
         state = SPAWN;
         // state =
         // task2.elapsedTime+=5;
