@@ -1,21 +1,19 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-
-// unsigned char
-
 unsigned char ROW_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
 unsigned char COLUMN_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
+unsigned char FALLING_SEQUENCE[8] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
 unsigned char player1[8] = {
-  0x1F,
-  0x1F,
-  0x15,
-  0x1F,
+  0x04,
+  0x04,
+  0x0E,
+  0x11,
   0x00,
   0x1F,
-  0x1F,
-  0x1F
+  0x04,
+  0x04
 };
 
 unsigned char player2[8] = {

@@ -16,9 +16,7 @@
 #include "keypad.h"
 #include <avr/eeprom.h>
 #include "io.c"
-// #include <time.h>
 #include <stdlib.h>
-// #include <math.h>
 #endif
 
 //button configuration
@@ -52,8 +50,6 @@ unsigned char playerCoords[2];
 unsigned char ROWS[2];
 
 unsigned char COLUMNS[2];
-
-unsigned char FALLING_SEQUENCE[8] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
 enum STATES { STATE_OUT };
 
@@ -183,10 +179,7 @@ int tick(int state) {
 
 
 int generateRandom() {
-  //CHANGE PLZ
-  int r = rand() % 8 + 1;
-  r = rand() % 8 + 1;
-  return r;
+  return (rand() % 8) + 1;;
 }
 
 unsigned char convert(int x){
@@ -374,6 +367,7 @@ void sendMenu() {
   //load acharacters
   LCD_createChar(0, player1);
   LCD_createChar(1, player2);
+  LCD_createChar(2, player3);
   LCD_createChar(3, player4);
   LCD_Cursor(7);
   LCD_WriteData(0x00);
