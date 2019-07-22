@@ -5,7 +5,7 @@
 * Daniel Kwong
 
 # Tasks
-The game has 2 tasks and 1 menu FSM.
+The game is a SynchSM which has 2 tasks and 1 menu FSM.
 * `MENU` - serves as a menu in which the player can enter in and out of games, and allows the player to set their game avatar. 
 * `DISPLAY` - doubles as an input and output task. Allows processing of input whilst simultaneously outputting to LCD and LED matrix.
 * `FALLING_STATES` - handles the "AI" of the game, and calculates collisions and contact with the player.
