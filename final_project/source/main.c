@@ -24,11 +24,14 @@
 #define F_CPU 1000000 UL
 #define BUTTON1 (~PIND & 0x01) //right
 #define BUTTON2 (~PIND & 0x02) //left
-#define BUTTON3 (~PINA & 0x04)
+#define BUTTON3 (~PIND & 0x04)
+#define DEFAULT_SPEED 60
+#define MOVES_PER_TICK 3
+
 // #define BUTTON4 (~PINA & 0x08) //down (p2)
 // #define BUTTON5 (~PINA & 0x10) //reset?
 
-unsigned char highScore;
+uint8_t highScore;
 unsigned char myPlayer; //0x00, 0x01, 0x02, 0x03
 unsigned char bestPlayer;
 unsigned char playerX = 0;
@@ -36,7 +39,9 @@ unsigned char playerY = 0;
 unsigned char currentDirection = 1; //trajectory of player
 unsigned char gameState; //status of the game
 unsigned char mousePos;
-unsigned char score;
+int score;
+unsigned char speed = DEFAULT_SPEED;
+unsigned char moves = MOVES_PER_TICK;
 
 /**
 GAME DATA (MATRIX)
@@ -46,9 +51,7 @@ playerCoords stores the Y coordinates of the player (two values)
 
 **/
 unsigned char playerCoords[2];
-
 unsigned char ROWS[2];
-
 unsigned char COLUMNS[2];
 
 enum STATES {
@@ -182,6 +185,8 @@ void printPos() {
 int tick(int state) {
   switch (state) {
   case STATE_OUT:
+  // if (moves > 0) {
+    if (gameState == 0x01) {
     updateMatrixSingle(playerX, playerY);
     if (BUTTON1) { //left
       moveCharacter(1);
@@ -189,8 +194,12 @@ int tick(int state) {
     if (BUTTON2) { //right
       moveCharacter(0);
     }
-    break;
   }
+    break;
+  // }
+}
+    // break;
+    // moves--;
   return state;
 }
 
@@ -223,6 +232,9 @@ unsigned char convert(int x) {
     break;
   case 8:
     return 0x80;
+    break;
+  case 9:
+    return 0x90;
     break;
   default:
     return 0x00;
@@ -275,25 +287,31 @@ int fall_tick(int state) {
     state = CALCULATE;
     break;
   case CALCULATE:
+// moves = MOVES_PER_TICK;
     // if (COLUMNS[0] == playerCoords[0] || COLUMNS[0] == playerCoords[1]) {
     if (COLUMNS[0] != playerCoords[0] && COLUMNS[0] != playerCoords[1]) {
       if (score >= 9) {
         state = FALL_START;
         gameState = 0x00;
-        sendWin();
+        // sendWin();
+        sendGameEnd(1); // send win endStatus
         //sendMenu();
         // sendInGame();
       } else {
         score++;
+        moves++;
         state = SPAWN;
         // state =
         // task2.elapsedTime+=5;
         sendInGame();
+        speed-=5;
+        TimerSet(speed);
       }
     } else {
       state = FALL_START;
       gameState = 0x00;
-      sendLose();
+      // sendLose();
+      sendGameEnd(0); // send loss endStatus
     }
     break;
   }
@@ -319,6 +337,9 @@ void updateMatrixSingle(unsigned char x, unsigned char y) {
 }
 
 void moveCharacter(unsigned char pos) {
+  // if (moves < 1) {
+    // return;
+  // }
   switch (pos) {
   case 0:
     if (playerY > 0) {
@@ -340,16 +361,17 @@ void moveCharacter(unsigned char pos) {
     break;
   }
   updateMatrixSingle(playerX, playerY);
+  // moves--;
 }
 
-void sendWin() {
-  // highScore = EEPROM_Read(0x01);
-  // if (score > highScore) {
-  //   EEPROM_Write(0x01, score); //write highscore
-  //   EEPROM_Write(0x00, myPlayer); //write top player
-  // }
-  //save high scores
-  // if ()
+/**
+Where endstatus = 0 is a loss
+and endstatus = 1 is a win
+**/
+void sendGameEnd(unsigned char endStatus) {
+  TimerSet(DEFAULT_SPEED);
+  speed = DEFAULT_SPEED;
+  checkHighScore();
   score = 0;
   ROWS[0] = 0;
   COLUMNS[0] = 0;
@@ -357,40 +379,17 @@ void sendWin() {
   COLUMNS[1] = 0;
   LCD_init();
   LCD_ClearScreen();
-  // LCD_DisplayString_NO_CLEAR(1, "Player ");
-  // LCD_Cursor(7);
-  // LCD_WriteData(myPlayer);
-  // LCD_Cursor(mousePos); //cursor pos
+  if (endStatus == 1) {
   LCD_DisplayString(5, "WINNER: ");
-  LCD_WriteData(myPlayer);
-  LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
-}
-
-void sendLose() {
-  // highScore = EEPROM_Read(0x01);
-  // if (score > highScore) {
-  //   EEPROM_Write(0x01, score); //write highscore
-  //   EEPROM_Write(0x00, myPlayer); //write top player
-  // }
-  //save high scores
-  // if ()
-  score = 0;
-  ROWS[0] = 0;
-  COLUMNS[0] = 0;
-  ROWS[1] = 0;
-  COLUMNS[1] = 0;
-  LCD_init();
-  LCD_ClearScreen();
-  // LCD_DisplayString_NO_CLEAR(1, "Player ");
-  // LCD_Cursor(7);
-  // LCD_WriteData(myPlayer);
-  // LCD_Cursor(mousePos); //cursor pos
+} else {
   LCD_DisplayString(5, "LOSER: ");
+}
   LCD_WriteData(myPlayer);
   LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
 }
 
 void sendMenu() {
+  // checkHighScore();
   score = 0;
   ROWS[0] = 0;
   COLUMNS[0] = 0;
@@ -400,13 +399,22 @@ void sendMenu() {
   LCD_ClearScreen();
   LCD_DisplayString(18, "highscore: ");
   LCD_Cursor(29);
-  EEPROM_Write(0x01, 5);
-  EEPROM_Write(0x00, 0x02);
-  highScore = EEPROM_Read(0x01);
-  bestPlayer = EEPROM_Read(0x00);
-  LCD_WriteData(('0' + highScore));
+  // EEPROM_Write(0x01, 5);
+  // EEPROM_Write(0x00, 0x02);
+  // highScore = EEPROM_Read(0x01);
+  bestPlayer = EEPROM_Read(0xFF);
+  // highScore = eeprom_read_byte((uint8_t*)22);
+  // eeprom_write_word(22, highScore);
+  // LCD_WriteData(('0' + highScore));
+  highScore = eeprom_read_byte((uint8_t*)22);
+  //reset highscore
+  if(highScore > 20){
+  highScore = 0;
+  }
+eeprom_write_word(22, highScore);
+LCD_WriteData(highScore + '0');
   LCD_Cursor(31);
-  LCD_WriteData(bestPlayer);
+  LCD_WriteData(EEPROM_Read(0xFF));
   //load acharacters
   LCD_createChar(0, player1);
   LCD_createChar(1, player2);
@@ -416,8 +424,18 @@ void sendMenu() {
   LCD_WriteData(0x00);
   LCD_WriteData(0x01);
   LCD_WriteData(0x02);
-  LCD_WriteData(0x03);
+  LCD_WriteData(0x04);
   LCD_Cursor(mousePos); //cursor pos
+}
+
+void checkHighScore() {
+  if (score > highScore) {
+    eeprom_write_byte((uint8_t*)22, score);
+		highScore = eeprom_read_byte((uint8_t*)22);
+    EEPROM_Write(0xFF, myPlayer); // writes new top player
+    bestPlayer = myPlayer;
+    // eeprom_write_byte((uint8_t*)46, highscore);
+  }
 }
 
 void sendInGame() {
@@ -430,6 +448,11 @@ void sendInGame() {
   LCD_Cursor(30);
   LCD_Cursor(1);
   LCD_WriteData('0' + score);
+}
+
+void EEPROM_RESET() {
+  EEPROM_Write(0x01, 0x00);
+  EEPROM_Write(0x00, 0x00);
 }
 
 int main(void) {
@@ -454,7 +477,7 @@ int main(void) {
   //TASK 1 (INPUT)
   task1.state = 0; //Task initial state.
   task1.period = 10; //Task Period.
-  task1.elapsedTime = 10; //Task current elapsed time.
+  task1.elapsedTime = 0; //Task current elapsed time.
   task1.TickFct = & tick; //Function pointer for the tick.
   //TASK 2 (FALLING)
   task2.state = 0;
@@ -464,15 +487,16 @@ int main(void) {
 
   mousePos = 7;
   srand(time(NULL));
-  TimerSet(30);
+  TimerSet(speed);
   TimerOn();
+  // EEPROM_RESET();
   sendMenu();
   unsigned short i; // Scheduler for-loop iterator
   playerX = 1;
   playerY = 0;
   // PORTB = 0x10;
   m_state = START;
-  PORTA = 0xFF;
+  // PORTA = 0xFF;
   while (1) {
     if (gameState == 0x00) { //game not going on rn
       PORTA = 0xFF;
@@ -489,8 +513,30 @@ int main(void) {
         }
         tasks[i]-> elapsedTime += 1;
       }
+      if (BUTTON3) { // SOFT RESET
+        gameState = 0x00;
+        score = 0;
+        ROWS[0] = 0;
+        COLUMNS[0] = 0;
+        ROWS[1] = 0;
+        COLUMNS[1] = 0;
+        playerY = 0;
+        mousePos = 7;
+        // LCD_
+        // LCD_ClearScreen();
+        sendMenu();
+        for (i = 0; i < numTasks; i++ ){
+          tasks[i]->state = 0;
+        }
+        // score = 0;
+        // ROWS[0] = 0;
+        // COLUMNS[0] = 0;
+        // ROWS[1] = 0;
+        // COLUMNS[1] = 0;
+      }
       while (!TimerFlag);
       TimerFlag = 0;
+      // moves = 3;
     }
   }
   return 0;
