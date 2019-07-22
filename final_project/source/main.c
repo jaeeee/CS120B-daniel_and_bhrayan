@@ -377,6 +377,7 @@ void sendGameEnd(unsigned char endStatus) {
   COLUMNS[0] = 0;
   ROWS[1] = 0;
   COLUMNS[1] = 0;
+  // mousePos = 7;
   LCD_init();
   LCD_ClearScreen();
   if (endStatus == 1) {
