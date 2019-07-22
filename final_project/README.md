@@ -1,5 +1,5 @@
 # EE/CS120B Final Project - Agility
-> https://docs.google.com/document/d/1ayurTyoRHxNn_bf6V9ax1yg67s5sU1ImfcDrv1s_AlA/edit
+> https://drive.google.com/drive/u/0/folders/1aaQPAo0M4R1NvSNEk8jFg70kN8HeKf0L
 
 # About
 Agility is a game that tests your reflexes and motor skills. I programmed this game onto an Atmega-1284 microcontroller using AVR tools. The game handles bit manipulation and collisions. The game is won when you have received 9 points, but when you are hit by a projectile, you will lose the game.
