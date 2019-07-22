@@ -8,31 +8,22 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
-
 #include <util/delay.h>
-
-#
-ifdef _SIMULATE_#include "simAVRHeader.h"
-
+#ifdef _SIMULATE_
+#include "simAVRHeader.h"
 #include "timer.h"
-
 #include "scheduler.h"
-
 #include "keypad.h"
-
 #include <avr/eeprom.h>
-
 #include "io.c"
-
 #include <stdlib.h>
-
-# endif
+#endif
 
 //button configuration
 /** MENU SELECTION (1-5) **/
-# define F_CPU 1000000 UL# define BUTTON1(~PIND & 0x01) //right
-# define BUTTON2(~PIND & 0x02) //left
-# define BUTTON3(~PINA & 0x04)
+#define F_CPU 1000000 UL# define BUTTON1(~PIND & 0x01) //right
+#define BUTTON2(~PIND & 0x02) //left
+#define BUTTON3(~PINA & 0x04)
 // #define BUTTON4 (~PINA & 0x08) //down (p2)
 // #define BUTTON5 (~PINA & 0x10) //reset?
 
