@@ -22,11 +22,11 @@
 //button configuration
 /** MENU SELECTION (1-5) **/
 #define F_CPU 1000000UL
-#define BUTTON1 (~PIND & 0x01) //up (p1)
-#define BUTTON2 (~PIND & 0x02) //down (p1)
-#define BUTTON3 (~PINA & 0x04) //up (p2)
-#define BUTTON4 (~PINA & 0x08) //down (p2)
-#define BUTTON5 (~PINA & 0x10) //reset?
+#define BUTTON1 (~PIND & 0x01) //right
+#define BUTTON2 (~PIND & 0x02) //left
+#define BUTTON3 (~PINA & 0x04)
+// #define BUTTON4 (~PINA & 0x08) //down (p2)
+// #define BUTTON5 (~PINA & 0x10) //reset?
 
 unsigned char highScore;
 unsigned char myPlayer; //0x00, 0x01, 0x02, 0x03

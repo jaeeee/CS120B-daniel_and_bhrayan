@@ -1,10 +1,18 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+/**
+STORES THE CONSTANTS FOR THE GAME LOGIC, SO THINGS DON'T HAVE TO BE RETYPED.
+THESE VALUES ARE TO REMAIN STATIC AND CONSISTENT.
+**/
+
 unsigned char ROW_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
 unsigned char COLUMN_VALUES[8] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
 unsigned char FALLING_SEQUENCE[8] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
+/**
+CUSTOM PLAYER AVATARS FOR LCD DISPLAY
+**/
 unsigned char player1[8] = {
   0x04,
   0x04,
