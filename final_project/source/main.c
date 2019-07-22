@@ -8,23 +8,31 @@
  *	code, is my own original work.
  */
 #include <avr/io.h>
+
 #include <util/delay.h>
-#ifdef _SIMULATE_
-#include "simAVRHeader.h"
+
+#
+ifdef _SIMULATE_#include "simAVRHeader.h"
+
 #include "timer.h"
+
 #include "scheduler.h"
+
 #include "keypad.h"
+
 #include <avr/eeprom.h>
+
 #include "io.c"
+
 #include <stdlib.h>
-#endif
+
+# endif
 
 //button configuration
 /** MENU SELECTION (1-5) **/
-#define F_CPU 1000000UL
-#define BUTTON1 (~PIND & 0x01) //right
-#define BUTTON2 (~PIND & 0x02) //left
-#define BUTTON3 (~PINA & 0x04)
+# define F_CPU 1000000 UL# define BUTTON1(~PIND & 0x01) //right
+# define BUTTON2(~PIND & 0x02) //left
+# define BUTTON3(~PINA & 0x04)
 // #define BUTTON4 (~PINA & 0x08) //down (p2)
 // #define BUTTON5 (~PINA & 0x10) //reset?
 
@@ -51,42 +59,61 @@ unsigned char ROWS[2];
 
 unsigned char COLUMNS[2];
 
-enum STATES { STATE_OUT };
+enum STATES {
+  STATE_OUT
+};
 
-enum FALL_STATES { FALL_START, SPAWN, TICK1, TICK2, TICK3, TICK4, TICK5, TICK6, TICK7, CALCULATE };
+enum FALL_STATES {
+  FALL_START,
+  SPAWN,
+  TICK1,
+  TICK2,
+  TICK3,
+  TICK4,
+  TICK5,
+  TICK6,
+  TICK7,
+  CALCULATE
+};
 
-enum MENU_STATES { START, WAIT1, INC, WAIT2, START_GAME } m_state;
+enum MENU_STATES {
+  START,
+  WAIT1,
+  INC,
+  WAIT2,
+  START_GAME
+}
+m_state;
 
 void menu_tick() {
-  switch(m_state) { //transitions
-    case START:
+  switch (m_state) { //transitions
+  case START:
     if (BUTTON2 && !BUTTON1) {
       m_state = WAIT1;
-    }
-    else if (!BUTTON2 && BUTTON1) {
+    } else if (!BUTTON2 && BUTTON1) {
       m_state = WAIT2;
     } else {
       m_state = START;
     }
     break;
-    case WAIT1:
+  case WAIT1:
     if (!BUTTON2) {
       m_state = INC;
     } else {
       m_state = WAIT1;
     }
     break;
-    case INC:
+  case INC:
     m_state = START;
     break;
-    case WAIT2:
+  case WAIT2:
     if (!BUTTON1) {
       m_state = START_GAME;
     } else {
       m_state = WAIT2;
     }
     break;
-    case START_GAME:
+  case START_GAME:
     // gameState = 0x01;
     if (gameState == 0x01) {
       m_state = START_GAME;
@@ -95,14 +122,14 @@ void menu_tick() {
     }
     break;
   }
-  switch(m_state) { //actions
-    case START:
+  switch (m_state) { //actions
+  case START:
     // PORTA = 0xFF;
     // sendMenu();
     break;
-    case WAIT1:
+  case WAIT1:
     break;
-    case INC:
+  case INC:
     if (mousePos < 10) {
       mousePos++;
     } else {
@@ -111,37 +138,35 @@ void menu_tick() {
     sendMenu();
     // mousePos++;
     break;
-    case WAIT2:
+  case WAIT2:
     break;
-    case START_GAME:
+  case START_GAME:
     gameState = 0x01;
-    switch(mousePos) {
-      case 7:
+    switch (mousePos) {
+    case 7:
       myPlayer = 0x00;
       break;
-      case 8:
+    case 8:
       myPlayer = 0x01;
       break;
-      case 9:
+    case 9:
       myPlayer = 0x02;
       break;
-      case 10:
+    case 10:
       myPlayer = 0x04;
       break;
     }
-        sendInGame();
+    sendInGame();
     break;
   }
 }
 
-void EEPROM_Write(unsigned char address, unsigned char data)
-{
-	eeprom_write_byte(address,data);
+void EEPROM_Write(unsigned char address, unsigned char data) {
+  eeprom_write_byte(address, data);
 }
 
-unsigned char EEPROM_Read(unsigned char address)
-{
-	return eeprom_read_byte(address);
+unsigned char EEPROM_Read(unsigned char address) {
+  return eeprom_read_byte(address);
 }
 
 void displayLEDMatrix() { //updates the matrix?
@@ -163,61 +188,60 @@ void printPos() {
 }
 
 int tick(int state) {
-  switch(state) {
-    case STATE_OUT:
+  switch (state) {
+  case STATE_OUT:
     updateMatrixSingle(playerX, playerY);
-      if(BUTTON1) { //left
-        moveCharacter(1);
-      }
-      if (BUTTON2) { //right
-        moveCharacter(0);
-      }
+    if (BUTTON1) { //left
+      moveCharacter(1);
+    }
+    if (BUTTON2) { //right
+      moveCharacter(0);
+    }
     break;
   }
   return state;
 }
 
-
 int generateRandom() {
   return (rand() % 8) + 1;;
 }
 
-unsigned char convert(int x){
-  switch(x) {
-    case 1:
+unsigned char convert(int x) {
+  switch (x) {
+  case 1:
     return 0x01;
     break;
-    case 2:
+  case 2:
     return 0x02;
     break;
-    case 3:
+  case 3:
     return 0x04;
     break;
-    case 4:
+  case 4:
     return 0x08;
     break;
-    case 5:
+  case 5:
     return 0x10;
     break;
-    case 6:
+  case 6:
     return 0x20;
     break;
-    case 7:
+  case 7:
     return 0x40;
     break;
-    case 8:
+  case 8:
     return 0x80;
     break;
   default:
-  return 0x00;
-  break;
-}
+    return 0x00;
+    break;
+  }
 }
 
 // enum FALL_STATES { FALL_START, SPAWN, TICK1, TICK2, TICK3, TICK4, TICK5, TICK6, TICK7, CALCULATE };
 int fall_tick(int state) {
-  switch(state) {
-    case FALL_START:
+  switch (state) {
+  case FALL_START:
     if (gameState == 0x01) {
       state = SPAWN;
     } else {
@@ -225,40 +249,40 @@ int fall_tick(int state) {
       // m_state = START;
     }
     break;
-    case SPAWN:
+  case SPAWN:
     ROWS[0] = FALLING_SEQUENCE[0];
     COLUMNS[0] = ~(convert(generateRandom())); //SET COLUMN TO SPAWN IN
     state = TICK1;
     break;
-    case TICK1:
+  case TICK1:
     ROWS[0] = FALLING_SEQUENCE[1];
     state = TICK2;
     break;
-    case TICK2:
+  case TICK2:
     ROWS[0] = FALLING_SEQUENCE[2];
     state = TICK3;
     break;
-    case TICK3:
+  case TICK3:
     ROWS[0] = FALLING_SEQUENCE[3];
     state = TICK4;
     break;
-    case TICK4:
+  case TICK4:
     ROWS[0] = FALLING_SEQUENCE[4];
     state = TICK5;
     break;
-    case TICK5:
+  case TICK5:
     ROWS[0] = FALLING_SEQUENCE[5];
     state = TICK6;
     break;
-    case TICK6:
+  case TICK6:
     ROWS[0] = FALLING_SEQUENCE[6];
     state = TICK7;
     break;
-    case TICK7:
+  case TICK7:
     ROWS[0] = FALLING_SEQUENCE[7];
     state = CALCULATE;
     break;
-    case CALCULATE:
+  case CALCULATE:
     if (COLUMNS[0] == playerCoords[0] || COLUMNS[0] == playerCoords[1]) {
       if (score >= 9) {
         state = FALL_START;
@@ -272,9 +296,9 @@ int fall_tick(int state) {
         // task2.elapsedTime+=5;
         sendInGame();
       }
-  } else {
-    state = FALL_START;
-  }
+    } else {
+      state = FALL_START;
+    }
     break;
   }
   return state;
@@ -283,12 +307,12 @@ int fall_tick(int state) {
 void updateMatrixSingle(unsigned char x, unsigned char y) {
   playerCoords[0] = ~(ROW_VALUES[y]); //save first coordinate of player
   if (currentDirection == 1) {
-  playerCoords[1] = ~(ROW_VALUES[y+1]);
-  y = ROW_VALUES[y] + ROW_VALUES[y+1];
-} else {
-  playerCoords[1] = ~(ROW_VALUES[y-1]);
-  y = ROW_VALUES[y-1] + ROW_VALUES[y];
-}
+    playerCoords[1] = ~(ROW_VALUES[y + 1]);
+    y = ROW_VALUES[y] + ROW_VALUES[y + 1];
+  } else {
+    playerCoords[1] = ~(ROW_VALUES[y - 1]);
+    y = ROW_VALUES[y - 1] + ROW_VALUES[y];
+  }
   // x = HEX_VALUES[x];
   unsigned char convertedY = ~y;
   // unsigned char hexVal1, unsigned char hexVal2;
@@ -298,29 +322,28 @@ void updateMatrixSingle(unsigned char x, unsigned char y) {
   // COLUMNS[0] = ~0x80;
 }
 
-
 void moveCharacter(unsigned char pos) {
-switch(pos) {
+  switch (pos) {
   case 0:
-  if (playerY > 0) {
-    playerY--;
-  }
-  // else {
-  //   // currentDirection = 1;
-  //   // moveCharacter(1);
-  // }
-  break;
+    if (playerY > 0) {
+      playerY--;
+    }
+    // else {
+    //   // currentDirection = 1;
+    //   // moveCharacter(1);
+    // }
+    break;
   case 1: //move right
-  if (playerY < 6) {
-    playerY++;
+    if (playerY < 6) {
+      playerY++;
+    }
+    // else {
+    //   // currentDirection = 0;
+    //   // moveCharacter(0);
+    // }
+    break;
   }
-  // else {
-  //   // currentDirection = 0;
-  //   // moveCharacter(0);
-  // }
-  break;
-}
-updateMatrixSingle(playerX, playerY);
+  updateMatrixSingle(playerX, playerY);
 }
 
 void sendWin() {
@@ -343,7 +366,7 @@ void sendWin() {
   // LCD_WriteData(myPlayer);
   // LCD_Cursor(mousePos); //cursor pos
   LCD_DisplayString(5, "WINNER: ");
-    LCD_WriteData(myPlayer);
+  LCD_WriteData(myPlayer);
   LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
 }
 
@@ -390,56 +413,63 @@ void sendInGame() {
 }
 
 int main(void) {
-  DDRA = 0xFF; PORTD = 0x00;
-  DDRB = 0xFF; PORTB = 0x00;
-  DDRC = 0xFF; PORTC = 0x00;
-  DDRD = 0xC0; PORTD = 0x7F;
-    static task task1;
-    static task task2;
-    task *tasks[] = { &task1, &task2};
-    const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
-    /**
-    TASKS INITIALIZATIONS
-    **/
-    //TASK 1 (INPUT)
-	   task1.state = 0;//Task initial state.
-	   task1.period = 10;//Task Period.
-	   task1.elapsedTime = 10;//Task current elapsed time.
-     task1.TickFct = &tick;//Function pointer for the tick.
-    //TASK 2 (FALLING)
-     task2.state = 0;
-     task2.period = 50;
-     task2.elapsedTime = 0;
-     task2.TickFct = &fall_tick;
+  DDRA = 0xFF;
+  PORTD = 0x00;
+  DDRB = 0xFF;
+  PORTB = 0x00;
+  DDRC = 0xFF;
+  PORTC = 0x00;
+  DDRD = 0xC0;
+  PORTD = 0x7F;
+  static task task1;
+  static task task2;
+  task * tasks[] = {
+    & task1,
+    & task2
+  };
+  const unsigned short numTasks = sizeof(tasks) / sizeof(task * );
+  /**
+  TASKS INITIALIZATIONS
+  **/
+  //TASK 1 (INPUT)
+  task1.state = 0; //Task initial state.
+  task1.period = 10; //Task Period.
+  task1.elapsedTime = 10; //Task current elapsed time.
+  task1.TickFct = & tick; //Function pointer for the tick.
+  //TASK 2 (FALLING)
+  task2.state = 0;
+  task2.period = 50;
+  task2.elapsedTime = 0;
+  task2.TickFct = & fall_tick;
 
-     mousePos = 7;
-     srand(time(NULL));
-	   TimerSet(30);
-	   TimerOn();
-     sendMenu();
-     unsigned short i; // Scheduler for-loop iterator
-     playerX = 1;
-     playerY = 0;
-         // PORTB = 0x10;
-         m_state = START;
-         PORTA = 0xFF;
-   	while(1) {
-      if (gameState == 0x00) { //game not going on rn
-             // sendMenu();
-             menu_tick();
-      }
-      if (gameState == 0x01) { //playing
+  mousePos = 7;
+  srand(time(NULL));
+  TimerSet(30);
+  TimerOn();
+  sendMenu();
+  unsigned short i; // Scheduler for-loop iterator
+  playerX = 1;
+  playerY = 0;
+  // PORTB = 0x10;
+  m_state = START;
+  PORTA = 0xFF;
+  while (1) {
+    if (gameState == 0x00) { //game not going on rn
+      // sendMenu();
+      menu_tick();
+    }
+    if (gameState == 0x01) { //playing
       displayLEDMatrix();
-   		for ( i = 0; i < numTasks; i++ ) {
-   			if ( tasks[i]->elapsedTime == tasks[i]->period ) {
-   				tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-   				tasks[i]->elapsedTime = 0;
-   			}
-   			tasks[i]->elapsedTime += 1;
-   		}
-   		while(!TimerFlag);
-   		TimerFlag = 0;
-   	}
+      for (i = 0; i < numTasks; i++) {
+        if (tasks[i] - > elapsedTime == tasks[i] - > period) {
+          tasks[i] - > state = tasks[i] - > TickFct(tasks[i] - > state);
+          tasks[i] - > elapsedTime = 0;
+        }
+        tasks[i] - > elapsedTime += 1;
+      }
+      while (!TimerFlag);
+      TimerFlag = 0;
+    }
   }
-    return 0;
+  return 0;
 }
