@@ -16,6 +16,9 @@
 #include "keypad.h"
 #include <avr/eeprom.h>
 #include "io.c"
+// #include <time.h>
+#include <stdlib.h>
+// #include <math.h>
 #endif
 
 //button configuration
@@ -41,7 +44,11 @@ unsigned char score;
 GAME DATA (MATRIX)
 ROWS[1] and COLUMNS[1] designated for player
 ROWS[0] and COLUMNS[0] designated for BOT
+playerCoords stores the Y coordinates of the player (two values)
+
 **/
+unsigned char playerCoords[2];
+
 unsigned char ROWS[2];
 
 unsigned char COLUMNS[2];
@@ -49,6 +56,8 @@ unsigned char COLUMNS[2];
 unsigned char FALLING_SEQUENCE[8] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
 enum STATES { STATE_OUT };
+
+enum FALL_STATES { FALL_START, SPAWN, TICK1, TICK2, TICK3, TICK4, TICK5, TICK6, TICK7, CALCULATE };
 
 enum MENU_STATES { START, WAIT1, INC, WAIT2, START_GAME } m_state;
 
@@ -92,8 +101,7 @@ void menu_tick() {
   }
   switch(m_state) { //actions
     case START:
-    EEPROM_Write(0x01, 7); //write highscore
-    EEPROM_Write(0x00, 0); //write top player
+    // PORTA = 0xFF;
     // sendMenu();
     break;
     case WAIT1:
@@ -141,6 +149,7 @@ unsigned char EEPROM_Read(unsigned char address)
 }
 
 void displayLEDMatrix() { //updates the matrix?
+  updateMatrixSingle(playerX, playerY);
   for (int i = 0; i < 2; i++) {
     _delay_us(500);
     PORTA = ROWS[i];
@@ -163,24 +172,128 @@ int tick(int state) {
     updateMatrixSingle(playerX, playerY);
       if(BUTTON1) { //left
         moveCharacter(1);
-        // printPos();
       }
       if (BUTTON2) { //right
         moveCharacter(0);
-        // printPos();
       }
-            // updateMatrixSingle(playerX, playerY);
-      // moveCharacter(1);
     break;
   }
   return state;
 }
 
+
+int generateRandom() {
+  //CHANGE PLZ
+  int r = rand() % 8 + 1;
+  r = rand() % 8 + 1;
+  return r;
+}
+
+unsigned char convert(int x){
+  switch(x) {
+    case 1:
+    return 0x01;
+    break;
+    case 2:
+    return 0x02;
+    break;
+    case 3:
+    return 0x04;
+    break;
+    case 4:
+    return 0x08;
+    break;
+    case 5:
+    return 0x10;
+    break;
+    case 6:
+    return 0x20;
+    break;
+    case 7:
+    return 0x40;
+    break;
+    case 8:
+    return 0x80;
+    break;
+  default:
+  return 0x00;
+  break;
+}
+}
+
+// enum FALL_STATES { FALL_START, SPAWN, TICK1, TICK2, TICK3, TICK4, TICK5, TICK6, TICK7, CALCULATE };
+int fall_tick(int state) {
+  switch(state) {
+    case FALL_START:
+    if (gameState == 0x01) {
+      state = SPAWN;
+    } else {
+      state = FALL_START;
+      // m_state = START;
+    }
+    break;
+    case SPAWN:
+    ROWS[0] = FALLING_SEQUENCE[0];
+    COLUMNS[0] = ~(convert(generateRandom())); //SET COLUMN TO SPAWN IN
+    state = TICK1;
+    break;
+    case TICK1:
+    ROWS[0] = FALLING_SEQUENCE[1];
+    state = TICK2;
+    break;
+    case TICK2:
+    ROWS[0] = FALLING_SEQUENCE[2];
+    state = TICK3;
+    break;
+    case TICK3:
+    ROWS[0] = FALLING_SEQUENCE[3];
+    state = TICK4;
+    break;
+    case TICK4:
+    ROWS[0] = FALLING_SEQUENCE[4];
+    state = TICK5;
+    break;
+    case TICK5:
+    ROWS[0] = FALLING_SEQUENCE[5];
+    state = TICK6;
+    break;
+    case TICK6:
+    ROWS[0] = FALLING_SEQUENCE[6];
+    state = TICK7;
+    break;
+    case TICK7:
+    ROWS[0] = FALLING_SEQUENCE[7];
+    state = CALCULATE;
+    break;
+    case CALCULATE:
+    if (COLUMNS[0] == playerCoords[0] || COLUMNS[0] == playerCoords[1]) {
+      if (score >= 9) {
+        state = FALL_START;
+        gameState = 0x00;
+        sendWin();
+        //sendMenu();
+        // sendInGame();
+      } else {
+        score++;
+        state = SPAWN;
+        // task2.elapsedTime+=5;
+        sendInGame();
+      }
+  } else {
+    state = FALL_START;
+  }
+    break;
+  }
+  return state;
+}
 //updates PLAYER
 void updateMatrixSingle(unsigned char x, unsigned char y) {
+  playerCoords[0] = ~(ROW_VALUES[y]); //save first coordinate of player
   if (currentDirection == 1) {
+  playerCoords[1] = ~(ROW_VALUES[y+1]);
   y = ROW_VALUES[y] + ROW_VALUES[y+1];
 } else {
+  playerCoords[1] = ~(ROW_VALUES[y-1]);
   y = ROW_VALUES[y-1] + ROW_VALUES[y];
 }
   // x = HEX_VALUES[x];
@@ -217,13 +330,42 @@ switch(pos) {
 updateMatrixSingle(playerX, playerY);
 }
 
+void sendWin() {
+  // highScore = EEPROM_Read(0x01);
+  // if (score > highScore) {
+  //   EEPROM_Write(0x01, score); //write highscore
+  //   EEPROM_Write(0x00, myPlayer); //write top player
+  // }
+  //save high scores
+  // if ()
+  score = 0;
+  ROWS[0] = 0;
+  COLUMNS[0] = 0;
+  ROWS[1] = 0;
+  COLUMNS[1] = 0;
+  LCD_init();
+  LCD_ClearScreen();
+  // LCD_DisplayString_NO_CLEAR(1, "Player ");
+  // LCD_Cursor(7);
+  // LCD_WriteData(myPlayer);
+  // LCD_Cursor(mousePos); //cursor pos
+  LCD_DisplayString(5, "WINNER: ");
+    LCD_WriteData(myPlayer);
+  LCD_DisplayString_NO_CLEAR(18, "PLAY AGAIN?");
+}
 
 void sendMenu() {
+  score = 0;
+  ROWS[0] = 0;
+  COLUMNS[0] = 0;
+  ROWS[1] = 0;
+  COLUMNS[1] = 0;
   LCD_init();
   LCD_ClearScreen();
   LCD_DisplayString(18, "highscore: ");
   LCD_Cursor(29);
-  // EEPROM_Write(0x01, 5);
+  EEPROM_Write(0x01, 5);
+  EEPROM_Write(0x00, 0x02);
   highScore = EEPROM_Read(0x01);
   bestPlayer = EEPROM_Read(0x00);
   LCD_WriteData(('0' + highScore));
@@ -259,13 +401,25 @@ int main(void) {
   DDRC = 0xFF; PORTC = 0x00;
   DDRD = 0xC0; PORTD = 0x7F;
     static task task1;
-    task *tasks[] = { &task1};
+    static task task2;
+    task *tasks[] = { &task1, &task2};
     const unsigned short numTasks = sizeof(tasks)/sizeof(task*);
+    /**
+    TASKS INITIALIZATIONS
+    **/
+    //TASK 1 (INPUT)
 	   task1.state = 0;//Task initial state.
 	   task1.period = 10;//Task Period.
 	   task1.elapsedTime = 10;//Task current elapsed time.
      task1.TickFct = &tick;//Function pointer for the tick.
-              mousePos = 7;
+    //TASK 2 (FALLING)
+     task2.state = 0;
+     task2.period = 50;
+     task2.elapsedTime = 0;
+     task2.TickFct = &fall_tick;
+
+     mousePos = 7;
+     srand(time(NULL));
 	   TimerSet(30);
 	   TimerOn();
      sendMenu();
