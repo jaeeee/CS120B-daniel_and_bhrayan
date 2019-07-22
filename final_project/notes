@@ -1,3 +1,7 @@
+FALLING SEQUENCE (0-7)
+
+ROWS[0] = FALLING_SEQUENCE[i]; //loop from 0 to 7
+COLUMNS[0] = ~0x80; //set a COLUMN
 
 // void transmit_data (unsigned char data) {
 //     /* BOT_SR uses A0 - A3  -- controls  GREEN (x), use '~' on data */
