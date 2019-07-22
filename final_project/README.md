@@ -1,5 +1,8 @@
-# EE/CS120B Final Project
+# EE/CS120B Final Project - Agility
 > https://docs.google.com/document/d/1ayurTyoRHxNn_bf6V9ax1yg67s5sU1ImfcDrv1s_AlA/edit
+
+# About
+Agility is a game that tests your reflexes and motor skills. The game is won when you have received 9 points, but when you are hit by a projectile, you will lose the game.
 
 # Team
 * Daniel Kwong
