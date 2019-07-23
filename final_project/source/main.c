@@ -523,7 +523,6 @@ int main(void) {
         COLUMNS[1] = 0;
         playerY = 0;
         mousePos = 7;
-        // LCD_
         // LCD_ClearScreen();
         sendMenu();
         for (i = 0; i < numTasks; i++ ){
